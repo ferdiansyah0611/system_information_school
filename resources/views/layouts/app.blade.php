@@ -18,6 +18,25 @@
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    <script src="{{url('vendor/template/')}}/libs/jquery/jquery.min.js"></script>
+        <script src="{{url('vendor/template/')}}/libs/bootstrap/js/bootstrap.bundle.min.js"></script>
+        <script src="{{url('vendor/template/')}}/libs/metismenu/metisMenu.min.js"></script>
+        <script src="{{url('vendor/template/')}}/libs/simplebar/simplebar.min.js"></script>
+        <script src="{{url('vendor/template/')}}/libs/node-waves/waves.min.js"></script>
+
+        <script src="https://unicons.iconscout.com/release/v2.0.1/script/monochrome/bundle.js"></script>
+
+        <!-- datepicker -->
+        <script src="{{url('vendor/template/')}}/libs/air-datepicker/js/datepicker.min.js"></script>
+        <script src="{{url('vendor/template/')}}/libs/air-datepicker/js/i18n/datepicker.en.js"></script>
+
+        <!-- apexcharts -->
+        <script src="{{url('vendor/template/')}}/libs/apexcharts/apexcharts.min.js"></script>
+
+        <script src="{{url('vendor/template/')}}/libs/jquery-knob/jquery.knob.min.js"></script> 
+        <script src="{{url('vendor/template/')}}/js/pages/dashboard.init.js"></script>
+
+        <script src="{{url('vendor/template/')}}/js/app.js"></script>
 </head>
 <body data-topbar="colored">
     <div id="app">
@@ -76,5 +95,6 @@
             @yield('content')
         </main>
     </div>
+    
 </body>
 </html>
