@@ -17,3 +17,10 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
+Route::group(['namespace' => 'Admin\Request'], function(){
+    //class
+    Route::get('class', 'ClassController@index');
+    Route::get('class/{scClass}', 'ClassController@show');
+    Route::post('class/store', 'ClassController@store');
+
+});

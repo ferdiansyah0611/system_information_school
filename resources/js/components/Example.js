@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-
+import { BrowserRouter, Route, Switch } from 'react-router-dom';
 function Example() {
     return (
         <div className="container">
@@ -19,6 +19,6 @@ function Example() {
 
 export default Example;
 
-if (document.getElementById('example')) {
-    ReactDOM.render(<Example />, document.getElementById('example'));
+if (document.getElementById('app')) {
+    ReactDOM.render(<Example />, document.getElementById('app'));
 }
