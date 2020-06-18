@@ -18,9 +18,9 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 Route::group(['namespace' => 'Admin\Request'], function(){
-    //class
-    Route::get('class', 'ClassController@index');
-    Route::get('class/{scClass}', 'ClassController@show');
-    Route::post('class/store', 'ClassController@store');
-
+    Route::apiResource('class', 'ClassController');
+    Route::apiResource('school', 'SchoolController');
+    Route::apiResource('student', 'StudentController');
+    Route::apiResource('study', 'StudyController');
+    Route::apiResource('teacher', 'TeacherController');
 });
