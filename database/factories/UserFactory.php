@@ -5,7 +5,7 @@
 use App\User;
 use Faker\Generator as Faker;
 use Illuminate\Support\Str;
-
+use Carbon\Carbon;
 /*
 |--------------------------------------------------------------------------
 | Model Factories
@@ -19,6 +19,13 @@ use Illuminate\Support\Str;
 
 $factory->define(User::class, function (Faker $faker) {
     return [
+    	'sc_school_id' => '1',
+    	'nisn' => rand(1000000, 10000000),
+    	'role' => 'user',
+    	'born' => Carbon::now(),
+    	'location' => 'indonesia',
+    	'avatar' => 'image',
+    	'languange' => 'en',
         'name' => $faker->name,
         'email' => $faker->unique()->safeEmail,
         'email_verified_at' => now(),

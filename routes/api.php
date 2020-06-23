@@ -23,4 +23,10 @@ Route::group(['namespace' => 'Admin\Request'], function(){
     Route::apiResource('student', 'StudentController');
     Route::apiResource('study', 'StudyController');
     Route::apiResource('teacher', 'TeacherController');
+    /*route datatable*/
+    Route::get('class/datatable', 'ClassController@datatable')->name('class.datatable');
+    Route::get('school/datatable', 'SchoolController@datatable')->name('school.datatable');
+    Route::get('student/datatable', 'StudentController@datatable')->name('student.datatable');
+    Route::get('study/datatable', 'StudyController@datatable')->name('study.datatable');
+    Route::get('teacher/datatable', 'TeacherController@datatable')->name('teacher.datatable');
 });

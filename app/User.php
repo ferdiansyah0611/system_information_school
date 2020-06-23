@@ -42,4 +42,8 @@ class User extends Authenticatable
     {
         return $this->hasMany('App\Models\ScStudent');
     }
+    public function scschool()
+    {
+        return $this->belongsTo('App\Models\ScSchool');
+    }
 }
