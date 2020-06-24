@@ -38,6 +38,8 @@ import App from './page/admin/Index.vue';
 import Dashboard from './page/admin/Dashboard.vue';
 import ManageClass from './page/admin/Manageclass.vue';
 import ManageSchool from './page/admin/ManageSchool.vue';
+import ManageStudent from './page/admin/ManageStudent.vue';
+import ManageStudy from './page/admin/ManageStudy.vue';
 // route in here
 const routes = [
     {
@@ -63,6 +65,18 @@ const routes = [
     	path : '/manage/school',
     	title : 'Management School',
     	component : ManageSchool
+    },
+    {
+        name : 'manageStudent',
+        path : '/manage/student',
+        title : 'Management Student',
+        component : ManageStudent
+    },
+    {
+        name : 'manageStudy',
+        path : '/manage/study',
+        title : 'Management Study',
+        component : ManageStudy
     }
     /*{
         name : 'login',
