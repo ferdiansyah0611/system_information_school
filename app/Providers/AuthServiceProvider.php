@@ -26,6 +26,7 @@ class AuthServiceProvider extends ServiceProvider
     {
         $this->registerPolicies();
         Passport::routes();
-        //
+        /*if production*/
+        /*Passport::loadKeysFrom('/secret-keys/oauth');*/
     }
 }

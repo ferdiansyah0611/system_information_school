@@ -15,18 +15,11 @@ import Vuex from 'vuex';
 Vue.use(VueRouter, VueAxios, Axios);
 Vue.component('pagination', require('laravel-vue-pagination'));
 
-/**
- * The following block of code may be used to automatically register your
- * Vue components. It will recursively scan this directory for the Vue
- * components and automatically register them with their "basename".
- *
- * Eg. ./components/ExampleComponent.vue -> <example-component></example-component>
- */
-
-// const files = require.context('./', true, /\.vue$/i)
-// files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
-
 // component in here
+Vue.component('passport-clients', require('./components/passport/Clients.vue'));
+Vue.component('passport-authorized-clients', require('./components/passport/AuthorizedClients.vue'));
+Vue.component('passport-personal-access-tokens', require('./components/passport/PersonalAccessTokens.vue'));
+
 Vue.component('nav-template', require('./components/template/one/Nav').default);
 Vue.component('side-left-template', require('./components/template/one/SideLeft').default);
 Vue.component('side-right-template', require('./components/template/one/SideRight').default);
@@ -40,6 +33,10 @@ import ManageClass from './page/admin/Manageclass.vue';
 import ManageSchool from './page/admin/ManageSchool.vue';
 import ManageStudent from './page/admin/ManageStudent.vue';
 import ManageStudy from './page/admin/ManageStudy.vue';
+import ManageTeacher from './page/admin/ManageTeacher.vue';
+import ManageAssessmentTask from './page/admin/ManageAssessmentTask.vue';
+// authenticate
+import Login from './components/auth/Login.vue';
 // route in here
 const routes = [
     {
@@ -77,14 +74,26 @@ const routes = [
         path : '/manage/study',
         title : 'Management Study',
         component : ManageStudy
-    }
-    /*{
-        name : 'login',
-        path : '/login',
-        title : 'Authenticate Resellers',
-        component : login
     },
     {
+        name : 'manageTeacher',
+        path : '/manage/teacher',
+        title : 'Management Teacher',
+        component : ManageTeacher
+    },
+    {
+        name : 'assessmenttask',
+        path : '/manage/assessment-task',
+        title : 'assessment task Student',
+        component : ManageAssessmentTask
+    },
+    {
+        name : 'login',
+        path : '/login',
+        title : 'Login System Academic',
+        component : Login
+    },
+    /*{
         name : 'showProduct',
         path : '/products/:product',
         title : 'View Products',
