@@ -16,18 +16,20 @@ Vue.use(VueRouter, VueAxios, Axios);
 Vue.component('pagination', require('laravel-vue-pagination'));
 
 // component in here
-Vue.component('passport-clients', require('./components/passport/Clients.vue'));
+/*Vue.component('passport-clients', require('./components/passport/Clients.vue'));
 Vue.component('passport-authorized-clients', require('./components/passport/AuthorizedClients.vue'));
-Vue.component('passport-personal-access-tokens', require('./components/passport/PersonalAccessTokens.vue'));
+Vue.component('passport-personal-access-tokens', require('./components/passport/PersonalAccessTokens.vue'));*/
 
-Vue.component('nav-template', require('./components/template/one/Nav').default);
-Vue.component('side-left-template', require('./components/template/one/SideLeft').default);
+/*Vue.component('nav-template', require('./components/template/one/Nav').default);*/
+/*Vue.component('side-left-template', require('./components/template/one/SideLeft').default);*/
 Vue.component('side-right-template', require('./components/template/one/SideRight').default);
 
 // data in here
 import Store from './store.js';
 // page in heres
 import App from './page/admin/Index.vue';
+// admin
+import TemplateAdmin from './components/template/one/Template.vue';
 import Dashboard from './page/admin/Dashboard.vue';
 import ManageClass from './page/admin/Manageclass.vue';
 import ManageSchool from './page/admin/ManageSchool.vue';
@@ -35,63 +37,100 @@ import ManageStudent from './page/admin/ManageStudent.vue';
 import ManageStudy from './page/admin/ManageStudy.vue';
 import ManageTeacher from './page/admin/ManageTeacher.vue';
 import ManageAssessmentTask from './page/admin/ManageAssessmentTask.vue';
+import ManageScHomeRoomTeacher from './page/admin/ManageScHomeRoomTeacher.vue';
+import ManageReportCard from './page/admin/ManageReportCard.vue';
 // authenticate
 import Login from './components/auth/Login.vue';
+import Client from './page/api/Client.vue';
+import AuthorizedClient from './page/api/AuthorizedClient.vue';
+import PersonalToken from './page/api/PersonalToken.vue';
+
 // route in here
-const routes = [
-    {
-        name : 'index',
-        path : '/',
-        title : 'Resellers Application',
+const routes = [{
+        name: 'index',
+        path: '/',
         component: Dashboard
     },
+    /*admin*/
     {
-    	name : 'dashboard',
-    	path : '/dashboard',
-    	title : 'Dashboard',
-    	component : Dashboard
+        name: 'admin',
+        path: '/admin',
+        component: TemplateAdmin,
+        beforeEnter(to, from, next) {
+            let User = JSON.parse(window.localStorage.getItem('users'));
+            if (User && User.user.role == 'admin') {
+                next();
+            } else {
+                next('/');
+            }
+        },
+        children: [{
+                path: 'dashboard',
+                component: Dashboard
+            },
+            {
+                path: 'manage/class',
+                component: ManageClass
+            },
+            {
+                path: 'manage/school',
+                component: ManageSchool
+            },
+            {
+                path: 'manage/student',
+                component: ManageStudent
+            },
+            {
+                path: 'manage/study',
+                component: ManageStudy
+            },
+            {
+                path: 'manage/teacher',
+                component: ManageTeacher
+            },
+            {
+                path: 'manage/assessment-task',
+                component: ManageAssessmentTask
+            },
+            {
+                path: 'manage/homeroom-teacher',
+                component: ManageScHomeRoomTeacher
+            },
+            {
+                path: 'manage/report-card',
+                component: ManageReportCard
+            },
+            {
+                path: 'setting/api/client',
+                component: Client
+            },
+            {
+                path: 'setting/api/authorized-token',
+                component: AuthorizedClient
+            },
+            {
+                path: 'setting/api/personal-token',
+                component: PersonalToken
+            },
+        ]
     },
     {
-    	name : 'manageclass',
-    	path : '/manage/class',
-    	title : 'Management Class',
-    	component : ManageClass
-    },
-    {
-    	name : 'manageSchool',
-    	path : '/manage/school',
-    	title : 'Management School',
-    	component : ManageSchool
-    },
-    {
-        name : 'manageStudent',
-        path : '/manage/student',
-        title : 'Management Student',
-        component : ManageStudent
-    },
-    {
-        name : 'manageStudy',
-        path : '/manage/study',
-        title : 'Management Study',
-        component : ManageStudy
-    },
-    {
-        name : 'manageTeacher',
-        path : '/manage/teacher',
-        title : 'Management Teacher',
-        component : ManageTeacher
-    },
-    {
-        name : 'assessmenttask',
-        path : '/manage/assessment-task',
-        title : 'assessment task Student',
-        component : ManageAssessmentTask
-    },
-    {
-        name : 'login',
-        path : '/login',
-        title : 'Login System Academic',
-        component : Login
+        name: 'login',
+        path: '/login',
+        title: 'Login System Academic',
+        component: Login,
+        beforeEnter(to, from, next) {
+            let User = JSON.parse(window.localStorage.getItem('users'));
+            if (User && User.user.id !== undefined) {
+                if(User.user.role == 'admin'){
+                    next('/admin/dashboard');
+                }else{
+                    next('/');
+                }
+            } else {
+                next();
+            }
+        }
     },
     /*{
         name : 'showProduct',
@@ -115,6 +154,6 @@ const router = new VueRouter({
 const app = new Vue(
     Vue.util.extend({
         router,
-        store:Store
+        store: Store
     }, App)
 ).$mount('#app');

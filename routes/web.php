@@ -19,4 +19,4 @@ use Illuminate\Support\Facades\Route;
 Route::get('/{any}', function(){
     return view('single');
 })->where('any', '.*');
-Auth::routes();
+/*Auth::routes();*/

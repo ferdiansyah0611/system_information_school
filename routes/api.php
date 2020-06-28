@@ -16,5 +16,7 @@ Route::group(['namespace' => 'Admin\Request', 'middleware' => 'auth:api'], funct
     Route::apiResource('student', 'StudentController');
     Route::apiResource('study', 'StudyController');
     Route::apiResource('teacher', 'TeacherController');
-    Route::apiResource('assessment-task', 'ScAssessmentTaskController');
+    Route::apiResource('assessment-task', 'AssessmentTaskController');
+    Route::apiResource('homeroom-teacher', 'HomeRoomTeacherController');
+    Route::apiResource('report-card', 'ReportCardController');
 });

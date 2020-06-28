@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateScTeachersTable extends Migration
+class CreateScReportCardElementariesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,13 @@ class CreateScTeachersTable extends Migration
      */
     public function up()
     {
-        Schema::create('sc_teachers', function (Blueprint $table) {
+        Schema::create('sc_report_card_elementaries', function (Blueprint $table) {
             $table->id();
-            $table->bigInteger('user_id')->unsigned();
-            $table->bigInteger('sc_school_id')->unsigned();
-            $table->string('title');
-            $table->string('graduate');
+            $table->bigInteger('sc_study_id')->unsigned();
+            $table->integer('kkm');
+            $table->integer('score');
+            $table->string('status');
+            $table->string('predicate');
             $table->timestamps();
         });
     }
@@ -30,6 +31,6 @@ class CreateScTeachersTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('sc_teachers');
+        Schema::dropIfExists('sc_report_card_elementaries');
     }
 }

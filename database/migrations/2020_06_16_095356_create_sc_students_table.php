@@ -21,6 +21,8 @@ class CreateScStudentsTable extends Migration
             $table->bigInteger('phone')->unique();
             $table->string('father');
             $table->string('mother');
+            $table->string('work_father');
+            $table->string('work_mother');
             $table->bigInteger('phone_father');
             $table->bigInteger('phone_mother');
             $table->string('generation');

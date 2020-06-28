@@ -1,0 +1,287 @@
+<?php
+
+namespace App\Http\Controllers\Admin\Request;
+
+use App\Http\Controllers\Controller;
+use Illuminate\Http\Request;
+use Validator;
+// vendor
+use Carbon\Carbon;
+// model
+use App\Models\ScClass;
+use App\Models\ScSchool;
+use App\Models\ScHomeRoomTeacher;
+use App\Models\ScTypeReportCard;
+use App\Models\ScReportCardSenior;
+use App\Models\ScReportCardJunior;
+use App\Models\ScReportCardElementary;
+use App\Models\ScReportCardExtraCurricular;
+
+class ReportCardController extends Controller
+{
+    /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->random = rand(1000000, 10000000);
+        $this->timestamp = Carbon::now();
+    }
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function index()
+    {
+        $order = $request->get('orderby');
+        $search = $request->get('search');
+        $columns = $request->get('columns');
+        $type = $request->get('type');
+        if($order == true){
+            // search default
+            if($search == 'default'){
+                if($columns < 101 && $columns > 1){
+                    return $this->searchDefault($order, $type, $columns);
+                }
+            // searching
+            }else{
+                if($columns < 101 && $columns > 1){
+                    return $this->searching($order, $type, $search, $columns);
+                }else{
+                    return $this->searching($order, $type, $search, 25);
+                }
+            }
+        // default url api/class
+        }else{
+            if($columns < 101 && $columns > 1){
+                return $this->searchDefault('id', 'asc', $columns);
+            }
+            if($type == 'default'){
+                return $this->searchDefault('id', 'asc', '25');
+            }
+        }
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function store(Request $request)
+    {
+        // validation variable
+        $numeric = 'required|numeric';
+        $string_type = 'required|string|min:10|max:20';
+        $string_description = 'required|string|min:10|max:2000';
+
+        $validator = Validator::make($request->all(), [
+            'sc_home_room_teacher_id' => $numeric,
+            'sc_student_id' => $numeric,
+            'type' => $string_type,
+            'description' => $string_description,
+            'period' => 'required|date',
+            'absent_broken' => $numeric,
+            'absent_permission' => $numeric,
+            'absent_without_explanation' => $numeric,
+            'personality_behavior' => $numeric,
+            'personality_diligence' => $numeric,
+            'personality_neatness' => $numeric,
+        ]);
+        if($validator->fails()){
+            return response()->json(['message' => $validator->errors()], 401);
+        }else{
+            $ScHomeRoomTeacher = ScHomeRoomTeacher::where('id', $request->sc_home_room_teacher_id)->get('sc_class_id');
+            // type
+            ScTypeReportCard::create([
+                'id' => $this->random,
+                'sc_home_room_teacher_id' => $request->sc_home_room_teacher_id,
+                'sc_student_id' => $request->sc_student_id,
+                'type' => $request->type,
+                'period' => $request->period,
+                'description' => $request->description,
+                'absent_broken' => $request->absent_broken,
+                'absent_permission' => $request->absent_permission,
+                'absent_without_explanation' => $request->absent_without_explanation,
+                'personality_behavior' => $request->personality_behavior,
+                'personality_diligence' => $request->personality_diligence,
+                'personality_neatness' => $request->personality_neatness,
+            ]);
+            foreach($ScHomeRoomTeacher as $data) {
+                $ScClass = ScClass::where('id', $data->sc_class_id)->get('sc_school_id');
+                foreach($ScClass as $class) {
+                    $ScSchool = ScSchool::where('id', $class->sc_school_id)->get('type');
+                    foreach($ScSchool as $school) {
+                        if($school->type == 'senior_high_school'){
+                            $validator_senior = Validator::make($request->all(), [
+                                'sc_study_id' => $numeric,
+                                'score' => $numeric,
+                                'kkm_k3' => $numeric,
+                                'kkm_k4' => $numeric,
+                                'k3_ph' => $numeric,
+                                'k3_pts' => $numeric,
+                                'k4_pr' => $numeric,
+                                'status' => 'required|string|min:1|max:191',
+                                'predicate' => 'required|string|min:1|max:191',
+                            ]);
+                            if($validator_senior->fails()){
+                                return response()->json(['message' => $validator_senior->errors()], 401);
+                            }else{
+                                // senior
+                                ScReportCardSenior::create([
+                                    'id' => $this->random,
+                                    'sc_study_id' => $request->sc_study_id,
+                                    'score' => $request->score,
+                                    'kkm_k3' => $request->kkm_k3,
+                                    'kkm_k4' => $request->kkm_k4,
+                                    'k3_ph' => $request->k3_ph,
+                                    'k3_pts' => $request->k3_pts,
+                                    'k4_pr' => $request->k4_pr,
+                                    'status' => $request->status,
+                                    'predicate' => $request->predicate,/*a b*/
+                                ]);
+                            }
+                        }
+                        if($school->type == 'junior_high_school'){
+
+                        }
+                        if($school->type == 'elementary_school'){
+                            
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param  \App\Models\ScTypeReportCard  $scTypeReportCard
+     * @return \Illuminate\Http\Response
+     */
+    public function show(ScTypeReportCard $scTypeReportCard)
+    {
+        //
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Models\ScTypeReportCard  $scTypeReportCard
+     * @return \Illuminate\Http\Response
+     */
+    public function update(Request $request, ScTypeReportCard $scTypeReportCard)
+    {
+        //
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  $scTypeReportCard
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy($scTypeReportCard)
+    {
+        ScTypeReportCard::where('id', $scTypeReportCard)->delete();
+        $ScSchool = ScSchool::where('id', request()->user()->sc_school_id)->get('type');
+        foreach($ScSchool as $school) {
+            if($school->type == 'senior_high_school') {
+                ScReportCardSenior::where('id', $scTypeReportCard)->delete();
+            }
+            if($school->type == 'junior_high_school'){
+                ScReportCardJunior::where('id', $scTypeReportCard)->delete();
+            }
+            if($school->type == 'elementary_school'){
+                ScReportCardElementary::where('id', $scTypeReportCard)->delete();
+            }
+            ScReportCardExtraCurricular::where('sc_type_report_card_id', $scTypeReportCard)->delete();
+        }
+        return response()->json(['message' => 'Successfuly delete data'], 200);
+    }
+    ////////////////////////////////end resources////////////////////////////////
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @param $$order $type $columns
+     * @return \Illuminate\Http\Response
+     */
+    public function searchDefault($order, $type, $columns)
+    {
+        /*ScTypeReportCard = id, sc_student_id, student_name, sc_home_room_teacher_id*/
+        $ScSchool = ScSchool::where('id', request(t)->user()->sc_school_id)->get('type');
+        foreach($ScSchool as $school) {
+            if($school->type == 'senior_high_school') {
+                /*ScReportCardSenior = sc_study_id, study_name, score, status, predicate*/
+                return response()->json(ScTypeReportCard::join('sc_students', 'sc_type_report_cards.sc_student_id', '=', 'sc_students.id')
+                ->join('users', 'sc_students.user_id', '=', 'users.id')
+                ->join('sc_report_card_seniors', 'sc_type_report_cards.id', '=', 'sc_report_card_seniors.id')
+                ->join('sc_studies', 'sc_report_card_seniors.sc_study_id', '=', 'sc_studies.id')
+                ->orderBy($order, $type)
+                ->select(
+                    'sc_type_report_cards.id', 'sc_type_report_cards.sc_home_room_teacher_id', 'sc_type_report_cards.sc_student_id',
+                    'sc_type_report_cards.created_at', 'sc_type_report_cards.updated_at',
+                    'users.name as student_name', 'users.id as user_id', 'sc_type_report_cards.sc_home_room_teacher_id',
+                    'sc_report_card_seniors.id as sc_report_card_senior_id', 'sc_report_card_seniors.score', 'sc_report_card_seniors.status', 'sc_report_card_seniors.predicate',
+                    'sc_studies.name as study_name'
+                )
+                ->paginate($columns), 200);
+            }
+            if($school->type == 'junior_high_school') {
+
+            }
+            if($school->type == 'elementary_school') {
+                /*ScReportCardElementary = */
+            }
+        }
+    }
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @param $$order $type $search $paginate
+     * @return \Illuminate\Http\Response
+     */
+    public function searching($order, $type, $search, $paginate)
+    {
+        /*ScTypeReportCard = id, student_name*/
+        $ScSchool = ScSchool::where('id', request(t)->user()->sc_school_id)->get('type');
+        foreach($ScSchool as $school) {
+            if($school->type == 'senior_high_school') {
+                /*ScReportCardSenior = study_name, score, status, predicate*/
+                return response()->json(ScTypeReportCard::join('sc_students', 'sc_type_report_cards.sc_student_id', '=', 'sc_students.id')
+                ->join('users', 'sc_students.user_id', '=', 'users.id')
+                ->join('sc_report_card_seniors', 'sc_type_report_cards.id', '=', 'sc_report_card_seniors.id')
+                ->join('sc_studies', 'sc_report_card_seniors.sc_study_id', '=', 'sc_studies.id')
+                ->where('sc_type_report_cards.id', 'like', '%' . $search . '%')
+                ->orWhere('users.name', 'like', '%' . $search . '%')
+                ->orWhere('sc_studies.name', 'like', '%' . $search . '%')
+                ->orWhere('sc_report_card_seniors.score', 'like', '%' . $search . '%')
+                ->orWhere('sc_report_card_seniors.status', 'like', '%' . $search . '%')
+                ->orWhere('sc_report_card_seniors.predicate', 'like', '%' . $search . '%')
+                ->orderBy($order, $type)
+                ->select(
+                    'sc_type_report_cards.id', 'sc_type_report_cards.sc_home_room_teacher_id', 'sc_type_report_cards.sc_student_id',
+                    'sc_type_report_cards.created_at', 'sc_type_report_cards.updated_at',
+                    'users.name as student_name', 'users.id as user_id', 'sc_type_report_cards.sc_home_room_teacher_id',
+                    'sc_report_card_seniors.id as sc_report_card_senior_id', 'sc_report_card_seniors.score', 'sc_report_card_seniors.status', 'sc_report_card_seniors.predicate',
+                    'sc_studies.name as study_name'
+                )
+                ->paginate($paginate), 200);
+            }
+            if($school->type == 'junior_high_school') {
+
+            }
+            if($school->type == 'elementary_school') {
+                /*ScReportCardElementary = */
+            }
+        }
+    }
+}

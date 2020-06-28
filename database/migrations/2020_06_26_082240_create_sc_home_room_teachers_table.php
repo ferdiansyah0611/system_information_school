@@ -17,6 +17,8 @@ class CreateScHomeRoomTeachersTable extends Migration
             $table->id();
             $table->bigInteger('sc_teacher_id')->unsigned();
             $table->bigInteger('sc_class_id')->unsigned();
+            $table->date('start_period');
+            $table->date('end_period');
             $table->timestamps();
         });
     }

@@ -15,7 +15,7 @@ class CreateScAssessmentTasksTable extends Migration
     {
         Schema::create('sc_assessment_tasks', function (Blueprint $table) {
             $table->id();
-            $table->bigInteger('sc_student_id');
+            $table->bigInteger('sc_student_id')->unsigned();
             $table->string('title');
             $table->string('description');
             $table->integer('score');
