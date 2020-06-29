@@ -10,11 +10,11 @@
     <!-- {{-- <script src="url('vendor/template/')}}/libs/bootstrap/js/bootstrap.bundle.min.js"></script> --}} -->
     <script src="{{url('vendor/template/')}}/libs/simplebar/simplebar.min.js"></script>
     <script src="{{url('vendor/template/')}}/libs/node-waves/waves.min.js"></script>
-    <script src="{{ asset('js/app.js') }}" defer></script>
+    <script src="{{asset('js/app.js') }}" defer></script>
+    <!-- <script mix('js/app.js') }}" defer></script> -->
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <script src="https://unicons.iconscout.com/release/v2.0.1/script/monochrome/bundle.js"></script>
-    <link rel="stylesheet" type="text/css" href="{{asset('vendor/datatables/media')}}/css/dataTables.bootstrap4.min.css">
 </head>
 <body data-topbar="colored">
     <div id="app"></div>

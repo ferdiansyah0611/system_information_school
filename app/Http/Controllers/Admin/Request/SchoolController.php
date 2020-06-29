@@ -5,8 +5,11 @@ namespace App\Http\Controllers\Admin\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Validator;
+// exports
+use App\Exports\SchoolExport;
 // vendor
 use Carbon\Carbon;
+use Maatwebsite\Excel\Facades\Excel;
 // model
 use App\Models\ScSchool;
 
@@ -182,5 +185,16 @@ class SchoolController extends Controller
                 'sc_schools.created_at','sc_schools.updated_at',
                 'users.name as user_name', 'users.id as user_id')
             ->paginate($paginate), 200);
+    }
+
+    /**
+     * Download a file excel of the export.
+     *
+     * @param $user
+     * @return Maatwebsite\Excel\Facades\Excel
+     */
+    public function export($user) 
+    {
+        return Excel::download(new SchoolExport, 'school_export.xlsx');
     }
 }

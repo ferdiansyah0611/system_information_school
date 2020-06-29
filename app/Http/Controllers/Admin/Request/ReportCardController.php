@@ -5,8 +5,11 @@ namespace App\Http\Controllers\Admin\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Validator;
+// exports
+use App\Exports\ReportCardExport;
 // vendor
 use Carbon\Carbon;
+use Maatwebsite\Excel\Facades\Excel;
 // model
 use App\Models\ScClass;
 use App\Models\ScSchool;
@@ -35,7 +38,7 @@ class ReportCardController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         $order = $request->get('orderby');
         $search = $request->get('search');
@@ -144,13 +147,33 @@ class ReportCardController extends Controller
                                     'status' => $request->status,
                                     'predicate' => $request->predicate,/*a b*/
                                 ]);
+                                return response()->json(['message' => 'Successfuly create data'], 200);
                             }
                         }
-                        if($school->type == 'junior_high_school'){
+                        if($school->type == 'junior_high_school') {
 
                         }
-                        if($school->type == 'elementary_school'){
-                            
+                        if($school->type == 'elementary_school') {
+                            $validator_elementary = Validator::make($request->all(), [
+                                'sc_study_id' => $numeric,
+                                'score' => $numeric,
+                                'kkm' => $numeric,
+                                'status' => 'required|string|min:1|max:191',
+                                'predicate' => 'required|string|min:1|max:191',
+                            ]);
+                            if($validator_elementary->fails()){
+                                return response()->json(['message' => $validator_elementary->errors()], 401);
+                            }else{
+                                ScReportCardElementary::create([
+                                    'id' => $this->random,
+                                    'sc_study_id' => $request->sc_study_id,
+                                    'score' => $request->score,
+                                    'kkm' => $request->kkm,
+                                    'status' => $request->status,
+                                    'predicate' => $request->predicate,
+                                ]);
+                                return response()->json(['message' => 'Successfuly create data'], 200);
+                            }
                         }
                     }
                 }
@@ -161,12 +184,42 @@ class ReportCardController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\ScTypeReportCard  $scTypeReportCard
+     * @param  $scTypeReportCard
      * @return \Illuminate\Http\Response
      */
-    public function show(ScTypeReportCard $scTypeReportCard)
+    public function show($scTypeReportCard)
     {
-        //
+        $ScSchool = ScSchool::where('id', request()->user()->sc_school_id)->get('type');
+        foreach($ScSchool as $school) {
+            if($school->type == 'senior_high_school') {
+                return response()->json(ScTypeReportCard::join('sc_students', 'sc_type_report_cards.sc_student_id', '=', 'sc_students.id')
+                ->join('users', 'sc_students.user_id', '=', 'users.id')
+                ->join('sc_report_card_seniors', 'sc_type_report_cards.id', '=', 'sc_report_card_seniors.id')
+                ->join('sc_studies', 'sc_report_card_seniors.sc_study_id', '=', 'sc_studies.id')
+                ->where('sc_type_report_cards.id', $scTypeReportCard)
+                ->orderBy('id', 'asc')
+                ->select(
+                    'sc_type_report_cards.id', 'sc_type_report_cards.sc_home_room_teacher_id', 'sc_type_report_cards.sc_student_id',
+                    'sc_type_report_cards.type', 'sc_type_report_cards.period', 'sc_type_report_cards.description',
+                    'sc_type_report_cards.absent_broken', 'sc_type_report_cards.absent_permission', 'sc_type_report_cards.absent_without_explanation',
+                    'sc_type_report_cards.personality_behavior', 'sc_type_report_cards.personality_diligence', 'sc_type_report_cards.personality_neatness',
+                    'sc_type_report_cards.created_at', 'sc_type_report_cards.updated_at',
+                    'users.name as student_name', 'users.id as user_id', 'sc_type_report_cards.sc_home_room_teacher_id',
+                    'sc_studies.name as study_name',
+                    'sc_report_card_seniors.id as sc_report_card_senior_id', 'sc_report_card_seniors.score',
+                    'sc_report_card_seniors.kkm_k3', 'sc_report_card_seniors.kkm_k4', 'sc_report_card_seniors.k3_ph',
+                    'sc_report_card_seniors.k3_pts', 'sc_report_card_seniors.k4_pr', 'sc_report_card_seniors.status',
+                    'sc_report_card_seniors.predicate',
+                )
+                ->get(), 200);
+            }
+            if($school->type == 'junior_high_school') {
+
+            }
+            if($school->type == 'elementary_school') {
+                /*ScReportCardElementary = */
+            }
+        }
     }
 
     /**
@@ -176,7 +229,7 @@ class ReportCardController extends Controller
      * @param  \App\Models\ScTypeReportCard  $scTypeReportCard
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, ScTypeReportCard $scTypeReportCard)
+    public function update($scTypeReportCard)
     {
         //
     }
@@ -195,10 +248,10 @@ class ReportCardController extends Controller
             if($school->type == 'senior_high_school') {
                 ScReportCardSenior::where('id', $scTypeReportCard)->delete();
             }
-            if($school->type == 'junior_high_school'){
+            if($school->type == 'junior_high_school') {
                 ScReportCardJunior::where('id', $scTypeReportCard)->delete();
             }
-            if($school->type == 'elementary_school'){
+            if($school->type == 'elementary_school') {
                 ScReportCardElementary::where('id', $scTypeReportCard)->delete();
             }
             ScReportCardExtraCurricular::where('sc_type_report_card_id', $scTypeReportCard)->delete();
@@ -216,10 +269,10 @@ class ReportCardController extends Controller
     public function searchDefault($order, $type, $columns)
     {
         /*ScTypeReportCard = id, sc_student_id, student_name, sc_home_room_teacher_id*/
-        $ScSchool = ScSchool::where('id', request(t)->user()->sc_school_id)->get('type');
+        $ScSchool = ScSchool::where('id', request()->user()->sc_school_id)->get('type');
         foreach($ScSchool as $school) {
             if($school->type == 'senior_high_school') {
-                /*ScReportCardSenior = sc_study_id, study_name, score, status, predicate*/
+                /*ScReportCardSenior = study_name, score, status, predicate*/
                 return response()->json(ScTypeReportCard::join('sc_students', 'sc_type_report_cards.sc_student_id', '=', 'sc_students.id')
                 ->join('users', 'sc_students.user_id', '=', 'users.id')
                 ->join('sc_report_card_seniors', 'sc_type_report_cards.id', '=', 'sc_report_card_seniors.id')
@@ -228,7 +281,7 @@ class ReportCardController extends Controller
                 ->select(
                     'sc_type_report_cards.id', 'sc_type_report_cards.sc_home_room_teacher_id', 'sc_type_report_cards.sc_student_id',
                     'sc_type_report_cards.created_at', 'sc_type_report_cards.updated_at',
-                    'users.name as student_name', 'users.id as user_id', 'sc_type_report_cards.sc_home_room_teacher_id',
+                    'users.name as student_name', 'users.id as user_id', 'sc_type_report_cards.sc_home_room_teacher_id as home_room_teacher_id',
                     'sc_report_card_seniors.id as sc_report_card_senior_id', 'sc_report_card_seniors.score', 'sc_report_card_seniors.status', 'sc_report_card_seniors.predicate',
                     'sc_studies.name as study_name'
                 )
@@ -283,5 +336,16 @@ class ReportCardController extends Controller
                 /*ScReportCardElementary = */
             }
         }
+    }
+
+    /**
+     * Download a file excel of the export.
+     *
+     * @param $user
+     * @return Maatwebsite\Excel\Facades\Excel
+     */
+    public function export($user) 
+    {
+        return Excel::download(new ReportCardExport, 'report_card_export_export.xlsx');
     }
 }

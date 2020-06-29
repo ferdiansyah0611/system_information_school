@@ -4,14 +4,14 @@
             <div class="container-fluid">
                 <div class="row align-items-center">
                     <div class="col-md-8">
-                        <h4 class="page-title mb-1">Manage Data School</h4>
+                        <h4 class="page-title mb-1">Manage Data Report Card</h4>
                         <ol class="breadcrumb m-0">
                             <li class="breadcrumb-item"><a href="javascript: void(0);">Manage</a></li>
-                            <li class="breadcrumb-item active">School</li>
+                            <li class="breadcrumb-item active">Report-Card</li>
                         </ol>
                     </div>
                     <div class="col-md-4">
-                        <div class="float-right d-none d-md-block">
+                        <div class="float-right d-md-block">
                             <div class="dropdown">
                                 <button class="btn btn-light btn-rounded dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                     <i class="mdi mdi-settings-outline mr-1"></i> Settings
@@ -20,7 +20,7 @@
                                     <a class="dropdown-item" href="#" data-toggle="modal" data-target="#modal-add">Add new data</a>
                                     <div class="dropdown-divider"></div>
                                     <a class="dropdown-item" href="#">Import Excel</a>
-                                    <a class="dropdown-item" href="#">Export Excel</a>
+                                    <a class="dropdown-item" :href="'/api/report-card/excel/export/' + user_id" download>Export Excel</a>
                                 </div>
                             </div>
                         </div>
@@ -59,17 +59,23 @@
                                     <thead>
                                         <tr>
                                             <th>#</th>
-                                            <th>User Id</th>
-                                            <th>Name</th>
+                                            <th>Teacher Id</th>
+                                            <th>Student</th>
+                                            <th>Study</th>
+                                            <th>Score</th>
+                                            <th>Status</th>
                                             <th>Updated On</th>
                                             <th>Action</th>
                                         </tr>
                                     </thead>
-                                    <tbody v-for="data in TableSchool">
+                                    <tbody v-for="data in TableReportCard">
                                         <tr>
                                             <td>{{data.id}}</td>
-                                            <td>{{data.user_id}}</td>
-                                            <td>{{data.name}}</td>
+                                            <td>{{data.home_room_teacher_id}}</td>
+                                            <td>{{data.student_name}}</td>
+                                            <td>{{data.study_name}}</td>
+                                            <td>{{data.score}}</td>
+                                            <td>{{data.status}}</td>
                                             <th>{{data.updated_at}}</th>
                                             <th>
                                                 <button class="btn btn-primary btn-sm waves-effect waves-light" v-on:click="editRequest(data.id)">
@@ -109,7 +115,7 @@
                                 <input type="text" class="form-control" id="user_id_add" v-model="addReportCard.sc_home_room_teacher_id">
                             </div>
                             <div class="form-group col-sm-12 col-md-6 float-left">
-                                <label for="user_id_add">sc_student_id</label>
+                                <label for="user_id_add">Student ID</label>
                                 <input type="text" class="form-control" id="user_id_add" v-model="addReportCard.sc_student_id">
                             </div>
                             <div class="form-group col-12 float-left">
@@ -160,49 +166,53 @@
                             <h5 class="card-title">Senior High School</h5>
                             <div class="dropdown-divider"></div>
                             <!-- senior -->
-                            <div id="senior_high_school">
+                            <div id="add_senior_high_school">
                                 <div class="form-group col-sm-12 col-md-6 float-left">
-                                    <label for="class_name_add">sc_student_id</label>
+                                    <label for="class_name_add">Student ID</label>
                                     <input type="number" class="form-control" id="class_name_add" v-model="addReportCard.sc_student_id">
                                 </div>
                                 <div class="form-group col-sm-12 col-md-6 float-left">
-                                    <label for="class_name_add">sc_study_id</label>
+                                    <label for="class_name_add">Study ID</label>
                                     <input type="number" class="form-control" id="class_name_add" v-model="addReportCard.sc_study_id">
                                 </div>
                                 <div class="form-group col-sm-12 col-md-6 float-left">
-                                    <label for="class_name_add">score</label>
+                                    <label for="class_name_add">Score</label>
                                     <input type="number" class="form-control" id="class_name_add" v-model="addReportCard.score">
                                 </div>
                                 <div class="form-group col-sm-12 col-md-6 float-left">
-                                    <label for="class_name_add">kkm_k3</label>
+                                    <label for="class_name_add">KKM K3</label>
                                     <input type="number" class="form-control" id="class_name_add" v-model="addReportCard.kkm_k3">
                                 </div>
                                 <div class="form-group col-sm-12 col-md-6 float-left">
-                                    <label for="class_name_add">kkm_k4</label>
+                                    <label for="class_name_add">KKM k4</label>
                                     <input type="number" class="form-control" id="class_name_add" v-model="addReportCard.kkm_k4">
                                 </div>
                                 <div class="form-group col-sm-12 col-md-6 float-left">
-                                    <label for="class_name_add">k3_ph</label>
+                                    <label for="class_name_add">K3 PH</label>
                                     <input type="number" class="form-control" id="class_name_add" v-model="addReportCard.k3_ph">
                                 </div>
                                 <div class="form-group col-sm-12 col-md-6 float-left">
-                                    <label for="class_name_add">k3_pts</label>
+                                    <label for="class_name_add">K3 PTS</label>
                                     <input type="number" class="form-control" id="class_name_add" v-model="addReportCard.k3_pts">
                                 </div>
                                 <div class="form-group col-sm-12 col-md-6 float-left">
-                                    <label for="class_name_add">k4_pr</label>
+                                    <label for="class_name_add">K4 Praktek</label>
                                     <input type="number" class="form-control" id="class_name_add" v-model="addReportCard.k4_pr">
                                 </div>
                                 <div class="form-group col-sm-12 col-md-6 float-left">
-                                    <label for="class_name_add">status</label>
+                                    <label for="class_name_add">Status</label>
                                     <input type="text" class="form-control" id="class_name_add" v-model="addReportCard.status">
                                 </div>
                                 <div class="form-group col-sm-12 col-md-6 float-left">
-                                    <label for="class_name_add">predicate</label>
-                                    <input type="text" class="form-control" id="class_name_add" v-model="addReportCard.predicate">
+                                    <label for="class_name_add">Predicate</label>
+                                    <select class="custom-select" v-model="addReportCard.predicate">
+                                        <option value="A">A</option>
+                                        <option value="B">B</option>
+                                        <option value="C">C</option>
+                                        <option value="D">D</option>
+                                    </select>
                                 </div> 
                             </div>
-                            
                         </div>
                     </div>
                     <div class="modal-footer">
@@ -223,25 +233,113 @@
                         </button>
                     </div>
                     <div class="modal-body">
-                        <div class="form-group">
-                            <label for="user_id">User ID</label>
-                            <input type="text" class="form-control" id="user_id" v-model="editSchool.user_id">
+                        <div class="float-left">
+                            <h5 class="card-title">Information</h5>
+                            <div class="dropdown-divider"></div>
+                            <!-- type -->
+                            <div class="form-group col-sm-12 col-md-6 float-left">
+                                <label for="user_id_add">Homeroom Teacher ID</label>
+                                <input type="text" class="form-control" id="user_id_add" v-model="editReportCard.sc_home_room_teacher_id">
+                            </div>
+                            <div class="form-group col-sm-12 col-md-6 float-left">
+                                <label for="user_id_add">Student ID</label>
+                                <input type="text" class="form-control" id="user_id_add" v-model="editReportCard.sc_student_id">
+                            </div>
+                            <div class="form-group col-12 float-left">
+                                <label for="type_add">Type School</label>
+                                <select class="custom-select" id="type_add" v-model="editReportCard.type">
+                                    <option value="odd_semester_1">Semester 1 Ganjil</option>
+                                    <option value="even_semester_1">Semester 1 Genap</option>
+                                    <option value="odd_semester_2">Semester 2 Ganjil</option>
+                                    <option value="even_semester_2">Semester 2 Genap</option>
+                                </select>
+                            </div>
+                            <div class="form-group col-12 float-left">
+                                <label for="description_add">Description</label>
+                                <textarea class="form-control" id="description_add" placeholder="Description..." v-model="editReportCard.description"></textarea>
+                            </div>
+                            <div class="form-group col-sm-12 col-md-6 float-left">
+                                <label for="class_name_add">Absent</label>
+                                <input type="number" class="form-control" id="class_name_add" v-model="editReportCard.absent_broken">
+                            </div>
+                            <div class="form-group col-sm-12 col-md-6 float-left">
+                                <label for="class_name_add">Absent Permission</label>
+                                <input type="number" class="form-control" id="class_name_add" v-model="editReportCard.absent_permission">
+                            </div>
+                            <div class="form-group col-sm-12 col-md-6 float-left">
+                                <label for="class_name_add">Absent Without Explanation</label>
+                                <input type="number" class="form-control" id="class_name_add" v-model="editReportCard.absent_without_explanation">
+                            </div>
+                            <div class="form-group col-sm-12 col-md-6 float-left">
+                                <label for="class_name_add">Personality Behavior</label>
+                                <input type="number" class="form-control" id="class_name_add" v-model="editReportCard.personality_behavior">
+                            </div>
+                            <div class="form-group col-sm-12 col-md-6 float-left">
+                                <label for="class_name_add">Personality Diligence</label>
+                                <input type="number" class="form-control" id="class_name_add" v-model="editReportCard.personality_diligence">
+                            </div>
+                            <div class="form-group col-sm-12 col-md-6 float-left">
+                                <label for="class_name_add">Personality Neatness</label>
+                                <input type="number" class="form-control" id="class_name_add" v-model="editReportCard.personality_neatness">
+                            </div>
+
+                            <div class="form-group col-sm-12 col-md-6 float-left">
+                                <label for="class_name_add">Personality Neatness</label>
+                                <input type="date" class="form-control" id="class_name_add" v-model="editReportCard.period">
+                            </div>
+                            
                         </div>
-                        <div class="form-group">
-                            <label for="class_name">Name School</label>
-                            <input type="text" class="form-control" id="class_name" v-model="editSchool.name">
-                        </div>
-                         <div class="form-group">
-                            <label for="type">Type School</label>
-                            <select class="custom-select" id="type" v-model="editSchool.type">
-                                <option value="elementary_school">Elementary School</option>
-                                <option value="junior_high_school">Junior High School</option>
-                                <option value="senior_high_school">Senior High School</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label for="description">Description</label>
-                            <textarea class="form-control" id="description" placeholder="Description..." v-model="editSchool.description"></textarea>
+                        <div class="float-left">
+                            <h5 class="card-title">Senior High School</h5>
+                            <div class="dropdown-divider"></div>
+                            <!-- senior -->
+                            <div id="add_senior_high_school">
+                                <div class="form-group col-sm-12 col-md-6 float-left">
+                                    <label for="class_name_add">Student ID</label>
+                                    <input type="number" class="form-control" id="class_name_add" v-model="editReportCard.sc_student_id">
+                                </div>
+                                <div class="form-group col-sm-12 col-md-6 float-left">
+                                    <label for="class_name_add">Study ID</label>
+                                    <input type="number" class="form-control" id="class_name_add" v-model="editReportCard.sc_study_id">
+                                </div>
+                                <div class="form-group col-sm-12 col-md-6 float-left">
+                                    <label for="class_name_add">Score</label>
+                                    <input type="number" class="form-control" id="class_name_add" v-model="editReportCard.score">
+                                </div>
+                                <div class="form-group col-sm-12 col-md-6 float-left">
+                                    <label for="class_name_add">KKM K3</label>
+                                    <input type="number" class="form-control" id="class_name_add" v-model="editReportCard.kkm_k3">
+                                </div>
+                                <div class="form-group col-sm-12 col-md-6 float-left">
+                                    <label for="class_name_add">KKM k4</label>
+                                    <input type="number" class="form-control" id="class_name_add" v-model="editReportCard.kkm_k4">
+                                </div>
+                                <div class="form-group col-sm-12 col-md-6 float-left">
+                                    <label for="class_name_add">K3 PH</label>
+                                    <input type="number" class="form-control" id="class_name_add" v-model="editReportCard.k3_ph">
+                                </div>
+                                <div class="form-group col-sm-12 col-md-6 float-left">
+                                    <label for="class_name_add">K3 PTS</label>
+                                    <input type="number" class="form-control" id="class_name_add" v-model="editReportCard.k3_pts">
+                                </div>
+                                <div class="form-group col-sm-12 col-md-6 float-left">
+                                    <label for="class_name_add">K4 Praktek</label>
+                                    <input type="number" class="form-control" id="class_name_add" v-model="editReportCard.k4_pr">
+                                </div>
+                                <div class="form-group col-sm-12 col-md-6 float-left">
+                                    <label for="class_name_add">Status</label>
+                                    <input type="text" class="form-control" id="class_name_add" v-model="editReportCard.status">
+                                </div>
+                                <div class="form-group col-sm-12 col-md-6 float-left">
+                                    <label for="class_name_add">Predicate</label>
+                                    <select class="custom-select" v-model="editReportCard.predicate">
+                                        <option value="A">A</option>
+                                        <option value="B">B</option>
+                                        <option value="C">C</option>
+                                        <option value="D">D</option>
+                                    </select>
+                                </div> 
+                            </div>
                         </div>
                     </div>
                     <div class="modal-footer">
@@ -254,15 +352,18 @@
     </div>
 </template>
 <script>
-document.title = 'Manage Report Card';
 
 import Swal from 'sweetalert2';
 
 export default {
+    beforeMount() {
+        document.title = 'Manage Report Card';
+    },
     data() {
         return {
+            user_id : this.$store.state.Users.user.id,
             /*table data*/
-            TableSchool: [],
+            TableReportCard: [],
             PaginateSchool: {},
             table: {
                 columns: '25',
@@ -272,6 +373,7 @@ export default {
             school : [],
             /*data for add school*/
             addReportCard : {
+                id : '',
             	sc_home_room_teacher_id : '',
             	sc_student_id : '',
             	type : '',
@@ -296,12 +398,30 @@ export default {
                 sc_study_id : ''
             },
             /*data for edit school*/
-            editSchool: {
+            editReportCard: {
                 id: '',
-                user_id : '',
-            	name : '',
-            	description : '',
-                type : ''
+                sc_home_room_teacher_id : '',
+                sc_student_id : '',
+                type : '',
+                description : '',
+                period : '',
+                absent_broken : '',
+                absent_permission : '',
+                absent_without_explanation : '',
+                personality_behavior : '',
+                personality_diligence : '',
+                personality_neatness : '',
+                sc_study_id : '',
+                score : '',
+                kkm_k3 : '',
+                kkm_k4 : '',
+                k3_ph : '',
+                k3_pts : '',
+                k4_pr : '',
+                status : '',
+                predicate : '',
+                period : '',
+                sc_study_id : ''
             }
         }
     },
@@ -316,7 +436,7 @@ export default {
     		console.error(error);
     		Swal.fire('Error!', message + '. Please wait for the page to resfresh automatically', 'error');
     		setTimeout(function(){
-    			window.location.reload();
+    			/*window.location.reload();*/
     		}, 5000);
     	},
         /*display error*/
@@ -340,13 +460,13 @@ export default {
             /*search ''*/
             if (data == '') {
                 await axios({
-                    url: '/api/school?page=' + paginate + '&orderby=' + order[0] + '&type=' + order[1] + '&columns=' + columns + '&search=default',
+                    url: '/api/report-card?page=' + paginate + '&orderby=' + order[0] + '&type=' + order[1] + '&columns=' + columns + '&search=default',
                     method: 'get',
                     headers : {
                         'Authorization' : 'Bearer ' + this.$store.state.Users.success.token
                     }
                 }).then(result => {
-                    this.TableSchool = result.data.data;
+                    this.TableReportCard = result.data.data;
                     this.PaginateSchool = result.data;
                 }).catch(error => {
                     this.serverErrorPage(error, error.message);
@@ -354,13 +474,13 @@ export default {
                 /*searching*/
             } else {
                 await axios({
-                    url: '/api/school?page=' + paginate + '&orderby=' + order[0] + '&type=' + order[1] + '&columns=' + columns + '&search=' + data,
+                    url: '/api/report-card?page=' + paginate + '&orderby=' + order[0] + '&type=' + order[1] + '&columns=' + columns + '&search=' + data,
                     method: 'get',
                     headers : {
                         'Authorization' : 'Bearer ' + this.$store.state.Users.success.token
                     }
                 }).then(result => {
-                    this.TableSchool = result.data.data;
+                    this.TableReportCard = result.data.data;
                     this.PaginateSchool = result.data;
                 }).catch(error => {
                     this.serverErrorPage(error, error.message);
@@ -374,13 +494,13 @@ export default {
             /*search ''*/
             if (data == '') {
                 await axios({
-                    url: '/api/school?page=' + paginate + '&orderby=' + order[0] + '&type=' + order[1] + '&columns=' + columns + '&search=default',
+                    url: '/api/report-card?page=' + paginate + '&orderby=' + order[0] + '&type=' + order[1] + '&columns=' + columns + '&search=default',
                     method: 'get',
                     headers : {
                         'Authorization' : 'Bearer ' + this.$store.state.Users.success.token
                     }
                 }).then(result => {
-                    this.TableSchool = result.data.data;
+                    this.TableReportCard = result.data.data;
                     this.PaginateSchool = result.data;
                 }).catch(error => {
                     this.Error(error, error.message);
@@ -388,13 +508,13 @@ export default {
                 /*searching*/
             } else {
                 await axios({
-                    url: '/api/school?page=' + paginate + '&orderby=' + order[0] + '&type=' + order[1] + '&columns=' + columns + '&search=' + data,
+                    url: '/api/report-card?page=' + paginate + '&orderby=' + order[0] + '&type=' + order[1] + '&columns=' + columns + '&search=' + data,
                     method: 'get',
                     headers : {
                         'Authorization' : 'Bearer ' + this.$store.state.Users.success.token
                     }
                 }).then(result => {
-                    this.TableSchool = result.data.data;
+                    this.TableReportCard = result.data.data;
                     this.PaginateSchool = result.data;
                 }).catch(error => {
                     this.Error(error, error.message);
@@ -409,13 +529,13 @@ export default {
             /*search ''*/
             if (data == '') {
                 await axios({
-                    url: '/api/school?page=' + paginate + '&orderby=' + type[0] + '&type=' + type[1] + '&columns=' + columns + '&search=default',
+                    url: '/api/report-card?page=' + paginate + '&orderby=' + type[0] + '&type=' + type[1] + '&columns=' + columns + '&search=default',
                     method: 'get',
                     headers : {
                         'Authorization' : 'Bearer ' + this.$store.state.Users.success.token
                     }
                 }).then(result => {
-                    this.TableSchool = result.data.data;
+                    this.TableReportCard = result.data.data;
                     this.PaginateSchool = result.data;
                 }).catch(error => {
                     this.Error(error, error.message);
@@ -423,13 +543,13 @@ export default {
                 /*searching*/
             } else {
                 await axios({
-                    url: '/api/school?page=' + paginate + '&orderby=' + type[0] + '&type=' + type[1] + '&columns=' + columns + '&search=' + data,
+                    url: '/api/report-card?page=' + paginate + '&orderby=' + type[0] + '&type=' + type[1] + '&columns=' + columns + '&search=' + data,
                     method: 'get',
                     headers : {
                         'Authorization' : 'Bearer ' + this.$store.state.Users.success.token
                     }
                 }).then(result => {
-                    this.TableSchool = result.data.data;
+                    this.TableReportCard = result.data.data;
                     this.PaginateSchool = result.data;
                 }).catch(error => {
                     this.Error(error, error.message);
@@ -443,13 +563,13 @@ export default {
             /*search ''*/
             if (data == '') {
                 await axios({
-                    url: '/api/school?page=' + paginate + '&orderby=' + order[0] + '&type=' + order[1] + '&columns=' + columns + '&search=default',
+                    url: '/api/report-card?page=' + paginate + '&orderby=' + order[0] + '&type=' + order[1] + '&columns=' + columns + '&search=default',
                     method: 'get',
                     headers : {
                         'Authorization' : 'Bearer ' + this.$store.state.Users.success.token
                     }
                 }).then(result => {
-                    this.TableSchool = result.data.data;
+                    this.TableReportCard = result.data.data;
                     this.PaginateSchool = result.data;
                 }).catch(error => {
                     this.Error(error, error.message);
@@ -457,13 +577,13 @@ export default {
                 /*searching*/
             } else {
                 await axios({
-                    url: '/api/school?page=' + paginate + '&orderby=' + order[0] + '&type=' + order[1] + '&columns=' + columns + '&search=' + data,
+                    url: '/api/report-card?page=' + paginate + '&orderby=' + order[0] + '&type=' + order[1] + '&columns=' + columns + '&search=' + data,
                     method: 'get',
                     headers : {
                         'Authorization' : 'Bearer ' + this.$store.state.Users.success.token
                     }
                 }).then(result => {
-                    this.TableSchool = result.data.data;
+                    this.TableReportCard = result.data.data;
                     this.PaginateSchool = result.data;
                 }).catch(error => {
                     this.Error(error, error.message);
@@ -478,11 +598,10 @@ export default {
                     'Authorization' : 'Bearer ' + this.$store.state.Users.success.token
                 }
             }).then(result => {
-                console.log(result.data);
                 this.school = result.data;
                 result.data.forEach(function(val, key){
-                    if(val.type == 'senior_high_school'){
-                        document.getElementById('senior_high_school').style.display = 'block';
+                    if(val.type == 'add_senior_high_school'){
+                        document.getElementById('add_senior_high_school').style.display = 'block';
                     }
                 });
             }).catch(error => {
@@ -531,16 +650,16 @@ export default {
         /*save data for edit modal*/
         async editSave() {
             await axios({
-                url: '/api/school/' + this.editSchool.id,
+                url: '/api/report-card/' + this.editReportCard.id,
                 method: 'put',
                 headers : {
                     'Authorization' : 'Bearer ' + this.$store.state.Users.success.token
                 },
                 data: {
-                	user_id : this.editSchool.user_id,
-                    name: this.editSchool.name,
-                    description: this.editSchool.description,
-                    type: this.editSchool.type
+                	user_id : this.editReportCard.user_id,
+                    name: this.editReportCard.name,
+                    description: this.editReportCard.description,
+                    type: this.editReportCard.type
                 }
             }).then(result => {
                 $('#modal-1').modal('hide');
@@ -549,12 +668,12 @@ export default {
                 this.appSchool();
             }).catch(error => {
                 this.Error(error, error.message);
-            })
+            });
         },
         /*edit/get data on click for table*/
         async editRequest(id) {
             await axios({
-                url: '/api/school/' + id,
+                url: '/api/report-card/' + id,
                 method: 'get',
                 headers : {
                     'Authorization' : 'Bearer ' + this.$store.state.Users.success.token
@@ -562,11 +681,26 @@ export default {
             }).then(result => {
                 $('#modal-1').modal('show');
                 result.data.forEach((val, key) => {
-                    this.editSchool.id = val.id;
-                    this.editSchool.user_id = val.user_id;
-                    this.editSchool.name = val.name;
-                    this.editSchool.description = val.description;
-                    this.editSchool.type = val.type;
+                    this.editReportCard.sc_home_room_teacher_id = val.sc_home_room_teacher_id;
+                    this.editReportCard.sc_student_id = val.sc_student_id;
+                    this.editReportCard.type = val.type;
+                    this.editReportCard.description = val.description;
+                    this.editReportCard.period = val.period;
+                    this.editReportCard.absent_broken = val.absent_broken;
+                    this.editReportCard.absent_permission = val.absent_permission;
+                    this.editReportCard.absent_without_explanation = val.absent_without_explanation;
+                    this.editReportCard.personality_behavior = val.personality_behavior;
+                    this.editReportCard.personality_diligence = val.personality_diligence;
+                    this.editReportCard.personality_neatness = val.personality_neatness;
+                    this.editReportCard.sc_study_id = val.sc_study_id;
+                    this.editReportCard.score = val.score;
+                    this.editReportCard.kkm_k3 = val.kkm_k3;
+                    this.editReportCard.kkm_k4 = val.kkm_k4;
+                    this.editReportCard.k3_ph = val.k3_ph;
+                    this.editReportCard.k3_pts = val.k3_pts;
+                    this.editReportCard.k4_pr = val.k4_pr;
+                    this.editReportCard.status = val.status;
+                    this.editReportCard.predicate = val.predicate;
                 });
             }).catch(error => {
                 this.Error(error, error.message);
@@ -585,7 +719,7 @@ export default {
             }).then(result => {
                 if (result.value) {
                     return axios({
-                        url: '/api/school/' + data,
+                        url: '/api/report-card/' + data,
                         method: 'delete',
                         headers : {
                             'Authorization' : 'Bearer ' + this.$store.state.Users.success.token

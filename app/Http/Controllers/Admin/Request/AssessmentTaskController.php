@@ -4,8 +4,11 @@ namespace App\Http\Controllers\Admin\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Validator;
+// exports
+use App\Exports\AssessmentTaskExport;
 // vendor
 use Carbon\Carbon;
+use Maatwebsite\Excel\Facades\Excel;
 // model
 use App\Models\ScAssessmentTask;
 
@@ -134,7 +137,7 @@ class AssessmentTaskController extends Controller
                 'score' => $request->score,
                 'updated_at' => $this->timestamp
             ]);
-            return response()->json(['message' => 'Successfuly create data'], 200);
+            return response()->json(['message' => 'Successfuly update data'], 200);
         }
     }
 
@@ -199,5 +202,16 @@ class AssessmentTaskController extends Controller
                 'sc_classes.id as sc_class_id', 'sc_classes.name as sc_class_name',
                 'users.name as user_name', 'users.nisn')
             ->paginate($columns), 200);
+    }
+
+    /**
+     * Download a file excel of the export.
+     *
+     * @param $user
+     * @return Maatwebsite\Excel\Facades\Excel
+     */
+    public function export($user) 
+    {
+        return Excel::download(new AssessmentTaskExport, 'assessment_task_export.xlsx');
     }
 }

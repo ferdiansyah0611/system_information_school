@@ -5,8 +5,11 @@ namespace App\Http\Controllers\Admin\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Validator;
+// exports
+use App\Exports\TeacherExport;
 // vendor
 use Carbon\Carbon;
+use Maatwebsite\Excel\Facades\Excel;
 // model
 use App\Models\ScTeacher;
 
@@ -131,7 +134,7 @@ class TeacherController extends Controller
                 'graduate' => $request->graduate,
                 'updated_at' => $this->timestamp
             ]);
-            return response()->json(['message' => 'Successfuly create data'], 200);
+            return response()->json(['message' => 'Successfuly update data'], 200);
         }
     }
 
@@ -187,5 +190,16 @@ class TeacherController extends Controller
                 'sc_schools.id as sc_school_id', 'sc_schools.name as sc_school_name',
                 'users.name as user_name', 'users.id as user_id', 'users.nisn')
             ->paginate($columns), 200);
+    }
+
+    /**
+     * Download a file excel of the export.
+     *
+     * @param $user
+     * @return Maatwebsite\Excel\Facades\Excel
+     */
+    public function export($user) 
+    {
+        return Excel::download(new TeacherExport, 'teacher_export.xlsx');
     }
 }

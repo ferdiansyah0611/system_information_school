@@ -11,7 +11,7 @@
                         </ol>
                     </div>
                     <div class="col-md-4">
-                        <div class="float-right d-none d-md-block">
+                        <div class="float-right d-md-block">
                             <div class="dropdown">
                                 <button class="btn btn-light btn-rounded dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                     <i class="mdi mdi-settings-outline mr-1"></i> Settings
@@ -20,7 +20,7 @@
                                     <a class="dropdown-item" href="#" data-toggle="modal" data-target="#modal-add">Add new data</a>
                                     <div class="dropdown-divider"></div>
                                     <a class="dropdown-item" href="#">Import Excel</a>
-                                    <a class="dropdown-item" href="#">Export Excel</a>
+                                    <a class="dropdown-item" :href="'/api/school/excel/export/' + user_id" download>Export Excel</a>
                                 </div>
                             </div>
                         </div>
@@ -170,13 +170,16 @@
     </div>
 </template>
 <script>
-document.title = 'Manage School';
 
 import Swal from 'sweetalert2';
 
 export default {
+    beforeMount() {
+        document.title = 'Manage School';
+    },
     data() {
         return {
+            user_id : this.$store.state.Users.user.id,
             /*table data*/
             TableSchool: [],
             PaginateSchool: {},

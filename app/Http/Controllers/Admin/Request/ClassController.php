@@ -5,8 +5,11 @@ namespace App\Http\Controllers\Admin\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Validator;
+// exports
+use App\Exports\ClassExport;
 // vendor
 use Carbon\Carbon;
+use Maatwebsite\Excel\Facades\Excel;
 //model
 use App\Models\ScClass;
 
@@ -158,7 +161,7 @@ class ClassController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @param $$order $type $search $paginate
+     * @param $order $type $search $paginate
      * @return \Illuminate\Http\Response
      */
     public function searching($order, $type, $search, $paginate)
@@ -183,5 +186,16 @@ class ClassController extends Controller
                 ->select('sc_classes.id', 'sc_classes.sc_school_id', 'sc_classes.name', 'sc_schools.name as sc_school_name', 'sc_schools.description', 'sc_classes.created_at', 'sc_classes.updated_at')
                 ->paginate($paginate), 200);
         }
+    }
+
+    /**
+     * Download a file excel of the export.
+     *
+     * @param $user
+     * @return Maatwebsite\Excel\Facades\Excel
+     */
+    public function export($user) 
+    {
+        return Excel::download(new ClassExport, 'class_export.xlsx');
     }
 }

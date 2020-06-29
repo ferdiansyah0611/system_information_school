@@ -5,8 +5,11 @@ namespace App\Http\Controllers\Admin\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Validator;
+// exports
+use App\Exports\StudyExport;
 // vendor
 use Carbon\Carbon;
+use Maatwebsite\Excel\Facades\Excel;
 // model
 use App\Models\ScStudy;
 
@@ -142,7 +145,7 @@ class StudyController extends Controller
                 'time' => $request->time,
                 'updated_at' => $this->timestamp
             ]);
-            return response()->json(['message' => 'Successfuly create data'], 200);
+            return response()->json(['message' => 'Successfuly update data'], 200);
         }
     }
 
@@ -211,5 +214,16 @@ class StudyController extends Controller
                 'sc_classes.name as sc_class_name',
                 'users.name as user_name', 'users.id as user_id', 'users.nisn')
             ->paginate($paginate), 200);
+    }
+
+    /**
+     * Download a file excel of the export.
+     *
+     * @param $user
+     * @return Maatwebsite\Excel\Facades\Excel
+     */
+    public function export($user) 
+    {
+        return Excel::download(new StudyExport, 'study_export.xlsx');
     }
 }

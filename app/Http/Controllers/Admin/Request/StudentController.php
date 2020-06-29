@@ -5,8 +5,11 @@ namespace App\Http\Controllers\Admin\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Validator;
+// exports
+use App\Exports\StudentExport;
 // vendor
 use Carbon\Carbon;
+use Maatwebsite\Excel\Facades\Excel;
 // model
 use App\Models\ScStudent;
 use App\User;
@@ -164,7 +167,7 @@ class StudentController extends Controller
             User::where('id', $request->user_id)->update([
                 'nisn' => $request->nisn
             ]);
-            return response()->json(['message' => 'Successfuly create data'], 200);
+            return response()->json(['message' => 'Successfuly update data'], 200);
         }
     }
 
@@ -231,5 +234,16 @@ class StudentController extends Controller
                 'sc_classes.name as sc_class_name',
                 'users.name as user_name', 'users.id as user_id')
             ->paginate($paginate), 200);
+    }
+
+    /**
+     * Download a file excel of the export.
+     *
+     * @param $user
+     * @return Maatwebsite\Excel\Facades\Excel
+     */
+    public function export($user) 
+    {
+        return Excel::download(new StudentExport, 'student_export.xlsx');
     }
 }

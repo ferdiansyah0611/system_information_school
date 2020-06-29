@@ -20,7 +20,7 @@
                                     <a class="dropdown-item" href="#" data-toggle="modal" data-target="#modal-add">Add new data</a>
                                     <div class="dropdown-divider"></div>
                                     <a class="dropdown-item" href="#">Import Excel</a>
-                                    <a class="dropdown-item" href="#">Export Excel</a>
+                                    <a class="dropdown-item" :href="'/api/class/excel/export/' + user_id" download>Export Excel</a>
                                 </div>
                             </div>
                         </div>
@@ -151,13 +151,16 @@
     </div>
 </template>
 <script>
-document.title = 'Manage Class';
 
 import Swal from 'sweetalert2';
 
 export default {
+    beforeMount() {
+        document.title = 'Manage Class';
+    },
     data() {
         return {
+            user_id : this.$store.state.Users.user.id,
             /*table data*/
             TableClass: [],
             PaginateClass: {},

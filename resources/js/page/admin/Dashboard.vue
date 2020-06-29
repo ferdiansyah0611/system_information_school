@@ -6,7 +6,7 @@
                     <div class="col-md-8">
                         <h4 class="page-title mb-1">Dashboard</h4>
                         <ol class="breadcrumb m-0">
-                            <li class="breadcrumb-item active">Welcome to Xoric Dashboard</li>
+                            <li class="breadcrumb-item active">Welcome to web system information <b>By Ferdiansyah</b></li>
                         </ol>
                     </div>
                     <div class="col-md-4">
@@ -37,14 +37,14 @@
                                 <div class="row">
                                     <div class="col-6">
                                         <h5>Welcome Back !</h5>
-                                        <p class="text-muted">Xoric Dashboard</p>
+                                        <p class="text-muted">{{username}}</p>
                                         <div class="mt-4">
                                             <a href="#" class="btn btn-primary btn-sm">View more <i class="mdi mdi-arrow-right ml-1"></i></a>
                                         </div>
                                     </div>
                                     <div class="col-5 ml-auto">
                                         <div>
-                                            <img src="assets/images/widget-img.png" alt="" class="img-fluid">
+                                            <img src="/vendor/template/images/widget-img.png" alt="" class="img-fluid">
                                         </div>
                                     </div>
                                 </div>
@@ -87,7 +87,7 @@
                                     </div>
                                 </form>
                                 <h5 class="header-title mb-4">Sales Report</h5>
-                                <div id="yearly-sale-chart" class="apex-charts"></div>
+                                <canvas id="lineChart" class="apex-charts"></canvas>
                             </div>
                         </div>
                     </div>
@@ -180,215 +180,40 @@
                     </div>
                 </div>
                 <!-- end row -->
-                <div class="row">
-                    <div class="col-lg-8">
-                        <div class="card">
-                            <div class="card-body">
-                                <div class="float-right ml-2">
-                                    <a href="#">View all</a>
-                                </div>
-                                <h5 class="header-title mb-4">Latest Transaction</h5>
-                                <div class="table-responsive">
-                                    <table class="table table-centered table-hover mb-0">
-                                        <thead>
-                                            <tr>
-                                                <th scope="col">Transaction ID</th>
-                                                <th scope="col">Name</th>
-                                                <th scope="col">Date</th>
-                                                <th scope="col">status</th>
-                                                <th scope="col">Amount</th>
-                                                <th scope="col">Action</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr>
-                                                <th scope="row">
-                                                    <a href="#"># XO1345</a>
-                                                </th>
-                                                <td>Danny Johnson</td>
-                                                <td>26 Jan</td>
-                                                <td>
-                                                    <div class="badge badge-soft-primary">Confirm</div>
-                                                </td>
-                                                <td>$124</td>
-                                                <td>
-                                                    <div class="btn-group" role="group">
-                                                        <button type="button" class="btn btn-outline-secondary btn-sm" data-toggle="tooltip" data-placement="top" title="View">
-                                                            <i class="mdi mdi-eye"></i>
-                                                        </button>
-                                                        <button type="button" class="btn btn-outline-secondary btn-sm" data-toggle="tooltip" data-placement="top" title="Edit">
-                                                            <i class="mdi mdi-pencil"></i>
-                                                        </button>
-                                                        <button type="button" class="btn btn-outline-secondary btn-sm" data-toggle="tooltip" data-placement="top" title="Delete">
-                                                            <i class="mdi mdi-trash-can"></i>
-                                                        </button>
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <th scope="row">
-                                                    <a href="#"># XO1346</a>
-                                                </th>
-                                                <td>Alvin Newton</td>
-                                                <td>21 Jan</td>
-                                                <td>
-                                                    <div class="badge badge-soft-warning">Pending</div>
-                                                </td>
-                                                <td>$112</td>
-                                                <td>
-                                                    <div class="btn-group" role="group">
-                                                        <button type="button" class="btn btn-outline-secondary btn-sm" data-toggle="tooltip" data-placement="top" title="View">
-                                                            <i class="mdi mdi-eye"></i>
-                                                        </button>
-                                                        <button type="button" class="btn btn-outline-secondary btn-sm" data-toggle="tooltip" data-placement="top" title="Edit">
-                                                            <i class="mdi mdi-pencil"></i>
-                                                        </button>
-                                                        <button type="button" class="btn btn-outline-secondary btn-sm" data-toggle="tooltip" data-placement="top" title="Delete">
-                                                            <i class="mdi mdi-trash-can"></i>
-                                                        </button>
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <th scope="row">
-                                                    <a href="#"># XO1347</a>
-                                                </th>
-                                                <td>Bennie Perez</td>
-                                                <td>15 Jan</td>
-                                                <td>
-                                                    <div class="badge badge-soft-primary">Confirm</div>
-                                                </td>
-                                                <td>$106</td>
-                                                <td>
-                                                    <div class="btn-group" role="group">
-                                                        <button type="button" class="btn btn-outline-secondary btn-sm" data-toggle="tooltip" data-placement="top" title="View">
-                                                            <i class="mdi mdi-eye"></i>
-                                                        </button>
-                                                        <button type="button" class="btn btn-outline-secondary btn-sm" data-toggle="tooltip" data-placement="top" title="Edit">
-                                                            <i class="mdi mdi-pencil"></i>
-                                                        </button>
-                                                        <button type="button" class="btn btn-outline-secondary btn-sm" data-toggle="tooltip" data-placement="top" title="Delete">
-                                                            <i class="mdi mdi-trash-can"></i>
-                                                        </button>
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <th scope="row">
-                                                    <a href="#"># XO1348</a>
-                                                </th>
-                                                <td>Steven Kwon</td>
-                                                <td>11 Jan</td>
-                                                <td>
-                                                    <div class="badge badge-soft-primary">Confirm</div>
-                                                </td>
-                                                <td>$115</td>
-                                                <td>
-                                                    <div class="btn-group" role="group">
-                                                        <button type="button" class="btn btn-outline-secondary btn-sm" data-toggle="tooltip" data-placement="top" title="View">
-                                                            <i class="mdi mdi-eye"></i>
-                                                        </button>
-                                                        <button type="button" class="btn btn-outline-secondary btn-sm" data-toggle="tooltip" data-placement="top" title="Edit">
-                                                            <i class="mdi mdi-pencil"></i>
-                                                        </button>
-                                                        <button type="button" class="btn btn-outline-secondary btn-sm" data-toggle="tooltip" data-placement="top" title="Delete">
-                                                            <i class="mdi mdi-trash-can"></i>
-                                                        </button>
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <th scope="row">
-                                                    <a href="#"># XO1349</a>
-                                                </th>
-                                                <td>Bryan Roark</td>
-                                                <td>08 Jan</td>
-                                                <td>
-                                                    <div class="badge badge-soft-danger">Cancel</div>
-                                                </td>
-                                                <td>$105</td>
-                                                <td>
-                                                    <div class="btn-group" role="group">
-                                                        <button type="button" class="btn btn-outline-secondary btn-sm" data-toggle="tooltip" data-placement="top" title="View">
-                                                            <i class="mdi mdi-eye"></i>
-                                                        </button>
-                                                        <button type="button" class="btn btn-outline-secondary btn-sm" data-toggle="tooltip" data-placement="top" title="Edit">
-                                                            <i class="mdi mdi-pencil"></i>
-                                                        </button>
-                                                        <button type="button" class="btn btn-outline-secondary btn-sm" data-toggle="tooltip" data-placement="top" title="Delete">
-                                                            <i class="mdi mdi-trash-can"></i>
-                                                        </button>
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                </div>
-                                <div class="mt-4">
-                                    <ul class="pagination pagination-rounded justify-content-center mb-0">
-                                        <li class="page-item disabled">
-                                            <a class="page-link" href="#" aria-label="Previous">
-                                                <i class="mdi mdi-chevron-left"></i>
-                                            </a>
-                                        </li>
-                                        <li class="page-item"><a class="page-link" href="#">1</a></li>
-                                        <li class="page-item active"><a class="page-link" href="#">2</a></li>
-                                        <li class="page-item"><a class="page-link" href="#">3</a></li>
-                                        <li class="page-item"><a class="page-link" href="#">4</a></li>
-                                        <li class="page-item">
-                                            <a class="page-link" href="#" aria-label="Next">
-                                                <i class="mdi mdi-chevron-right"></i>
-                                            </a>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-4">
-                        <div class="card">
-                            <div class="card-body">
-                                <h5 class="header-title mb-4">Revenue by Location</h5>
-                                <div id="usa-map" style="height: 150px" class="mb-5"></div>
-                                <div class="table-responsive">
-                                    <table class="table table-centered">
-                                        <tbody>
-                                            <tr>
-                                                <th scope="row">California</th>
-                                                <td>$ 8,257</td>
-                                                <td>
-                                                    <div dir="ltr" class="ml-2">
-                                                        <input data-plugin="knob" data-width="36" data-height="36" data-linecap=round data-displayInput=false data-fgColor="#3051d3" value="56" data-skin="tron" data-angleOffset="36" data-readOnly=true data-thickness=".2" />
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <th scope="row">New York</th>
-                                                <td>$ 7,253</td>
-                                                <td>
-                                                    <div dir="ltr" class="ml-2">
-                                                        <input data-plugin="knob" data-width="36" data-height="36" data-linecap=round data-displayInput=false data-fgColor="#3051d3" value="42" data-skin="tron" data-angleOffset="36" data-readOnly=true data-thickness=".2" />
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                    <div class="text-center">
-                                        <a href="#" class="btn btn-primary btn-sm">View more <i class="mdi mdi-arrow-right ml-1"></i></a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
             </div>
         </div>
     </div>
 </template>
 <script>
-document.title = 'Dashboard';
+import Chart from 'chart.js';
 export default {
+    beforeMount() {
+        document.title = 'Dashboard';
+    },
+    data() {
+        return {
+            username : this.$store.state.Users.user.name
+        }
+    },
     mounted() {
+        $(function(){
+            var e = $("#lineChart").get(0).getContext("2d");
+            new Chart(e, {
+                type: "line",
+                data: {
+                    labels: ["2020", "2021", "2022", "2023", "2024", "2025", "2026", "2027"],
+                    datasets: [
+                        { label: "Apple", data: [120, 180, 140, 210, 160, 240, 180, 210], borderColor: ["#3ddc97"], borderWidth: 3, fill: !1, pointBackgroundColor: "#ffffff", pointBorderColor: "#3ddc97" },
+                        { label: "Samsung", data: [80, 140, 100, 170, 120, 200, 140, 170], borderColor: ["#7c8a96"], borderWidth: 3, fill: !1, pointBackgroundColor: "#ffffff", pointBorderColor: "#7c8a96" },
+                    ],
+                },
+                options: {
+                    scales: { yAxes: [{ gridLines: { drawBorder: !1, borderDash: [3, 3], zeroLineColor: "#7b919e" }, ticks: { min: 0, color: "#7b919e" } }], xAxes: [{ gridLines: { display: !1, drawBorder: !1, color: "#ffffff" } }] },
+                    elements: { line: { tension: 0.2 }, point: { radius: 4 } },
+                    stepsize: 1,
+                },
+            });
+        });
     },
     created() {
 

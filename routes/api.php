@@ -19,4 +19,16 @@ Route::group(['namespace' => 'Admin\Request', 'middleware' => 'auth:api'], funct
     Route::apiResource('assessment-task', 'AssessmentTaskController');
     Route::apiResource('homeroom-teacher', 'HomeRoomTeacherController');
     Route::apiResource('report-card', 'ReportCardController');
+
+});
+Route::group(['namespace' => 'Admin\Request'], function(){
+    /*export*/
+    Route::get('class/excel/export/{user}', 'ClassController@export')->name('class.export');
+    Route::get('school/excel/export/{user}', 'SchoolController@export')->name('school.export');
+    Route::get('student/excel/export/{user}', 'StudentController@export')->name('student.export');
+    Route::get('study/excel/export/{user}', 'StudyController@export')->name('study.export');
+    Route::get('teacher/excel/export/{user}', 'TeacherController@export')->name('teacher.export');
+    Route::get('assessment-task/excel/export/{user}', 'AssessmentTaskController@export')->name('assessment-task.export');
+    Route::get('homeroom-teacher/excel/export/{user}', 'HomeRoomTeacherController@export')->name('homeroom-teacher.export');
+    Route::get('report-card/excel/export/{user}', 'ReportCardController@export')->name('report-card.export');
 });
