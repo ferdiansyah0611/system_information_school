@@ -22,6 +22,7 @@ Route::group(['namespace' => 'Admin\Request', 'middleware' => 'auth:api'], funct
 
 });
 Route::group(['namespace' => 'Admin\Request'], function(){
+    Route::get('dashboard', 'AdminController@dashboard');
     /*export*/
     Route::get('class/excel/export/{user}', 'ClassController@export')->name('class.export');
     Route::get('school/excel/export/{user}', 'SchoolController@export')->name('school.export');

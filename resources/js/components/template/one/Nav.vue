@@ -57,13 +57,7 @@
                             <img src="/vendor/template/images/flags/spain.jpg" alt="user-image" class="mr-2" height="12"><span class="align-middle">Spanish</span>
                         </a>
                         <a href="javascript:void(0);" class="dropdown-item notify-item">
-                            <img src="/vendor/template/images/flags/germany.jpg" alt="user-image" class="mr-2" height="12"><span class="align-middle">German</span>
-                        </a>
-                        <a href="javascript:void(0);" class="dropdown-item notify-item">
-                            <img src="/vendor/template/images/flags/italy.jpg" alt="user-image" class="mr-2" height="12"><span class="align-middle">Italian</span>
-                        </a>
-                        <a href="javascript:void(0);" class="dropdown-item notify-item">
-                            <img src="/vendor/template/images/flags/russia.jpg" alt="user-image" class="mr-2" height="12"><span class="align-middle">Russian</span>
+                            <img src="/vendor/template/images/flags/us.jpg" alt="user-image" class="mr-2" height="12"><span class="align-middle">English</span>
                         </a>
                     </div>
                 </div>

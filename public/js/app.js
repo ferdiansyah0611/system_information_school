@@ -2992,12 +2992,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -3607,124 +3601,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   beforeMount: function beforeMount() {
@@ -3732,65 +3608,73 @@ __webpack_require__.r(__webpack_exports__);
   },
   data: function data() {
     return {
-      username: this.$store.state.Users.user.name
+      user: this.$store.state.Users.user
     };
   },
   mounted: function mounted() {
     $(function () {
-      var e = $("#lineChart").get(0).getContext("2d");
-      new chart_js__WEBPACK_IMPORTED_MODULE_0___default.a(e, {
-        type: "line",
-        data: {
-          labels: ["2020", "2021", "2022", "2023", "2024", "2025", "2026", "2027"],
-          datasets: [{
-            label: "Apple",
-            data: [120, 180, 140, 210, 160, 240, 180, 210],
-            borderColor: ["#3ddc97"],
-            borderWidth: 3,
-            fill: !1,
-            pointBackgroundColor: "#ffffff",
-            pointBorderColor: "#3ddc97"
-          }, {
-            label: "Samsung",
-            data: [80, 140, 100, 170, 120, 200, 140, 170],
-            borderColor: ["#7c8a96"],
-            borderWidth: 3,
-            fill: !1,
-            pointBackgroundColor: "#ffffff",
-            pointBorderColor: "#7c8a96"
-          }]
-        },
-        options: {
-          scales: {
-            yAxes: [{
-              gridLines: {
-                drawBorder: !1,
-                borderDash: [3, 3],
-                zeroLineColor: "#7b919e"
-              },
-              ticks: {
-                min: 0,
-                color: "#7b919e"
-              }
-            }],
-            xAxes: [{
-              gridLines: {
-                display: !1,
-                drawBorder: !1,
-                color: "#ffffff"
-              }
+      axios({
+        url: '/api/dashboard',
+        method: 'get',
+        headers: {
+          'Authorization': 'Bearer ' + JSON.parse(window.localStorage.getItem('users')).success.token
+        }
+      }).then(function (result) {
+        var e = $("#lineChart").get(0).getContext("2d");
+        new chart_js__WEBPACK_IMPORTED_MODULE_0___default.a(e, {
+          type: "line",
+          data: {
+            labels: [new Date().getFullYear().toString(), (new Date().getFullYear() + 1).toString(), (new Date().getFullYear() + 2).toString(), (new Date().getFullYear() + 3).toString(), (new Date().getFullYear() + 4).toString(), (new Date().getFullYear() + 5).toString(), (new Date().getFullYear() + 6).toString(), (new Date().getFullYear() + 7).toString()],
+            datasets: [{
+              label: "School",
+              data: [result.data.school.year_2020, result.data.school.year_2021, result.data.school.year_2022, result.data.school.year_2023, result.data.school.year_2024, result.data.school.year_2025, result.data.school.year_2026, result.data.school.year_2027],
+              borderColor: ["#3ddc97"],
+              borderWidth: 3,
+              fill: !1,
+              pointBackgroundColor: "#ffffff",
+              pointBorderColor: "#3ddc97"
+            }, {
+              label: "Student",
+              data: [result.data.student.year_2020, result.data.student.year_2021, result.data.student.year_2022, result.data.student.year_2023, result.data.student.year_2024, result.data.student.year_2025, result.data.student.year_2026, result.data.student.year_2027],
+              borderColor: ["#7c8a96"],
+              borderWidth: 3,
+              fill: !1,
+              pointBackgroundColor: "#ffffff",
+              pointBorderColor: "#7c8a96"
             }]
           },
-          elements: {
-            line: {
-              tension: 0.2
+          options: {
+            scales: {
+              yAxes: [{
+                gridLines: {
+                  drawBorder: !1,
+                  borderDash: [3, 3],
+                  zeroLineColor: "#7b919e"
+                },
+                ticks: {
+                  min: 0,
+                  color: "#7b919e"
+                }
+              }],
+              xAxes: [{
+                gridLines: {
+                  display: !1,
+                  drawBorder: !1,
+                  color: "#ffffff"
+                }
+              }]
             },
-            point: {
-              radius: 4
-            }
-          },
-          stepsize: 1
-        }
+            elements: {
+              line: {
+                tension: 0.2
+              },
+              point: {
+                radius: 4
+              }
+            },
+            stepsize: 1
+          }
+        });
       });
     });
   },
@@ -90527,50 +90411,12 @@ var staticRenderFns = [
             _c("img", {
               staticClass: "mr-2",
               attrs: {
-                src: "/vendor/template/images/flags/germany.jpg",
+                src: "/vendor/template/images/flags/us.jpg",
                 alt: "user-image",
                 height: "12"
               }
             }),
-            _c("span", { staticClass: "align-middle" }, [_vm._v("German")])
-          ]
-        ),
-        _vm._v(" "),
-        _c(
-          "a",
-          {
-            staticClass: "dropdown-item notify-item",
-            attrs: { href: "javascript:void(0);" }
-          },
-          [
-            _c("img", {
-              staticClass: "mr-2",
-              attrs: {
-                src: "/vendor/template/images/flags/italy.jpg",
-                alt: "user-image",
-                height: "12"
-              }
-            }),
-            _c("span", { staticClass: "align-middle" }, [_vm._v("Italian")])
-          ]
-        ),
-        _vm._v(" "),
-        _c(
-          "a",
-          {
-            staticClass: "dropdown-item notify-item",
-            attrs: { href: "javascript:void(0);" }
-          },
-          [
-            _c("img", {
-              staticClass: "mr-2",
-              attrs: {
-                src: "/vendor/template/images/flags/russia.jpg",
-                alt: "user-image",
-                height: "12"
-              }
-            }),
-            _c("span", { staticClass: "align-middle" }, [_vm._v("Russian")])
+            _c("span", { staticClass: "align-middle" }, [_vm._v("English")])
           ]
         )
       ])
@@ -92330,7 +92176,7 @@ var render = function() {
                     _c("h5", [_vm._v("Welcome Back !")]),
                     _vm._v(" "),
                     _c("p", { staticClass: "text-muted" }, [
-                      _vm._v(_vm._s(_vm.username))
+                      _vm._v(_vm._s(_vm.user.name))
                     ]),
                     _vm._v(" "),
                     _vm._m(1)
@@ -92341,13 +92187,29 @@ var render = function() {
               ])
             ]),
             _vm._v(" "),
-            _vm._m(3)
+            _c("div", { staticClass: "card" }, [
+              _c("div", { staticClass: "card-body" }, [
+                _c("h5", { staticClass: "header-title mb-4" }, [
+                  _vm._v("Profile")
+                ]),
+                _vm._v(" "),
+                _vm._m(3),
+                _vm._v(" "),
+                _vm._m(4),
+                _vm._v(" "),
+                _c("div", { staticClass: "col-8 float-left mt-3" }, [
+                  _c("p", [_vm._v(": " + _vm._s(_vm.user.name))]),
+                  _vm._v(" "),
+                  _c("p", [_vm._v(": " + _vm._s(_vm.user.nisn))]),
+                  _vm._v(" "),
+                  _c("p", [_vm._v(": " + _vm._s(_vm.user.location))])
+                ])
+              ])
+            ])
           ]),
           _vm._v(" "),
-          _vm._m(4)
-        ]),
-        _vm._v(" "),
-        _vm._m(5)
+          _vm._m(5)
+        ])
       ])
     ])
   ])
@@ -92367,64 +92229,6 @@ var staticRenderFns = [
               _c("li", { staticClass: "breadcrumb-item active" }, [
                 _vm._v("Welcome to web system information "),
                 _c("b", [_vm._v("By Ferdiansyah")])
-              ])
-            ])
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "col-md-4" }, [
-            _c("div", { staticClass: "float-right d-none d-md-block" }, [
-              _c("div", { staticClass: "dropdown" }, [
-                _c(
-                  "button",
-                  {
-                    staticClass: "btn btn-light btn-rounded dropdown-toggle",
-                    attrs: {
-                      type: "button",
-                      "data-toggle": "dropdown",
-                      "aria-haspopup": "true",
-                      "aria-expanded": "false"
-                    }
-                  },
-                  [
-                    _c("i", { staticClass: "mdi mdi-settings-outline mr-1" }),
-                    _vm._v(" Settings\n                            ")
-                  ]
-                ),
-                _vm._v(" "),
-                _c(
-                  "div",
-                  {
-                    staticClass:
-                      "dropdown-menu dropdown-menu-right dropdown-menu-animated"
-                  },
-                  [
-                    _c(
-                      "a",
-                      { staticClass: "dropdown-item", attrs: { href: "#" } },
-                      [_vm._v("Action")]
-                    ),
-                    _vm._v(" "),
-                    _c(
-                      "a",
-                      { staticClass: "dropdown-item", attrs: { href: "#" } },
-                      [_vm._v("Another action")]
-                    ),
-                    _vm._v(" "),
-                    _c(
-                      "a",
-                      { staticClass: "dropdown-item", attrs: { href: "#" } },
-                      [_vm._v("Something else here")]
-                    ),
-                    _vm._v(" "),
-                    _c("div", { staticClass: "dropdown-divider" }),
-                    _vm._v(" "),
-                    _c(
-                      "a",
-                      { staticClass: "dropdown-item", attrs: { href: "#" } },
-                      [_vm._v("Separated link")]
-                    )
-                  ]
-                )
               ])
             ])
           ])
@@ -92460,63 +92264,26 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "card" }, [
-      _c("div", { staticClass: "card-body" }, [
-        _c("h5", { staticClass: "header-title mb-4" }, [
-          _vm._v("Monthy sale Report")
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "media" }, [
-          _c("div", { staticClass: "media-body" }, [
-            _c("p", { staticClass: "text-muted mb-2" }, [
-              _vm._v("This month Sale")
-            ]),
-            _vm._v(" "),
-            _c("h4", [_vm._v("$ 13,425")])
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "ml-2", attrs: { dir: "ltr" } }, [
-            _c("input", {
-              attrs: {
-                "data-plugin": "knob",
-                "data-width": "56",
-                "data-height": "56",
-                "data-linecap": "round",
-                "data-displayInput": "false",
-                "data-fgColor": "#3051d3",
-                value: "56",
-                "data-skin": "tron",
-                "data-angleOffset": "56",
-                "data-readOnly": "true",
-                "data-thickness": ".17"
-              }
-            })
-          ])
-        ]),
-        _vm._v(" "),
-        _c("hr"),
-        _vm._v(" "),
-        _c("div", { staticClass: "media" }, [
-          _c("div", { staticClass: "media-body" }, [
-            _c("p", { staticClass: "text-muted" }, [_vm._v("Sale status")]),
-            _vm._v(" "),
-            _c("h5", { staticClass: "mb-0" }, [
-              _vm._v(" + 12 % "),
-              _c("span", { staticClass: "font-size-14 text-muted ml-1" }, [
-                _vm._v("From previous period")
-              ])
-            ])
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "align-self-end ml-2" }, [
-            _c(
-              "a",
-              { staticClass: "btn btn-primary btn-sm", attrs: { href: "#" } },
-              [_vm._v("View more")]
-            )
-          ])
-        ])
-      ])
+    return _c("div", { staticClass: "text-center" }, [
+      _c("img", {
+        staticClass: "rounded-circle",
+        attrs: {
+          src: "/vendor/template/images/users/avatar-1.jpg",
+          alt: "Header Avatar"
+        }
+      })
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "col-4 float-left mt-3" }, [
+      _c("p", [_vm._v("Name")]),
+      _vm._v(" "),
+      _c("p", [_vm._v("NISN")]),
+      _vm._v(" "),
+      _c("p", [_vm._v("Location")])
     ])
   },
   function() {
@@ -92526,177 +92293,14 @@ var staticRenderFns = [
     return _c("div", { staticClass: "col-xl-8" }, [
       _c("div", { staticClass: "card" }, [
         _c("div", { staticClass: "card-body" }, [
-          _c("form", { staticClass: "form-inline float-right" }, [
-            _c("div", { staticClass: "input-group mb-3" }, [
-              _c("input", {
-                staticClass: "form-control form-control-sm datepicker-here",
-                attrs: {
-                  type: "text",
-                  "data-range": "true",
-                  "data-multiple-dates-separator": " - ",
-                  "data-language": "en",
-                  placeholder: "Select Date"
-                }
-              }),
-              _vm._v(" "),
-              _c("div", { staticClass: "input-group-append" }, [
-                _c("span", { staticClass: "input-group-text" }, [
-                  _c("i", { staticClass: "far fa-calendar font-size-12" })
-                ])
-              ])
-            ])
-          ]),
-          _vm._v(" "),
           _c("h5", { staticClass: "header-title mb-4" }, [
-            _vm._v("Sales Report")
+            _vm._v("Statistic School & Student")
           ]),
           _vm._v(" "),
           _c("canvas", {
             staticClass: "apex-charts",
             attrs: { id: "lineChart" }
           })
-        ])
-      ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "row" }, [
-      _c("div", { staticClass: "col-lg-4" }, [
-        _c("div", { staticClass: "card" }, [
-          _c("div", { staticClass: "card-header bg-transparent p-3" }, [
-            _c("h5", { staticClass: "header-title mb-0" }, [
-              _vm._v("Sales Status")
-            ])
-          ]),
-          _vm._v(" "),
-          _c("ul", { staticClass: "list-group list-group-flush" }, [
-            _c("li", { staticClass: "list-group-item" }, [
-              _c("div", { staticClass: "media my-2" }, [
-                _c("div", { staticClass: "media-body" }, [
-                  _c("p", { staticClass: "text-muted mb-2" }, [
-                    _vm._v("Number of Sales")
-                  ]),
-                  _vm._v(" "),
-                  _c("h5", { staticClass: "mb-0" }, [_vm._v("1,625")])
-                ]),
-                _vm._v(" "),
-                _c("div", { staticClass: "icons-lg ml-2 align-self-center" }, [
-                  _c("i", { staticClass: "uim uim-layer-group" })
-                ])
-              ])
-            ]),
-            _vm._v(" "),
-            _c("li", { staticClass: "list-group-item" }, [
-              _c("div", { staticClass: "media my-2" }, [
-                _c("div", { staticClass: "media-body" }, [
-                  _c("p", { staticClass: "text-muted mb-2" }, [
-                    _vm._v("Sales Revenue ")
-                  ]),
-                  _vm._v(" "),
-                  _c("h5", { staticClass: "mb-0" }, [_vm._v("$ 42,235")])
-                ]),
-                _vm._v(" "),
-                _c("div", { staticClass: "icons-lg ml-2 align-self-center" }, [
-                  _c("i", { staticClass: "uim uim-analytics" })
-                ])
-              ])
-            ]),
-            _vm._v(" "),
-            _c("li", { staticClass: "list-group-item" }, [
-              _c("div", { staticClass: "media my-2" }, [
-                _c("div", { staticClass: "media-body" }, [
-                  _c("p", { staticClass: "text-muted mb-2" }, [
-                    _vm._v("Average Price")
-                  ]),
-                  _vm._v(" "),
-                  _c("h5", { staticClass: "mb-0" }, [_vm._v("$ 14.56")])
-                ]),
-                _vm._v(" "),
-                _c("div", { staticClass: "icons-lg ml-2 align-self-center" }, [
-                  _c("i", { staticClass: "uim uim-ruler" })
-                ])
-              ])
-            ]),
-            _vm._v(" "),
-            _c("li", { staticClass: "list-group-item" }, [
-              _c("div", { staticClass: "media my-2" }, [
-                _c("div", { staticClass: "media-body" }, [
-                  _c("p", { staticClass: "text-muted mb-2" }, [
-                    _vm._v("Product Sold")
-                  ]),
-                  _vm._v(" "),
-                  _c("h5", { staticClass: "mb-0" }, [_vm._v("8,235")])
-                ]),
-                _vm._v(" "),
-                _c("div", { staticClass: "icons-lg ml-2 align-self-center" }, [
-                  _c("i", { staticClass: "uim uim-box" })
-                ])
-              ])
-            ])
-          ])
-        ])
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "col-lg-4" }, [
-        _c("div", { staticClass: "card" }, [
-          _c("div", { staticClass: "card-body" }, [
-            _c("h5", { staticClass: "header-title mb-4" }, [
-              _vm._v("Social Source")
-            ]),
-            _vm._v(" "),
-            _c("div", {
-              staticClass: "apex-charts",
-              attrs: { id: "radial-chart" }
-            }),
-            _vm._v(" "),
-            _c("div", { staticClass: "text-center mt-3" }, [
-              _c("div", { staticClass: "row" }, [
-                _c("div", { staticClass: "col-6" }, [
-                  _c("div", [
-                    _c("p", { staticClass: "text-muted" }, [
-                      _c("i", {
-                        staticClass: "mdi mdi-circle text-primary mr-1"
-                      }),
-                      _vm._v(" Facebook")
-                    ]),
-                    _vm._v(" "),
-                    _c("h5", [_vm._v("$ 1,625")])
-                  ])
-                ]),
-                _vm._v(" "),
-                _c("div", { staticClass: "col-6" }, [
-                  _c("div", [
-                    _c("p", { staticClass: "text-muted" }, [
-                      _c("i", {
-                        staticClass: "mdi mdi-circle text-warning mr-1"
-                      }),
-                      _vm._v(" Twitter")
-                    ]),
-                    _vm._v(" "),
-                    _c("h5", [_vm._v("$ 1,504")])
-                  ])
-                ])
-              ])
-            ])
-          ])
-        ])
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "col-lg-4" }, [
-        _c("div", { staticClass: "card" }, [
-          _c("div", { staticClass: "card-body" }, [
-            _c("h5", { staticClass: "header-title" }, [
-              _vm._v("Recent Activity")
-            ]),
-            _vm._v(" "),
-            _c("div", {
-              staticClass: "apex-charts",
-              attrs: { id: "activity-chart" }
-            })
-          ])
         ])
       ])
     ])

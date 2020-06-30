@@ -9,22 +9,6 @@
                             <li class="breadcrumb-item active">Welcome to web system information <b>By Ferdiansyah</b></li>
                         </ol>
                     </div>
-                    <div class="col-md-4">
-                        <div class="float-right d-none d-md-block">
-                            <div class="dropdown">
-                                <button class="btn btn-light btn-rounded dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    <i class="mdi mdi-settings-outline mr-1"></i> Settings
-                                </button>
-                                <div class="dropdown-menu dropdown-menu-right dropdown-menu-animated">
-                                    <a class="dropdown-item" href="#">Action</a>
-                                    <a class="dropdown-item" href="#">Another action</a>
-                                    <a class="dropdown-item" href="#">Something else here</a>
-                                    <div class="dropdown-divider"></div>
-                                    <a class="dropdown-item" href="#">Separated link</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
                 </div>
             </div>
         </div>
@@ -37,7 +21,7 @@
                                 <div class="row">
                                     <div class="col-6">
                                         <h5>Welcome Back !</h5>
-                                        <p class="text-muted">{{username}}</p>
+                                        <p class="text-muted">{{user.name}}</p>
                                         <div class="mt-4">
                                             <a href="#" class="btn btn-primary btn-sm">View more <i class="mdi mdi-arrow-right ml-1"></i></a>
                                         </div>
@@ -52,25 +36,19 @@
                         </div>
                         <div class="card">
                             <div class="card-body">
-                                <h5 class="header-title mb-4">Monthy sale Report</h5>
-                                <div class="media">
-                                    <div class="media-body">
-                                        <p class="text-muted mb-2">This month Sale</p>
-                                        <h4>$ 13,425</h4>
-                                    </div>
-                                    <div dir="ltr" class="ml-2">
-                                        <input data-plugin="knob" data-width="56" data-height="56" data-linecap=round data-displayInput=false data-fgColor="#3051d3" value="56" data-skin="tron" data-angleOffset="56" data-readOnly=true data-thickness=".17" />
-                                    </div>
+                                <h5 class="header-title mb-4">Profile</h5>
+                                <div class="text-center">
+                                    <img src="/vendor/template/images/users/avatar-1.jpg" alt="Header Avatar" class="rounded-circle">
                                 </div>
-                                <hr>
-                                <div class="media">
-                                    <div class="media-body">
-                                        <p class="text-muted">Sale status</p>
-                                        <h5 class="mb-0"> + 12 % <span class="font-size-14 text-muted ml-1">From previous period</span></h5>
-                                    </div>
-                                    <div class="align-self-end ml-2">
-                                        <a href="#" class="btn btn-primary btn-sm">View more</a>
-                                    </div>
+                                <div class="col-4 float-left mt-3">
+                                    <p>Name</p>
+                                    <p>NISN</p>
+                                    <p>Location</p>
+                                </div>
+                                <div class="col-8 float-left mt-3">
+                                    <p>: {{user.name}}</p>
+                                    <p>: {{user.nisn}}</p>
+                                    <p>: {{user.location}}</p>
                                 </div>
                             </div>
                         </div>
@@ -78,108 +56,12 @@
                     <div class="col-xl-8">
                         <div class="card">
                             <div class="card-body">
-                                <form class="form-inline float-right">
-                                    <div class="input-group mb-3">
-                                        <input type="text" class="form-control form-control-sm datepicker-here" data-range="true" data-multiple-dates-separator=" - " data-language="en" placeholder="Select Date" />
-                                        <div class="input-group-append">
-                                            <span class="input-group-text"><i class="far fa-calendar font-size-12"></i></span>
-                                        </div>
-                                    </div>
-                                </form>
-                                <h5 class="header-title mb-4">Sales Report</h5>
+                                <h5 class="header-title mb-4">Statistic School & Student</h5>
                                 <canvas id="lineChart" class="apex-charts"></canvas>
                             </div>
                         </div>
                     </div>
                 </div>
-                <div class="row">
-                    <div class="col-lg-4">
-                        <div class="card">
-                            <div class="card-header bg-transparent p-3">
-                                <h5 class="header-title mb-0">Sales Status</h5>
-                            </div>
-                            <ul class="list-group list-group-flush">
-                                <li class="list-group-item">
-                                    <div class="media my-2">
-                                        <div class="media-body">
-                                            <p class="text-muted mb-2">Number of Sales</p>
-                                            <h5 class="mb-0">1,625</h5>
-                                        </div>
-                                        <div class="icons-lg ml-2 align-self-center">
-                                            <i class="uim uim-layer-group"></i>
-                                        </div>
-                                    </div>
-                                </li>
-                                <li class="list-group-item">
-                                    <div class="media my-2">
-                                        <div class="media-body">
-                                            <p class="text-muted mb-2">Sales Revenue </p>
-                                            <h5 class="mb-0">$ 42,235</h5>
-                                        </div>
-                                        <div class="icons-lg ml-2 align-self-center">
-                                            <i class="uim uim-analytics"></i>
-                                        </div>
-                                    </div>
-                                </li>
-                                <li class="list-group-item">
-                                    <div class="media my-2">
-                                        <div class="media-body">
-                                            <p class="text-muted mb-2">Average Price</p>
-                                            <h5 class="mb-0">$ 14.56</h5>
-                                        </div>
-                                        <div class="icons-lg ml-2 align-self-center">
-                                            <i class="uim uim-ruler"></i>
-                                        </div>
-                                    </div>
-                                </li>
-                                <li class="list-group-item">
-                                    <div class="media my-2">
-                                        <div class="media-body">
-                                            <p class="text-muted mb-2">Product Sold</p>
-                                            <h5 class="mb-0">8,235</h5>
-                                        </div>
-                                        <div class="icons-lg ml-2 align-self-center">
-                                            <i class="uim uim-box"></i>
-                                        </div>
-                                    </div>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                    <div class="col-lg-4">
-                        <div class="card">
-                            <div class="card-body">
-                                <h5 class="header-title mb-4">Social Source</h5>
-                                <div id="radial-chart" class="apex-charts"></div>
-                                <div class="text-center mt-3">
-                                    <div class="row">
-                                        <div class="col-6">
-                                            <div>
-                                                <p class="text-muted"><i class="mdi mdi-circle text-primary mr-1"></i> Facebook</p>
-                                                <h5>$ 1,625</h5>
-                                            </div>
-                                        </div>
-                                        <div class="col-6">
-                                            <div>
-                                                <p class="text-muted"><i class="mdi mdi-circle text-warning mr-1"></i> Twitter</p>
-                                                <h5>$ 1,504</h5>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-4">
-                        <div class="card">
-                            <div class="card-body">
-                                <h5 class="header-title">Recent Activity</h5>
-                                <div id="activity-chart" class="apex-charts"></div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <!-- end row -->
             </div>
         </div>
     </div>
@@ -192,27 +74,62 @@ export default {
     },
     data() {
         return {
-            username : this.$store.state.Users.user.name
+            user : this.$store.state.Users.user
         }
     },
     mounted() {
         $(function(){
-            var e = $("#lineChart").get(0).getContext("2d");
-            new Chart(e, {
-                type: "line",
-                data: {
-                    labels: ["2020", "2021", "2022", "2023", "2024", "2025", "2026", "2027"],
-                    datasets: [
-                        { label: "Apple", data: [120, 180, 140, 210, 160, 240, 180, 210], borderColor: ["#3ddc97"], borderWidth: 3, fill: !1, pointBackgroundColor: "#ffffff", pointBorderColor: "#3ddc97" },
-                        { label: "Samsung", data: [80, 140, 100, 170, 120, 200, 140, 170], borderColor: ["#7c8a96"], borderWidth: 3, fill: !1, pointBackgroundColor: "#ffffff", pointBorderColor: "#7c8a96" },
-                    ],
-                },
-                options: {
-                    scales: { yAxes: [{ gridLines: { drawBorder: !1, borderDash: [3, 3], zeroLineColor: "#7b919e" }, ticks: { min: 0, color: "#7b919e" } }], xAxes: [{ gridLines: { display: !1, drawBorder: !1, color: "#ffffff" } }] },
-                    elements: { line: { tension: 0.2 }, point: { radius: 4 } },
-                    stepsize: 1,
-                },
-            });
+            axios({
+                url : '/api/dashboard',
+                method : 'get',
+                headers : {
+                    'Authorization' : 'Bearer ' + JSON.parse(window.localStorage.getItem('users')).success.token
+                }
+            }).then(result => {
+                var e = $("#lineChart").get(0).getContext("2d");
+                new Chart(e, {
+                    type: "line",
+                    data: {
+                        labels: [
+                        (new Date().getFullYear() ).toString(),
+                        (new Date().getFullYear() + 1).toString(),
+                        (new Date().getFullYear() + 2).toString(), 
+                        (new Date().getFullYear() + 3).toString(), 
+                        (new Date().getFullYear() + 4).toString(), 
+                        (new Date().getFullYear() + 5).toString(), 
+                        (new Date().getFullYear() + 6).toString(), 
+                        (new Date().getFullYear() + 7).toString()], 
+                        datasets: [
+                            { label: "School", data: [
+                                result.data.school.year_2020, 
+                                result.data.school.year_2021,
+                                result.data.school.year_2022,
+                                result.data.school.year_2023,
+                                result.data.school.year_2024,
+                                result.data.school.year_2025,
+                                result.data.school.year_2026, 
+                                result.data.school.year_2027
+                            ], borderColor: ["#3ddc97"], borderWidth: 3, fill: !1, pointBackgroundColor: "#ffffff", pointBorderColor: "#3ddc97" },
+                            { label: "Student", data: [
+                                result.data.student.year_2020, 
+                                result.data.student.year_2021,
+                                result.data.student.year_2022,
+                                result.data.student.year_2023,
+                                result.data.student.year_2024,
+                                result.data.student.year_2025,
+                                result.data.student.year_2026, 
+                                result.data.student.year_2027
+                            ], borderColor: ["#7c8a96"], borderWidth: 3, fill: !1, pointBackgroundColor: "#ffffff", pointBorderColor: "#7c8a96" },
+                        ],
+                    },
+                    options: {
+                        scales: { yAxes: [{ gridLines: { drawBorder: !1, borderDash: [3, 3], zeroLineColor: "#7b919e" }, ticks: { min: 0, color: "#7b919e" } }], xAxes: [{ gridLines: { display: !1, drawBorder: !1, color: "#ffffff" } }] },
+                        elements: { line: { tension: 0.2 }, point: { radius: 4 } },
+                        stepsize: 1,
+                    },
+                });
+
+            })
         });
     },
     created() {
