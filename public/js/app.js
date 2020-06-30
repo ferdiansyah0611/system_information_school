@@ -2991,11 +2991,10 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
-      username: this.$store.state.Users.user.name
+      user: this.$store.state.Users.user
     };
   }
 });
@@ -90196,7 +90195,7 @@ var render = function() {
               }),
               _vm._v(" "),
               _c("span", { staticClass: "d-none d-sm-inline-block ml-1" }, [
-                _vm._v(_vm._s(_vm.username))
+                _vm._v(_vm._s(_vm.user.name))
               ]),
               _vm._v(" "),
               _c("i", {
@@ -90452,14 +90451,6 @@ var staticRenderFns = [
       _vm._v(" "),
       _c("a", { staticClass: "dropdown-item", attrs: { href: "#" } }, [
         _c("i", {
-          staticClass:
-            "mdi mdi-credit-card-outline font-size-16 align-middle mr-1"
-        }),
-        _vm._v(" Billing")
-      ]),
-      _vm._v(" "),
-      _c("a", { staticClass: "dropdown-item", attrs: { href: "#" } }, [
-        _c("i", {
           staticClass: "mdi mdi-account-settings font-size-16 align-middle mr-1"
         }),
         _vm._v(" Settings")
@@ -90525,7 +90516,10 @@ var render = function() {
                   },
                   [
                     _c("div", { staticClass: "d-inline-block icons-sm mr-1" }, [
-                      _c("i", { staticClass: "uim uim-airplay" })
+                      _c("i", {
+                        staticClass: "fas fa-chart-line",
+                        staticStyle: { color: "#3051d3" }
+                      })
                     ]),
                     _c(
                       "span",
@@ -90826,7 +90820,10 @@ var staticRenderFns = [
       },
       [
         _c("div", { staticClass: "d-inline-block icons-sm mr-1" }, [
-          _c("i", { staticClass: "uim uim-object-ungroup" })
+          _c("i", {
+            staticClass: "fas fa-layer-group",
+            staticStyle: { color: "#3051d3" }
+          })
         ]),
         _vm._v(" "),
         _c("span", [_vm._v("API")])
@@ -90845,7 +90842,10 @@ var staticRenderFns = [
       },
       [
         _c("div", { staticClass: "d-inline-block icons-sm mr-1" }, [
-          _c("i", { staticClass: "uim uim-object-ungroup" })
+          _c("i", {
+            staticClass: "fas fa-store-alt",
+            staticStyle: { color: "#3051d3" }
+          })
         ]),
         _vm._v(" "),
         _c("span", [_vm._v("Class")])
@@ -90870,7 +90870,10 @@ var staticRenderFns = [
       },
       [
         _c("div", { staticClass: "d-inline-block icons-sm mr-1" }, [
-          _c("i", { staticClass: "uim uim-object-ungroup" })
+          _c("i", {
+            staticClass: "fas fa-school",
+            staticStyle: { color: "#3051d3" }
+          })
         ]),
         _vm._v(" "),
         _c("span", [_vm._v("School")])
@@ -90895,7 +90898,10 @@ var staticRenderFns = [
       },
       [
         _c("div", { staticClass: "d-inline-block icons-sm mr-1" }, [
-          _c("i", { staticClass: "uim uim-object-ungroup" })
+          _c("i", {
+            staticClass: "fas fa-smile",
+            staticStyle: { color: "#3051d3" }
+          })
         ]),
         _vm._v(" "),
         _c("span", [_vm._v("Student")])
@@ -90920,7 +90926,10 @@ var staticRenderFns = [
       },
       [
         _c("div", { staticClass: "d-inline-block icons-sm mr-1" }, [
-          _c("i", { staticClass: "uim uim-object-ungroup" })
+          _c("i", {
+            staticClass: "fas fa-book",
+            staticStyle: { color: "#3051d3" }
+          })
         ]),
         _vm._v(" "),
         _c("span", [_vm._v("Study")])
@@ -90945,7 +90954,10 @@ var staticRenderFns = [
       },
       [
         _c("div", { staticClass: "d-inline-block icons-sm mr-1" }, [
-          _c("i", { staticClass: "uim uim-object-ungroup" })
+          _c("i", {
+            staticClass: "fas fa-chalkboard-teacher",
+            staticStyle: { color: "#3051d3" }
+          })
         ]),
         _vm._v(" "),
         _c("span", [_vm._v("Teacher")])
@@ -90970,7 +90982,10 @@ var staticRenderFns = [
       },
       [
         _c("div", { staticClass: "d-inline-block icons-sm mr-1" }, [
-          _c("i", { staticClass: "uim uim-object-ungroup" })
+          _c("i", {
+            staticClass: "fas fa-sticky-note",
+            staticStyle: { color: "#3051d3" }
+          })
         ]),
         _vm._v(" "),
         _c("span", [_vm._v("Assessment Task")])
@@ -90995,7 +91010,10 @@ var staticRenderFns = [
       },
       [
         _c("div", { staticClass: "d-inline-block icons-sm mr-1" }, [
-          _c("i", { staticClass: "uim uim-object-ungroup" })
+          _c("i", {
+            staticClass: "mdi mdi-notebook-multiple",
+            staticStyle: { color: "#3051d3" }
+          })
         ]),
         _vm._v(" "),
         _c("span", [_vm._v("Report Card")])
@@ -91115,507 +91133,6 @@ var staticRenderFns = [
                   _vm._v(" "),
                   _c("span", { staticClass: "mdi mdi-magnify" })
                 ])
-              ]),
-              _vm._v(" "),
-              _c("h6", { staticClass: "px-4 py-3 mt-2 bg-light" }, [
-                _vm._v("Group Chats")
-              ]),
-              _vm._v(" "),
-              _c("div", { staticClass: "p-2" }, [
-                _c(
-                  "a",
-                  {
-                    staticClass:
-                      "text-reset notification-item pl-3 mb-2 d-block",
-                    attrs: { href: "javascript: void(0);" }
-                  },
-                  [
-                    _c("i", {
-                      staticClass:
-                        "mdi mdi-checkbox-blank-circle-outline mr-1 text-success"
-                    }),
-                    _vm._v(" "),
-                    _c("span", { staticClass: "mb-0 mt-1" }, [
-                      _vm._v("App Development")
-                    ])
-                  ]
-                ),
-                _vm._v(" "),
-                _c(
-                  "a",
-                  {
-                    staticClass:
-                      "text-reset notification-item pl-3 mb-2 d-block",
-                    attrs: { href: "javascript: void(0);" }
-                  },
-                  [
-                    _c("i", {
-                      staticClass:
-                        "mdi mdi-checkbox-blank-circle-outline mr-1 text-warning"
-                    }),
-                    _vm._v(" "),
-                    _c("span", { staticClass: "mb-0 mt-1" }, [
-                      _vm._v("Office Work")
-                    ])
-                  ]
-                ),
-                _vm._v(" "),
-                _c(
-                  "a",
-                  {
-                    staticClass:
-                      "text-reset notification-item pl-3 mb-2 d-block",
-                    attrs: { href: "javascript: void(0);" }
-                  },
-                  [
-                    _c("i", {
-                      staticClass:
-                        "mdi mdi-checkbox-blank-circle-outline mr-1 text-danger"
-                    }),
-                    _vm._v(" "),
-                    _c("span", { staticClass: "mb-0 mt-1" }, [
-                      _vm._v("Personal Group")
-                    ])
-                  ]
-                ),
-                _vm._v(" "),
-                _c(
-                  "a",
-                  {
-                    staticClass: "text-reset notification-item pl-3 d-block",
-                    attrs: { href: "javascript: void(0);" }
-                  },
-                  [
-                    _c("i", {
-                      staticClass: "mdi mdi-checkbox-blank-circle-outline mr-1"
-                    }),
-                    _vm._v(" "),
-                    _c("span", { staticClass: "mb-0 mt-1" }, [
-                      _vm._v("Freelance")
-                    ])
-                  ]
-                )
-              ]),
-              _vm._v(" "),
-              _c("h6", { staticClass: "px-4 py-3 mt-4 bg-light" }, [
-                _vm._v("Favourites")
-              ]),
-              _vm._v(" "),
-              _c("div", { staticClass: "p-2" }, [
-                _c(
-                  "a",
-                  {
-                    staticClass: "text-reset notification-item",
-                    attrs: { href: "javascript: void(0);" }
-                  },
-                  [
-                    _c("div", { staticClass: "media" }, [
-                      _c(
-                        "div",
-                        {
-                          staticClass:
-                            "position-relative align-self-center mr-3"
-                        },
-                        [
-                          _c("img", {
-                            staticClass: "rounded-circle avatar-xs",
-                            attrs: {
-                              src:
-                                "/vendor/template/images/users/avatar-10.jpg",
-                              alt: "user-pic"
-                            }
-                          }),
-                          _vm._v(" "),
-                          _c("i", {
-                            staticClass: "mdi mdi-circle user-status online"
-                          })
-                        ]
-                      ),
-                      _vm._v(" "),
-                      _c("div", { staticClass: "media-body overflow-hidden" }, [
-                        _c("h6", { staticClass: "mt-0 mb-1" }, [
-                          _vm._v("Andrew Mackie")
-                        ]),
-                        _vm._v(" "),
-                        _c("div", { staticClass: "font-size-12 text-muted" }, [
-                          _c("p", { staticClass: "mb-0 text-truncate" }, [
-                            _vm._v("It will seem like simplified English.")
-                          ])
-                        ])
-                      ])
-                    ])
-                  ]
-                ),
-                _vm._v(" "),
-                _c(
-                  "a",
-                  {
-                    staticClass: "text-reset notification-item",
-                    attrs: { href: "javascript: void(0);" }
-                  },
-                  [
-                    _c("div", { staticClass: "media" }, [
-                      _c(
-                        "div",
-                        {
-                          staticClass:
-                            "position-relative align-self-center mr-3"
-                        },
-                        [
-                          _c("img", {
-                            staticClass: "rounded-circle avatar-xs",
-                            attrs: {
-                              src: "/vendor/template/images/users/avatar-1.jpg",
-                              alt: "user-pic"
-                            }
-                          }),
-                          _vm._v(" "),
-                          _c("i", {
-                            staticClass: "mdi mdi-circle user-status away"
-                          })
-                        ]
-                      ),
-                      _vm._v(" "),
-                      _c("div", { staticClass: "media-body overflow-hidden" }, [
-                        _c("h6", { staticClass: "mt-0 mb-1" }, [
-                          _vm._v("Rory Dalyell")
-                        ]),
-                        _vm._v(" "),
-                        _c("div", { staticClass: "font-size-12 text-muted" }, [
-                          _c("p", { staticClass: "mb-0 text-truncate" }, [
-                            _vm._v(
-                              "To an English person, it will seem like simplified"
-                            )
-                          ])
-                        ])
-                      ])
-                    ])
-                  ]
-                ),
-                _vm._v(" "),
-                _c(
-                  "a",
-                  {
-                    staticClass: "text-reset notification-item",
-                    attrs: { href: "javascript: void(0);" }
-                  },
-                  [
-                    _c("div", { staticClass: "media" }, [
-                      _c(
-                        "div",
-                        {
-                          staticClass:
-                            "position-relative align-self-center mr-3"
-                        },
-                        [
-                          _c("img", {
-                            staticClass: "rounded-circle avatar-xs",
-                            attrs: {
-                              src: "/vendor/template/images/users/avatar-9.jpg",
-                              alt: "user-pic"
-                            }
-                          }),
-                          _vm._v(" "),
-                          _c("i", {
-                            staticClass: "mdi mdi-circle user-status busy"
-                          })
-                        ]
-                      ),
-                      _vm._v(" "),
-                      _c("div", { staticClass: "media-body overflow-hidden" }, [
-                        _c("h6", { staticClass: "mt-0 mb-1" }, [
-                          _vm._v("Jaxon Dunhill")
-                        ]),
-                        _vm._v(" "),
-                        _c("div", { staticClass: "font-size-12 text-muted" }, [
-                          _c("p", { staticClass: "mb-0 text-truncate" }, [
-                            _vm._v("To achieve this, it would be necessary.")
-                          ])
-                        ])
-                      ])
-                    ])
-                  ]
-                )
-              ]),
-              _vm._v(" "),
-              _c("h6", { staticClass: "px-4 py-3 mt-4 bg-light" }, [
-                _vm._v("Other Chats")
-              ]),
-              _vm._v(" "),
-              _c("div", { staticClass: "p-2 pb-4" }, [
-                _c(
-                  "a",
-                  {
-                    staticClass: "text-reset notification-item",
-                    attrs: { href: "javascript: void(0);" }
-                  },
-                  [
-                    _c("div", { staticClass: "media" }, [
-                      _c(
-                        "div",
-                        {
-                          staticClass:
-                            "position-relative align-self-center mr-3"
-                        },
-                        [
-                          _c("img", {
-                            staticClass: "rounded-circle avatar-xs",
-                            attrs: {
-                              src: "/vendor/template/images/users/avatar-2.jpg",
-                              alt: "user-pic"
-                            }
-                          }),
-                          _vm._v(" "),
-                          _c("i", {
-                            staticClass: "mdi mdi-circle user-status online"
-                          })
-                        ]
-                      ),
-                      _vm._v(" "),
-                      _c("div", { staticClass: "media-body overflow-hidden" }, [
-                        _c("h6", { staticClass: "mt-0 mb-1" }, [
-                          _vm._v("Jackson Therry")
-                        ]),
-                        _vm._v(" "),
-                        _c("div", { staticClass: "font-size-12 text-muted" }, [
-                          _c("p", { staticClass: "mb-0 text-truncate" }, [
-                            _vm._v(
-                              "Everyone realizes why a new common language."
-                            )
-                          ])
-                        ])
-                      ])
-                    ])
-                  ]
-                ),
-                _vm._v(" "),
-                _c(
-                  "a",
-                  {
-                    staticClass: "text-reset notification-item",
-                    attrs: { href: "javascript: void(0);" }
-                  },
-                  [
-                    _c("div", { staticClass: "media" }, [
-                      _c(
-                        "div",
-                        {
-                          staticClass:
-                            "position-relative align-self-center mr-3"
-                        },
-                        [
-                          _c("img", {
-                            staticClass: "rounded-circle avatar-xs",
-                            attrs: {
-                              src: "/vendor/template/images/users/avatar-4.jpg",
-                              alt: "user-pic"
-                            }
-                          }),
-                          _vm._v(" "),
-                          _c("i", {
-                            staticClass: "mdi mdi-circle user-status away"
-                          })
-                        ]
-                      ),
-                      _vm._v(" "),
-                      _c("div", { staticClass: "media-body overflow-hidden" }, [
-                        _c("h6", { staticClass: "mt-0 mb-1" }, [
-                          _vm._v("Charles Deakin")
-                        ]),
-                        _vm._v(" "),
-                        _c("div", { staticClass: "font-size-12 text-muted" }, [
-                          _c("p", { staticClass: "mb-0 text-truncate" }, [
-                            _vm._v(
-                              "The languages only differ in their grammar."
-                            )
-                          ])
-                        ])
-                      ])
-                    ])
-                  ]
-                ),
-                _vm._v(" "),
-                _c(
-                  "a",
-                  {
-                    staticClass: "text-reset notification-item",
-                    attrs: { href: "javascript: void(0);" }
-                  },
-                  [
-                    _c("div", { staticClass: "media" }, [
-                      _c(
-                        "div",
-                        {
-                          staticClass:
-                            "position-relative align-self-center mr-3"
-                        },
-                        [
-                          _c("img", {
-                            staticClass: "rounded-circle avatar-xs",
-                            attrs: {
-                              src: "/vendor/template/images/users/avatar-5.jpg",
-                              alt: "user-pic"
-                            }
-                          }),
-                          _vm._v(" "),
-                          _c("i", {
-                            staticClass: "mdi mdi-circle user-status online"
-                          })
-                        ]
-                      ),
-                      _vm._v(" "),
-                      _c("div", { staticClass: "media-body overflow-hidden" }, [
-                        _c("h6", { staticClass: "mt-0 mb-1" }, [
-                          _vm._v("Ryan Salting")
-                        ]),
-                        _vm._v(" "),
-                        _c("div", { staticClass: "font-size-12 text-muted" }, [
-                          _c("p", { staticClass: "mb-0 text-truncate" }, [
-                            _vm._v(
-                              "If several languages coalesce the grammar of the resulting."
-                            )
-                          ])
-                        ])
-                      ])
-                    ])
-                  ]
-                ),
-                _vm._v(" "),
-                _c(
-                  "a",
-                  {
-                    staticClass: "text-reset notification-item",
-                    attrs: { href: "javascript: void(0);" }
-                  },
-                  [
-                    _c("div", { staticClass: "media" }, [
-                      _c(
-                        "div",
-                        {
-                          staticClass:
-                            "position-relative align-self-center mr-3"
-                        },
-                        [
-                          _c("img", {
-                            staticClass: "rounded-circle avatar-xs",
-                            attrs: {
-                              src: "/vendor/template/images/users/avatar-6.jpg",
-                              alt: "user-pic"
-                            }
-                          }),
-                          _vm._v(" "),
-                          _c("i", {
-                            staticClass: "mdi mdi-circle user-status online"
-                          })
-                        ]
-                      ),
-                      _vm._v(" "),
-                      _c("div", { staticClass: "media-body overflow-hidden" }, [
-                        _c("h6", { staticClass: "mt-0 mb-1" }, [
-                          _vm._v("Sean Howse")
-                        ]),
-                        _vm._v(" "),
-                        _c("div", { staticClass: "font-size-12 text-muted" }, [
-                          _c("p", { staticClass: "mb-0 text-truncate" }, [
-                            _vm._v("It will seem like simplified English.")
-                          ])
-                        ])
-                      ])
-                    ])
-                  ]
-                ),
-                _vm._v(" "),
-                _c(
-                  "a",
-                  {
-                    staticClass: "text-reset notification-item",
-                    attrs: { href: "javascript: void(0);" }
-                  },
-                  [
-                    _c("div", { staticClass: "media" }, [
-                      _c(
-                        "div",
-                        {
-                          staticClass:
-                            "position-relative align-self-center mr-3"
-                        },
-                        [
-                          _c("img", {
-                            staticClass: "rounded-circle avatar-xs",
-                            attrs: {
-                              src: "/vendor/template/images/users/avatar-7.jpg",
-                              alt: "user-pic"
-                            }
-                          }),
-                          _vm._v(" "),
-                          _c("i", {
-                            staticClass: "mdi mdi-circle user-status busy"
-                          })
-                        ]
-                      ),
-                      _vm._v(" "),
-                      _c("div", { staticClass: "media-body overflow-hidden" }, [
-                        _c("h6", { staticClass: "mt-0 mb-1" }, [
-                          _vm._v("Dean Coward")
-                        ]),
-                        _vm._v(" "),
-                        _c("div", { staticClass: "font-size-12 text-muted" }, [
-                          _c("p", { staticClass: "mb-0 text-truncate" }, [
-                            _vm._v(
-                              "The new common language will be more simple."
-                            )
-                          ])
-                        ])
-                      ])
-                    ])
-                  ]
-                ),
-                _vm._v(" "),
-                _c(
-                  "a",
-                  {
-                    staticClass: "text-reset notification-item",
-                    attrs: { href: "javascript: void(0);" }
-                  },
-                  [
-                    _c("div", { staticClass: "media" }, [
-                      _c(
-                        "div",
-                        {
-                          staticClass:
-                            "position-relative align-self-center mr-3"
-                        },
-                        [
-                          _c("img", {
-                            staticClass: "rounded-circle avatar-xs",
-                            attrs: {
-                              src: "/vendor/template/images/users/avatar-8.jpg",
-                              alt: "user-pic"
-                            }
-                          }),
-                          _vm._v(" "),
-                          _c("i", {
-                            staticClass: "mdi mdi-circle user-status away"
-                          })
-                        ]
-                      ),
-                      _vm._v(" "),
-                      _c("div", { staticClass: "media-body overflow-hidden" }, [
-                        _c("h6", { staticClass: "mt-0 mb-1" }, [
-                          _vm._v("Hayley East")
-                        ]),
-                        _vm._v(" "),
-                        _c("div", { staticClass: "font-size-12 text-muted" }, [
-                          _c("p", { staticClass: "mb-0 text-truncate" }, [
-                            _vm._v(
-                              "One could refuse to pay expensive translators."
-                            )
-                          ])
-                        ])
-                      ])
-                    ])
-                  ]
-                )
               ])
             ]
           ),

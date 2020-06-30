@@ -27,8 +27,8 @@
                             <span class="mdi mdi-magnify"></span>
                         </div>
                     </form>
-                    <h6 class="px-4 py-3 mt-2 bg-light">Group Chats</h6>
-                    <div class="p-2">
+                    <!-- <h6 class="px-4 py-3 mt-2 bg-light">Group Chats</h6> -->
+                    <!-- <div class="p-2">
                         <a href="javascript: void(0);" class="text-reset notification-item pl-3 mb-2 d-block">
                             <i class="mdi mdi-checkbox-blank-circle-outline mr-1 text-success"></i>
                             <span class="mb-0 mt-1">App Development</span>
@@ -45,8 +45,8 @@
                             <i class="mdi mdi-checkbox-blank-circle-outline mr-1"></i>
                             <span class="mb-0 mt-1">Freelance</span>
                         </a>
-                    </div>
-                    <h6 class="px-4 py-3 mt-4 bg-light">Favourites</h6>
+                    </div> -->
+                    <!-- <h6 class="px-4 py-3 mt-4 bg-light">Favourites</h6>
                     <div class="p-2">
                         <a href="javascript: void(0);" class="text-reset notification-item">
                             <div class="media">
@@ -177,7 +177,7 @@
                                 </div>
                             </div>
                         </a>
-                    </div>
+                    </div> -->
                 </div>
                 <div class="tab-pane" id="tasks-tab" role="tabpanel">
                     <h6 class="p-3 mb-0 mt-4 bg-light">Working Tasks</h6>
