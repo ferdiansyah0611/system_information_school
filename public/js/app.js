@@ -96248,7 +96248,7 @@ var staticRenderFns = [
     var _c = _vm._self._c || _h
     return _c("div", { staticClass: "col-md-8" }, [
       _c("h4", { staticClass: "page-title mb-1" }, [
-        _vm._v("Manage Data Study")
+        _vm._v("Manage Data Homeroom Teacher")
       ]),
       _vm._v(" "),
       _c("ol", { staticClass: "breadcrumb m-0" }, [
@@ -96258,7 +96258,9 @@ var staticRenderFns = [
           ])
         ]),
         _vm._v(" "),
-        _c("li", { staticClass: "breadcrumb-item active" }, [_vm._v("Study")])
+        _c("li", { staticClass: "breadcrumb-item active" }, [
+          _vm._v("Homeroom Teacher")
+        ])
       ])
     ])
   },
@@ -100525,7 +100527,7 @@ var staticRenderFns = [
     var _c = _vm._self._c || _h
     return _c("div", { staticClass: "col-md-8" }, [
       _c("h4", { staticClass: "page-title mb-1" }, [
-        _vm._v("Manage Data Class")
+        _vm._v("Manage Data Teacher")
       ]),
       _vm._v(" "),
       _c("ol", { staticClass: "breadcrumb m-0" }, [
@@ -100535,7 +100537,7 @@ var staticRenderFns = [
           ])
         ]),
         _vm._v(" "),
-        _c("li", { staticClass: "breadcrumb-item active" }, [_vm._v("Class")])
+        _c("li", { staticClass: "breadcrumb-item active" }, [_vm._v("Teacher")])
       ])
     ])
   },

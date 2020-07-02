@@ -4,10 +4,10 @@
             <div class="container-fluid">
                 <div class="row align-items-center">
                     <div class="col-md-8">
-                        <h4 class="page-title mb-1">Manage Data Class</h4>
+                        <h4 class="page-title mb-1">Manage Data Teacher</h4>
                         <ol class="breadcrumb m-0">
                             <li class="breadcrumb-item"><a href="javascript: void(0);">Manage</a></li>
-                            <li class="breadcrumb-item active">Class</li>
+                            <li class="breadcrumb-item active">Teacher</li>
                         </ol>
                     </div>
                     <div class="col-md-4">
