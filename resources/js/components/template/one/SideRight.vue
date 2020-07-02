@@ -27,157 +27,28 @@
                             <span class="mdi mdi-magnify"></span>
                         </div>
                     </form>
-                    <!-- <h6 class="px-4 py-3 mt-2 bg-light">Group Chats</h6> -->
-                    <!-- <div class="p-2">
-                        <a href="javascript: void(0);" class="text-reset notification-item pl-3 mb-2 d-block">
-                            <i class="mdi mdi-checkbox-blank-circle-outline mr-1 text-success"></i>
-                            <span class="mb-0 mt-1">App Development</span>
-                        </a>
-                        <a href="javascript: void(0);" class="text-reset notification-item pl-3 mb-2 d-block">
-                            <i class="mdi mdi-checkbox-blank-circle-outline mr-1 text-warning"></i>
-                            <span class="mb-0 mt-1">Office Work</span>
-                        </a>
-                        <a href="javascript: void(0);" class="text-reset notification-item pl-3 mb-2 d-block">
-                            <i class="mdi mdi-checkbox-blank-circle-outline mr-1 text-danger"></i>
-                            <span class="mb-0 mt-1">Personal Group</span>
-                        </a>
-                        <a href="javascript: void(0);" class="text-reset notification-item pl-3 d-block">
-                            <i class="mdi mdi-checkbox-blank-circle-outline mr-1"></i>
-                            <span class="mb-0 mt-1">Freelance</span>
-                        </a>
-                    </div> -->
-                    <!-- <h6 class="px-4 py-3 mt-4 bg-light">Favourites</h6>
-                    <div class="p-2">
-                        <a href="javascript: void(0);" class="text-reset notification-item">
-                            <div class="media">
-                                <div class="position-relative align-self-center mr-3">
-                                    <img src="/vendor/template/images/users/avatar-10.jpg" class="rounded-circle avatar-xs" alt="user-pic">
-                                    <i class="mdi mdi-circle user-status online"></i>
-                                </div>
-                                <div class="media-body overflow-hidden">
-                                    <h6 class="mt-0 mb-1">Andrew Mackie</h6>
-                                    <div class="font-size-12 text-muted">
-                                        <p class="mb-0 text-truncate">It will seem like simplified English.</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </a>
-                        <a href="javascript: void(0);" class="text-reset notification-item">
-                            <div class="media">
-                                <div class="position-relative align-self-center mr-3">
-                                    <img src="/vendor/template/images/users/avatar-1.jpg" class="rounded-circle avatar-xs" alt="user-pic">
-                                    <i class="mdi mdi-circle user-status away"></i>
-                                </div>
-                                <div class="media-body overflow-hidden">
-                                    <h6 class="mt-0 mb-1">Rory Dalyell</h6>
-                                    <div class="font-size-12 text-muted">
-                                        <p class="mb-0 text-truncate">To an English person, it will seem like simplified</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </a>
-                        <a href="javascript: void(0);" class="text-reset notification-item">
-                            <div class="media">
-                                <div class="position-relative align-self-center mr-3">
-                                    <img src="/vendor/template/images/users/avatar-9.jpg" class="rounded-circle avatar-xs" alt="user-pic">
-                                    <i class="mdi mdi-circle user-status busy"></i>
-                                </div>
-                                <div class="media-body overflow-hidden">
-                                    <h6 class="mt-0 mb-1">Jaxon Dunhill</h6>
-                                    <div class="font-size-12 text-muted">
-                                        <p class="mb-0 text-truncate">To achieve this, it would be necessary.</p>
-                                    </div>
-                                </div>
-                            </div>
+                    <div class="w-100 float-left p-2">
+                        <button class="btn btn-primary waves-effect waves-light col-12 float-left" v-on:click="modalNoteAdd">Create note</button>
+                    </div>
+                    <div v-if="loading" class="bs-spinner text-center">
+                        <div class="spinner-grow text-danger mr-2 mt-2" role="status">
+                            <span class="sr-only">Loading...</span>
+                        </div>
+                        <div class="spinner-grow text-warning mr-2 mt-2" role="status">
+                            <span class="sr-only">Loading...</span>
+                        </div>
+                        <div class="spinner-grow text-success mr-2 mt-2" role="status">
+                            <span class="sr-only">Loading...</span>
+                        </div>
+                    </div>
+                    <div class="w-100 float-left" v-for="data in PaginateNote.data" :key="data.id">
+                        <a href="javascript: void(0);" class="text-reset notification-item pl-3 mb-2 d-block" v-on:click="modalNoteEdit(data.id)">
+                            <div class="dropdown-divider" style="border-top-color: #bdbdbd;"></div>
+                            <span class="mb-0">{{data.title}}</span>
+                            <p class="text-truncate">{{data.note}}</p>
                         </a>
                     </div>
-                    <h6 class="px-4 py-3 mt-4 bg-light">Other Chats</h6>
-                    <div class="p-2 pb-4">
-                        <a href="javascript: void(0);" class="text-reset notification-item">
-                            <div class="media">
-                                <div class="position-relative align-self-center mr-3">
-                                    <img src="/vendor/template/images/users/avatar-2.jpg" class="rounded-circle avatar-xs" alt="user-pic">
-                                    <i class="mdi mdi-circle user-status online"></i>
-                                </div>
-                                <div class="media-body overflow-hidden">
-                                    <h6 class="mt-0 mb-1">Jackson Therry</h6>
-                                    <div class="font-size-12 text-muted">
-                                        <p class="mb-0 text-truncate">Everyone realizes why a new common language.</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </a>
-                        <a href="javascript: void(0);" class="text-reset notification-item">
-                            <div class="media">
-                                <div class="position-relative align-self-center mr-3">
-                                    <img src="/vendor/template/images/users/avatar-4.jpg" class="rounded-circle avatar-xs" alt="user-pic">
-                                    <i class="mdi mdi-circle user-status away"></i>
-                                </div>
-                                <div class="media-body overflow-hidden">
-                                    <h6 class="mt-0 mb-1">Charles Deakin</h6>
-                                    <div class="font-size-12 text-muted">
-                                        <p class="mb-0 text-truncate">The languages only differ in their grammar.</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </a>
-                        <a href="javascript: void(0);" class="text-reset notification-item">
-                            <div class="media">
-                                <div class="position-relative align-self-center mr-3">
-                                    <img src="/vendor/template/images/users/avatar-5.jpg" class="rounded-circle avatar-xs" alt="user-pic">
-                                    <i class="mdi mdi-circle user-status online"></i>
-                                </div>
-                                <div class="media-body overflow-hidden">
-                                    <h6 class="mt-0 mb-1">Ryan Salting</h6>
-                                    <div class="font-size-12 text-muted">
-                                        <p class="mb-0 text-truncate">If several languages coalesce the grammar of the resulting.</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </a>
-                        <a href="javascript: void(0);" class="text-reset notification-item">
-                            <div class="media">
-                                <div class="position-relative align-self-center mr-3">
-                                    <img src="/vendor/template/images/users/avatar-6.jpg" class="rounded-circle avatar-xs" alt="user-pic">
-                                    <i class="mdi mdi-circle user-status online"></i>
-                                </div>
-                                <div class="media-body overflow-hidden">
-                                    <h6 class="mt-0 mb-1">Sean Howse</h6>
-                                    <div class="font-size-12 text-muted">
-                                        <p class="mb-0 text-truncate">It will seem like simplified English.</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </a>
-                        <a href="javascript: void(0);" class="text-reset notification-item">
-                            <div class="media">
-                                <div class="position-relative align-self-center mr-3">
-                                    <img src="/vendor/template/images/users/avatar-7.jpg" class="rounded-circle avatar-xs" alt="user-pic">
-                                    <i class="mdi mdi-circle user-status busy"></i>
-                                </div>
-                                <div class="media-body overflow-hidden">
-                                    <h6 class="mt-0 mb-1">Dean Coward</h6>
-                                    <div class="font-size-12 text-muted">
-                                        <p class="mb-0 text-truncate">The new common language will be more simple.</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </a>
-                        <a href="javascript: void(0);" class="text-reset notification-item">
-                            <div class="media">
-                                <div class="position-relative align-self-center mr-3">
-                                    <img src="/vendor/template/images/users/avatar-8.jpg" class="rounded-circle avatar-xs" alt="user-pic">
-                                    <i class="mdi mdi-circle user-status away"></i>
-                                </div>
-                                <div class="media-body overflow-hidden">
-                                    <h6 class="mt-0 mb-1">Hayley East</h6>
-                                    <div class="font-size-12 text-muted">
-                                        <p class="mb-0 text-truncate">One could refuse to pay expensive translators.</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </a>
-                    </div> -->
+                    <pagination :data="PaginateNote" @pagination-change-page="appNote"></pagination>
                 </div>
                 <div class="tab-pane" id="tasks-tab" role="tabpanel">
                     <h6 class="p-3 mb-0 mt-4 bg-light">Working Tasks</h6>
@@ -245,22 +116,60 @@
                             <label class="custom-control-label font-weight-normal" for="settings-check3">Auto backup</label>
                         </div>
                     </div>
-                    <h6 class="px-4 py-3 mt-2 bg-light">Advanced Settings</h6>
-                    <div class="p-4">
-                        <h6 class="font-weight-medium">Application Alerts</h6>
-                        <div class="custom-control custom-switch mb-1">
-                            <input type="checkbox" class="custom-control-input" id="settings-check4" name="settings-check4" checked="">
-                            <label class="custom-control-label font-weight-normal" for="settings-check4">Email Notifications</label>
+                </div>
+            </div>
+        </div>
+        <!-- modal add note-->
+        <div class="modal fade" id="addNote" tabindex="-1" role="dialog" aria-labelledby="modal-add-title" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-scrollable">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title mt-0" id="modal-add-title">Add data</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label for="title">Title</label>
+                            <input type="text" id="title" class="form-control" v-model="addNotes.title">
                         </div>
-                        <div class="custom-control custom-switch mb-1">
-                            <input type="checkbox" class="custom-control-input" id="settings-check5" name="settings-check5">
-                            <label class="custom-control-label font-weight-normal" for="settings-check5">SMS Notifications</label>
+                        <div class="form-group">
+                            <label for="note">Note</label>
+                            <textarea type="text" id="note" class="form-control" v-model="addNotes.note"></textarea>
                         </div>
-                        <h6 class="mt-4">API</h6>
-                        <div class="custom-control custom-switch mb-1">
-                            <input type="checkbox" class="custom-control-input" id="settings-check6" name="settings-check6">
-                            <label class="custom-control-label font-weight-normal" for="settings-check6">Enable access</label>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-primary" v-on:click="createNote">Save changes</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- modal update note-->
+        <div class="modal fade" id="editNote" tabindex="-1" role="dialog" aria-labelledby="modal-add-title" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-scrollable">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title mt-0" id="modal-add-title">Edit data</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label for="title">Title</label>
+                            <input type="text" id="title" class="form-control" v-model="editNotes.title">
                         </div>
+                        <div class="form-group">
+                            <label for="note">Note</label>
+                            <textarea type="text" id="note" class="form-control" v-model="editNotes.note"></textarea>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-danger" v-on:click="deleteNote">Delete</button>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-primary" v-on:click="createNote">Save changes</button>
                     </div>
                 </div>
             </div>
@@ -268,6 +177,108 @@
     </div>
 </template>
 <script>
+import Swal from 'sweetalert2';
 export default{
+    data() {
+        return {
+            PaginateNote : {},
+            addNotes : {
+                title : '',
+                note : ''
+            },
+            editNotes : {
+                id : '',
+                title : '',
+                note : ''
+            },
+            loading : false
+        }
+    },
+    created() {
+        this.appNote();
+    },
+    methods : {
+        bugSweetAlert() {
+            document.body.querySelector('button.swal2-confirm').addEventListener('click', function() {
+                document.body.style.paddingRight = '0';
+            });
+        },
+        async appNote(paginate = 1) {
+            this.loading = true;
+            await axios({
+                url: '/api/note',
+                method: 'get',
+                headers : {
+                    'Authorization' : 'Bearer ' + this.$store.state.Users.success.token
+                }
+            }).then(result => {
+                this.PaginateNote = result.data;
+                this.loading = false;
+            }).catch(error => {
+                console.error(error.message);
+            });
+        },
+        async createNote() {
+            await axios({
+                url: '/api/note',
+                method: 'post',
+                data : {
+                    title : this.addNotes.title,
+                    note : this.addNotes.note
+                },
+                headers : {
+                    'Authorization' : 'Bearer ' + this.$store.state.Users.success.token
+                }
+            }).then(result => {
+                $('#addNote').modal('hide');
+                Swal.fire('Success!', result.data.message, 'success', 3000, false);
+                this.appNote();
+            }).catch(error => {
+                $('#addNote').modal('hide');
+                Swal.fire('Error!', error.message, 'error');
+            });
+        },
+        modalNoteAdd() {
+            $('#addNote').modal('show');
+            document.body.classList.remove('right-bar-enabled');
+        },
+        async modalNoteEdit(id) {
+            this.editNotes.id = id;
+            await axios({
+                url : '/api/note/' + id,
+                method : 'get',
+                headers : {
+                    'Authorization' : 'Bearer ' + this.$store.state.Users.success.token
+                }
+            }).then(result => {
+                document.body.classList.remove('right-bar-enabled');
+                $('#editNote').modal('show');
+                result.data.forEach((val, key) => {
+                    this.editNotes.title = val.title;
+                    this.editNotes.note = val.note;
+                });
+                this.appNote();
+            }).catch(error => {
+                $('#editNote').modal('hide');
+                Swal.fire('Error!', error.message, 'error');
+            });
+        },
+        async deleteNote() {
+            await axios({
+                url: '/api/note/' + this.editNotes.id,
+                method: 'delete',
+                headers : {
+                    'Authorization' : 'Bearer ' + this.$store.state.Users.success.token
+                }
+            }).then(result => {
+                $('#editNote').modal('hide');
+                Swal.fire('Success!', result.data.message, 'success');
+                this.appNote();
+            }).catch(error => {
+                $('#editNote').modal('hide');
+                Swal.fire('Error!', error.message, 'error');
+            });
+        }
+    }
 }
 </script>

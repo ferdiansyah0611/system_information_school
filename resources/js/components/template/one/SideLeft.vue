@@ -7,7 +7,7 @@
                     <li class="menu-title">Menu</li>
                     <li>
                         <router-link to="/admin/dashboard" class="waves-effect">
-                            <div class="d-inline-block icons-sm mr-1"><i class="fas fa-chart-line" style="color: #3051d3;"></i></div><span class="badge badge-pill badge-success float-right">3</span>
+                            <div class="d-inline-block icons-sm mr-1"><i class="fas fa-chart-line" style="color: #3051d3;"></i></div>
                             <span>Dashboard</span>
                         </router-link>
                     </li>

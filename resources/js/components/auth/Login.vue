@@ -7,7 +7,7 @@
                         <div class="card">
                             <div class="card-body p-4">
                                 <div class="p-2">
-                                    <h5 class="mb-5 text-center">Sign in to continue to web academic By Ferdiansyah.</h5>
+                                    <h5 class="mb-5 text-center">Sign in</h5>
                                     <form class="form-horizontal" @submit.prevent="requestLogin">
                                         <div class="row">
                                             <div class="col-md-12">
@@ -88,7 +88,7 @@ export default {
     		}).then(result => {
                 this.$store.commit('UsersData', JSON.stringify(result.data));
                 window.localStorage.setItem('users', JSON.stringify(result.data));
-                if(result.data.user.role == 'admin') {
+                if(result.data.user.role == 'admin' || result.data.user.role == 'administrator') {
     			     return window.location.href = '/admin';
 
                 }else{

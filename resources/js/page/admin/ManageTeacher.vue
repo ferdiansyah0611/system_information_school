@@ -57,7 +57,18 @@
                                 </select>
                             </div>
                             <div class="table-responsive">
-                                <table class="table mb-0">
+                                <div v-if="loading" class="d-flex justify-content-center mt-4">
+                                    <div class="spinner-grow text-danger mr-2 mt-2" role="status">
+                                        <span class="sr-only">Loading...</span>
+                                    </div>
+                                    <div class="spinner-grow text-warning mr-2 mt-2" role="status">
+                                        <span class="sr-only">Loading...</span>
+                                    </div>
+                                    <div class="spinner-grow text-success mr-2 mt-2" role="status">
+                                        <span class="sr-only">Loading...</span>
+                                    </div>
+                                </div>
+                                <table v-if="loading == false" class="table mb-0">
                                     <thead>
                                         <tr>
                                             <th>#</th>
@@ -86,7 +97,7 @@
                                         </tr>
                                     </tbody>
                                 </table>
-                                <pagination :data="PaginateClass" @pagination-change-page="appClass"></pagination>
+                                <pagination v-if="loading == false" :data="PaginateClass" @pagination-change-page="appClass"></pagination>
                             </div>
                         </div>
                     </div>
@@ -202,7 +213,8 @@ export default {
                 sc_school_id: '',
                 title : '',
                 graduate : ''
-            }
+            },
+            loading : false
         }
     },
     created() {
@@ -233,6 +245,7 @@ export default {
             var data = this.table.searching;
             var order = this.table.orderable.split(' ');
             var columns = this.table.columns;
+            this.loading = true;
             /*search ''*/
             if (data == '') {
                 await axios({
@@ -244,6 +257,7 @@ export default {
                 }).then(result => {
                     this.TableClass = result.data.data;
                     this.PaginateClass = result.data;
+                    this.loading = false;
                 }).catch(error => {
                     this.serverErrorPage(error, error.message);
                 });
@@ -258,6 +272,7 @@ export default {
                 }).then(result => {
                     this.TableClass = result.data.data;
                     this.PaginateClass = result.data;
+                    this.loading = false;
                 }).catch(error => {
                     this.serverErrorPage(error, error.message);
                 });
@@ -267,6 +282,7 @@ export default {
         async search(data, paginate = 1) {
             var order = this.table.orderable.split(' ');
             var columns = this.table.columns;
+            this.loading = true;
             /*search ''*/
             if (data == '') {
                 await axios({
@@ -278,6 +294,7 @@ export default {
                 }).then(result => {
                     this.TableClass = result.data.data;
                     this.PaginateClass = result.data;
+                    this.loading = false;
                 }).catch(error => {
                     this.Error(error, error.message);
                 });
@@ -292,6 +309,7 @@ export default {
                 }).then(result => {
                     this.TableClass = result.data.data;
                     this.PaginateClass = result.data;
+                    this.loading = false;
                 }).catch(error => {
                     this.Error(error, error.message);
                 });
@@ -302,6 +320,7 @@ export default {
             var data = this.table.searching;
             var type = order.split(' ');
             var columns = this.table.columns;
+            this.loading = true;
             /*search ''*/
             if (data == '') {
                 await axios({
@@ -313,6 +332,7 @@ export default {
                 }).then(result => {
                     this.TableClass = result.data.data;
                     this.PaginateClass = result.data;
+                    this.loading = false;
                 }).catch(error => {
                     this.Error(error, error.message);
                 });
@@ -327,6 +347,7 @@ export default {
                 }).then(result => {
                     this.TableClass = result.data.data;
                     this.PaginateClass = result.data;
+                    this.loading = false;
                 }).catch(error => {
                     this.Error(error, error.message);
                 });
@@ -336,6 +357,7 @@ export default {
         async columns(columns, paginate = 1) {
             var data = this.table.searching;
             var order = this.table.orderable.split(' ');
+            this.loading = true;
             /*search ''*/
             if (data == '') {
                 await axios({
@@ -347,6 +369,7 @@ export default {
                 }).then(result => {
                     this.TableClass = result.data.data;
                     this.PaginateClass = result.data;
+                    this.loading = false;
                 }).catch(error => {
                     this.Error(error, error.message);
                 });
@@ -361,6 +384,7 @@ export default {
                 }).then(result => {
                     this.TableClass = result.data.data;
                     this.PaginateClass = result.data;
+                    this.loading = false;
                 }).catch(error => {
                     this.Error(error, error.message);
                 });

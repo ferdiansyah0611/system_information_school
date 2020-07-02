@@ -15,7 +15,7 @@ class CreateScSchoolsTable extends Migration
     {
         Schema::create('sc_schools', function (Blueprint $table) {
             $table->id();
-            $table->string('user_id')->unsigned();//user with role admin
+            $table->bigInteger('user_id')->unsigned();/*user with role admin*/
             $table->string('name')->unique();
             $table->string('description');
             $table->string('type');

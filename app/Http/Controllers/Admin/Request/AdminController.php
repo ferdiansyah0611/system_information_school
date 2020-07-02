@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Carbon\Carbon;
 use App\Models\ScSchool;
 use App\Models\ScStudent;
+use Mail;
 class AdminController extends Controller
 {
     public function dashboard()
@@ -35,5 +36,16 @@ class AdminController extends Controller
     		'year_' . ($date + 8) => ScStudent::whereYear('created_at', $date + 8)->count(),
     	];
     	return response()->json($app);
+    }
+    public function sending()
+    {
+    	$to_name = 'Ferdiansyah';
+		$to_email = 'ferdisafina123@gmail.com';
+		$data = array('name' => "Ferdiansyah", 'body' => "Testing");
+		Mail::send('welcome', $data, function($message) use ($to_name, $to_email) {
+			$message->to($to_email, $to_name);
+			$message->subject('Test Mail');
+			$message->from('fer@lavosted','Test Mail');
+		});
     }
 }

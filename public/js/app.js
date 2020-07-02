@@ -2027,7 +2027,7 @@ var UserData = JSON.parse(window.localStorage.getItem('users'));
 
                   window.localStorage.setItem('users', JSON.stringify(result.data));
 
-                  if (result.data.user.role == 'admin') {
+                  if (result.data.user.role == 'admin' || result.data.user.role == 'administrator') {
                     return window.location.href = '/admin';
                   } else {
                     return window.location.href = '/';
@@ -3179,6 +3179,16 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var sweetalert2__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! sweetalert2 */ "./node_modules/sweetalert2/dist/sweetalert2.all.js");
+/* harmony import */ var sweetalert2__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(sweetalert2__WEBPACK_IMPORTED_MODULE_1__);
+
+
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
 //
 //
 //
@@ -3357,98 +3367,180 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-/* harmony default export */ __webpack_exports__["default"] = ({});
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  data: function data() {
+    return {
+      PaginateNote: {},
+      addNotes: {
+        title: '',
+        note: ''
+      },
+      editNotes: {
+        id: '',
+        title: '',
+        note: ''
+      },
+      loading: false
+    };
+  },
+  created: function created() {
+    this.appNote();
+  },
+  methods: {
+    bugSweetAlert: function bugSweetAlert() {
+      document.body.querySelector('button.swal2-confirm').addEventListener('click', function () {
+        document.body.style.paddingRight = '0';
+      });
+    },
+    appNote: function appNote() {
+      var _arguments = arguments,
+          _this = this;
+
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
+        var paginate;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
+                paginate = _arguments.length > 0 && _arguments[0] !== undefined ? _arguments[0] : 1;
+                _this.loading = true;
+                _context.next = 4;
+                return axios({
+                  url: '/api/note',
+                  method: 'get',
+                  headers: {
+                    'Authorization': 'Bearer ' + _this.$store.state.Users.success.token
+                  }
+                }).then(function (result) {
+                  _this.PaginateNote = result.data;
+                  _this.loading = false;
+                })["catch"](function (error) {
+                  console.error(error.message);
+                });
+
+              case 4:
+              case "end":
+                return _context.stop();
+            }
+          }
+        }, _callee);
+      }))();
+    },
+    createNote: function createNote() {
+      var _this2 = this;
+
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2() {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
+          while (1) {
+            switch (_context2.prev = _context2.next) {
+              case 0:
+                _context2.next = 2;
+                return axios({
+                  url: '/api/note',
+                  method: 'post',
+                  data: {
+                    title: _this2.addNotes.title,
+                    note: _this2.addNotes.note
+                  },
+                  headers: {
+                    'Authorization': 'Bearer ' + _this2.$store.state.Users.success.token
+                  }
+                }).then(function (result) {
+                  $('#addNote').modal('hide');
+                  sweetalert2__WEBPACK_IMPORTED_MODULE_1___default.a.fire('Success!', result.data.message, 'success', 3000, false);
+
+                  _this2.appNote();
+                })["catch"](function (error) {
+                  $('#addNote').modal('hide');
+                  sweetalert2__WEBPACK_IMPORTED_MODULE_1___default.a.fire('Error!', error.message, 'error');
+                });
+
+              case 2:
+              case "end":
+                return _context2.stop();
+            }
+          }
+        }, _callee2);
+      }))();
+    },
+    modalNoteAdd: function modalNoteAdd() {
+      $('#addNote').modal('show');
+      document.body.classList.remove('right-bar-enabled');
+    },
+    modalNoteEdit: function modalNoteEdit(id) {
+      var _this3 = this;
+
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee3() {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee3$(_context3) {
+          while (1) {
+            switch (_context3.prev = _context3.next) {
+              case 0:
+                _this3.editNotes.id = id;
+                _context3.next = 3;
+                return axios({
+                  url: '/api/note/' + id,
+                  method: 'get',
+                  headers: {
+                    'Authorization': 'Bearer ' + _this3.$store.state.Users.success.token
+                  }
+                }).then(function (result) {
+                  document.body.classList.remove('right-bar-enabled');
+                  $('#editNote').modal('show');
+                  result.data.forEach(function (val, key) {
+                    _this3.editNotes.title = val.title;
+                    _this3.editNotes.note = val.note;
+                  });
+
+                  _this3.appNote();
+                })["catch"](function (error) {
+                  $('#editNote').modal('hide');
+                  sweetalert2__WEBPACK_IMPORTED_MODULE_1___default.a.fire('Error!', error.message, 'error');
+                });
+
+              case 3:
+              case "end":
+                return _context3.stop();
+            }
+          }
+        }, _callee3);
+      }))();
+    },
+    deleteNote: function deleteNote() {
+      var _this4 = this;
+
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee4() {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee4$(_context4) {
+          while (1) {
+            switch (_context4.prev = _context4.next) {
+              case 0:
+                _context4.next = 2;
+                return axios({
+                  url: '/api/note/' + _this4.editNotes.id,
+                  method: 'delete',
+                  headers: {
+                    'Authorization': 'Bearer ' + _this4.$store.state.Users.success.token
+                  }
+                }).then(function (result) {
+                  $('#editNote').modal('hide');
+                  sweetalert2__WEBPACK_IMPORTED_MODULE_1___default.a.fire('Success!', result.data.message, 'success');
+
+                  _this4.appNote();
+                })["catch"](function (error) {
+                  $('#editNote').modal('hide');
+                  sweetalert2__WEBPACK_IMPORTED_MODULE_1___default.a.fire('Error!', error.message, 'error');
+                });
+
+              case 2:
+              case "end":
+                return _context4.stop();
+            }
+          }
+        }, _callee4);
+      }))();
+    }
+  }
+});
 
 /***/ }),
 
@@ -3895,6 +3987,17 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   beforeMount: function beforeMount() {
@@ -3927,7 +4030,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         title: '',
         description: '',
         score: ''
-      }
+      },
+      loading: false
     };
   },
   created: function created() {
@@ -4012,14 +4116,15 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 data = _this.table.searching;
                 order = _this.table.orderable.split(' ');
                 columns = _this.table.columns;
+                _this.loading = true;
                 /*search ''*/
 
                 if (!(data == '')) {
-                  _context4.next = 9;
+                  _context4.next = 10;
                   break;
                 }
 
-                _context4.next = 7;
+                _context4.next = 8;
                 return axios({
                   url: '/api/assessment-task?page=' + paginate + '&orderby=' + order[0] + '&type=' + order[1] + '&columns=' + columns + '&search=default',
                   method: 'get',
@@ -4029,16 +4134,17 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 }).then(function (result) {
                   _this.TableSchool = result.data.data;
                   _this.PaginateSchool = result.data;
+                  _this.loading = false;
                 })["catch"](function (error) {
                   _this.serverErrorPage(error, error.message);
                 });
 
-              case 7:
-                _context4.next = 11;
+              case 8:
+                _context4.next = 12;
                 break;
 
-              case 9:
-                _context4.next = 11;
+              case 10:
+                _context4.next = 12;
                 return axios({
                   url: '/api/assessment-task?page=' + paginate + '&orderby=' + order[0] + '&type=' + order[1] + '&columns=' + columns + '&search=' + data,
                   method: 'get',
@@ -4048,11 +4154,12 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 }).then(function (result) {
                   _this.TableSchool = result.data.data;
                   _this.PaginateSchool = result.data;
+                  _this.loading = false;
                 })["catch"](function (error) {
                   _this.serverErrorPage(error, error.message);
                 });
 
-              case 11:
+              case 12:
               case "end":
                 return _context4.stop();
             }
@@ -4075,14 +4182,15 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 paginate = _arguments2.length > 1 && _arguments2[1] !== undefined ? _arguments2[1] : 1;
                 order = _this2.table.orderable.split(' ');
                 columns = _this2.table.columns;
+                _this2.loading = true;
                 /*search ''*/
 
                 if (!(data == '')) {
-                  _context5.next = 8;
+                  _context5.next = 9;
                   break;
                 }
 
-                _context5.next = 6;
+                _context5.next = 7;
                 return axios({
                   url: '/api/assessment-task?page=' + paginate + '&orderby=' + order[0] + '&type=' + order[1] + '&columns=' + columns + '&search=default',
                   method: 'get',
@@ -4092,16 +4200,17 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 }).then(function (result) {
                   _this2.TableSchool = result.data.data;
                   _this2.PaginateSchool = result.data;
+                  _this2.loading = false;
                 })["catch"](function (error) {
                   _this2.Error(error, error.message);
                 });
 
-              case 6:
-                _context5.next = 10;
+              case 7:
+                _context5.next = 11;
                 break;
 
-              case 8:
-                _context5.next = 10;
+              case 9:
+                _context5.next = 11;
                 return axios({
                   url: '/api/assessment-task?page=' + paginate + '&orderby=' + order[0] + '&type=' + order[1] + '&columns=' + columns + '&search=' + data,
                   method: 'get',
@@ -4111,11 +4220,12 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 }).then(function (result) {
                   _this2.TableSchool = result.data.data;
                   _this2.PaginateSchool = result.data;
+                  _this2.loading = false;
                 })["catch"](function (error) {
                   _this2.Error(error, error.message);
                 });
 
-              case 10:
+              case 11:
               case "end":
                 return _context5.stop();
             }
@@ -4139,14 +4249,15 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 data = _this3.table.searching;
                 type = order.split(' ');
                 columns = _this3.table.columns;
+                _this3.loading = true;
                 /*search ''*/
 
                 if (!(data == '')) {
-                  _context6.next = 9;
+                  _context6.next = 10;
                   break;
                 }
 
-                _context6.next = 7;
+                _context6.next = 8;
                 return axios({
                   url: '/api/assessment-task?page=' + paginate + '&orderby=' + type[0] + '&type=' + type[1] + '&columns=' + columns + '&search=default',
                   method: 'get',
@@ -4156,16 +4267,17 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 }).then(function (result) {
                   _this3.TableSchool = result.data.data;
                   _this3.PaginateSchool = result.data;
+                  _this3.loading = false;
                 })["catch"](function (error) {
                   _this3.Error(error, error.message);
                 });
 
-              case 7:
-                _context6.next = 11;
+              case 8:
+                _context6.next = 12;
                 break;
 
-              case 9:
-                _context6.next = 11;
+              case 10:
+                _context6.next = 12;
                 return axios({
                   url: '/api/assessment-task?page=' + paginate + '&orderby=' + type[0] + '&type=' + type[1] + '&columns=' + columns + '&search=' + data,
                   method: 'get',
@@ -4175,11 +4287,12 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 }).then(function (result) {
                   _this3.TableSchool = result.data.data;
                   _this3.PaginateSchool = result.data;
+                  _this3.loading = false;
                 })["catch"](function (error) {
                   _this3.Error(error, error.message);
                 });
 
-              case 11:
+              case 12:
               case "end":
                 return _context6.stop();
             }
@@ -4202,14 +4315,15 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 paginate = _arguments4.length > 1 && _arguments4[1] !== undefined ? _arguments4[1] : 1;
                 data = _this4.table.searching;
                 order = _this4.table.orderable.split(' ');
+                _this4.loading = true;
                 /*search ''*/
 
                 if (!(data == '')) {
-                  _context7.next = 8;
+                  _context7.next = 9;
                   break;
                 }
 
-                _context7.next = 6;
+                _context7.next = 7;
                 return axios({
                   url: '/api/assessment-task?page=' + paginate + '&orderby=' + order[0] + '&type=' + order[1] + '&columns=' + _columns + '&search=default',
                   method: 'get',
@@ -4219,16 +4333,17 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 }).then(function (result) {
                   _this4.TableSchool = result.data.data;
                   _this4.PaginateSchool = result.data;
+                  _this4.loading = false;
                 })["catch"](function (error) {
                   _this4.Error(error, error.message);
                 });
 
-              case 6:
-                _context7.next = 10;
+              case 7:
+                _context7.next = 11;
                 break;
 
-              case 8:
-                _context7.next = 10;
+              case 9:
+                _context7.next = 11;
                 return axios({
                   url: '/api/assessment-task?page=' + paginate + '&orderby=' + order[0] + '&type=' + order[1] + '&columns=' + _columns + '&search=' + data,
                   method: 'get',
@@ -4238,11 +4353,12 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 }).then(function (result) {
                   _this4.TableSchool = result.data.data;
                   _this4.PaginateSchool = result.data;
+                  _this4.loading = false;
                 })["catch"](function (error) {
                   _this4.Error(error, error.message);
                 });
 
-              case 10:
+              case 11:
               case "end":
                 return _context7.stop();
             }
@@ -4789,6 +4905,17 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   beforeMount: function beforeMount() {
@@ -4858,7 +4985,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         k4_pr: '',
         status: '',
         predicate: ''
-      }, _defineProperty(_editReportCard, "period", ''), _defineProperty(_editReportCard, "sc_study_id", ''), _editReportCard)
+      }, _defineProperty(_editReportCard, "period", ''), _defineProperty(_editReportCard, "sc_study_id", ''), _editReportCard),
+      loading: false
     };
   },
   created: function created() {
@@ -4944,14 +5072,15 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
                 data = _this.table.searching;
                 order = _this.table.orderable.split(' ');
                 columns = _this.table.columns;
+                _this.loading = true;
                 /*search ''*/
 
                 if (!(data == '')) {
-                  _context4.next = 9;
+                  _context4.next = 10;
                   break;
                 }
 
-                _context4.next = 7;
+                _context4.next = 8;
                 return axios({
                   url: '/api/report-card?page=' + paginate + '&orderby=' + order[0] + '&type=' + order[1] + '&columns=' + columns + '&search=default',
                   method: 'get',
@@ -4961,16 +5090,17 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
                 }).then(function (result) {
                   _this.TableReportCard = result.data.data;
                   _this.PaginateSchool = result.data;
+                  _this.loading = false;
                 })["catch"](function (error) {
                   _this.serverErrorPage(error, error.message);
                 });
 
-              case 7:
-                _context4.next = 11;
+              case 8:
+                _context4.next = 12;
                 break;
 
-              case 9:
-                _context4.next = 11;
+              case 10:
+                _context4.next = 12;
                 return axios({
                   url: '/api/report-card?page=' + paginate + '&orderby=' + order[0] + '&type=' + order[1] + '&columns=' + columns + '&search=' + data,
                   method: 'get',
@@ -4980,11 +5110,12 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
                 }).then(function (result) {
                   _this.TableReportCard = result.data.data;
                   _this.PaginateSchool = result.data;
+                  _this.loading = false;
                 })["catch"](function (error) {
                   _this.serverErrorPage(error, error.message);
                 });
 
-              case 11:
+              case 12:
               case "end":
                 return _context4.stop();
             }
@@ -5007,14 +5138,15 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
                 paginate = _arguments2.length > 1 && _arguments2[1] !== undefined ? _arguments2[1] : 1;
                 order = _this2.table.orderable.split(' ');
                 columns = _this2.table.columns;
+                _this2.loading = true;
                 /*search ''*/
 
                 if (!(data == '')) {
-                  _context5.next = 8;
+                  _context5.next = 9;
                   break;
                 }
 
-                _context5.next = 6;
+                _context5.next = 7;
                 return axios({
                   url: '/api/report-card?page=' + paginate + '&orderby=' + order[0] + '&type=' + order[1] + '&columns=' + columns + '&search=default',
                   method: 'get',
@@ -5024,16 +5156,17 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
                 }).then(function (result) {
                   _this2.TableReportCard = result.data.data;
                   _this2.PaginateSchool = result.data;
+                  _this2.loading = false;
                 })["catch"](function (error) {
                   _this2.Error(error, error.message);
                 });
 
-              case 6:
-                _context5.next = 10;
+              case 7:
+                _context5.next = 11;
                 break;
 
-              case 8:
-                _context5.next = 10;
+              case 9:
+                _context5.next = 11;
                 return axios({
                   url: '/api/report-card?page=' + paginate + '&orderby=' + order[0] + '&type=' + order[1] + '&columns=' + columns + '&search=' + data,
                   method: 'get',
@@ -5043,11 +5176,12 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
                 }).then(function (result) {
                   _this2.TableReportCard = result.data.data;
                   _this2.PaginateSchool = result.data;
+                  _this2.loading = false;
                 })["catch"](function (error) {
                   _this2.Error(error, error.message);
                 });
 
-              case 10:
+              case 11:
               case "end":
                 return _context5.stop();
             }
@@ -5071,14 +5205,15 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
                 data = _this3.table.searching;
                 type = order.split(' ');
                 columns = _this3.table.columns;
+                _this3.loading = true;
                 /*search ''*/
 
                 if (!(data == '')) {
-                  _context6.next = 9;
+                  _context6.next = 10;
                   break;
                 }
 
-                _context6.next = 7;
+                _context6.next = 8;
                 return axios({
                   url: '/api/report-card?page=' + paginate + '&orderby=' + type[0] + '&type=' + type[1] + '&columns=' + columns + '&search=default',
                   method: 'get',
@@ -5088,16 +5223,17 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
                 }).then(function (result) {
                   _this3.TableReportCard = result.data.data;
                   _this3.PaginateSchool = result.data;
+                  _this3.loading = false;
                 })["catch"](function (error) {
                   _this3.Error(error, error.message);
                 });
 
-              case 7:
-                _context6.next = 11;
+              case 8:
+                _context6.next = 12;
                 break;
 
-              case 9:
-                _context6.next = 11;
+              case 10:
+                _context6.next = 12;
                 return axios({
                   url: '/api/report-card?page=' + paginate + '&orderby=' + type[0] + '&type=' + type[1] + '&columns=' + columns + '&search=' + data,
                   method: 'get',
@@ -5107,11 +5243,12 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
                 }).then(function (result) {
                   _this3.TableReportCard = result.data.data;
                   _this3.PaginateSchool = result.data;
+                  _this3.loading = false;
                 })["catch"](function (error) {
                   _this3.Error(error, error.message);
                 });
 
-              case 11:
+              case 12:
               case "end":
                 return _context6.stop();
             }
@@ -5134,14 +5271,15 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
                 paginate = _arguments4.length > 1 && _arguments4[1] !== undefined ? _arguments4[1] : 1;
                 data = _this4.table.searching;
                 order = _this4.table.orderable.split(' ');
+                _this4.loading = true;
                 /*search ''*/
 
                 if (!(data == '')) {
-                  _context7.next = 8;
+                  _context7.next = 9;
                   break;
                 }
 
-                _context7.next = 6;
+                _context7.next = 7;
                 return axios({
                   url: '/api/report-card?page=' + paginate + '&orderby=' + order[0] + '&type=' + order[1] + '&columns=' + _columns + '&search=default',
                   method: 'get',
@@ -5151,16 +5289,17 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
                 }).then(function (result) {
                   _this4.TableReportCard = result.data.data;
                   _this4.PaginateSchool = result.data;
+                  _this4.loading = false;
                 })["catch"](function (error) {
                   _this4.Error(error, error.message);
                 });
 
-              case 6:
-                _context7.next = 10;
+              case 7:
+                _context7.next = 11;
                 break;
 
-              case 8:
-                _context7.next = 10;
+              case 9:
+                _context7.next = 11;
                 return axios({
                   url: '/api/report-card?page=' + paginate + '&orderby=' + order[0] + '&type=' + order[1] + '&columns=' + _columns + '&search=' + data,
                   method: 'get',
@@ -5174,7 +5313,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
                   _this4.Error(error, error.message);
                 });
 
-              case 10:
+              case 11:
               case "end":
                 return _context7.stop();
             }
@@ -5607,6 +5746,17 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   beforeMount: function beforeMount() {
@@ -5617,8 +5767,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       user_id: this.$store.state.Users.user.id,
 
       /*table data*/
-      TableStudy: [],
-      PaginateStudy: {},
+      TableHomeRoomTeacher: [],
+      PaginateHomeRoomTeacher: {},
       table: {
         columns: '25',
         orderable: 'id asc',
@@ -5641,7 +5791,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         sc_teacher_id: '',
         start_period: '',
         end_period: ''
-      }
+      },
+      loading: false
     };
   },
   created: function created() {
@@ -5726,14 +5877,15 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 data = _this.table.searching;
                 order = _this.table.orderable.split(' ');
                 columns = _this.table.columns;
+                _this.loading = true;
                 /*search ''*/
 
                 if (!(data == '')) {
-                  _context4.next = 9;
+                  _context4.next = 10;
                   break;
                 }
 
-                _context4.next = 7;
+                _context4.next = 8;
                 return axios({
                   url: '/api/homeroom-teacher?page=' + paginate + '&orderby=' + order[0] + '&type=' + order[1] + '&columns=' + columns + '&search=default',
                   method: 'get',
@@ -5741,18 +5893,19 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                     'Authorization': 'Bearer ' + _this.$store.state.Users.success.token
                   }
                 }).then(function (result) {
-                  _this.TableStudy = result.data.data;
-                  _this.PaginateStudy = result.data;
+                  _this.TableHomeRoomTeacher = result.data.data;
+                  _this.PaginateHomeRoomTeacher = result.data;
+                  _this.loading = false;
                 })["catch"](function (error) {
                   _this.serverErrorPage(error, error.message);
                 });
 
-              case 7:
-                _context4.next = 11;
+              case 8:
+                _context4.next = 12;
                 break;
 
-              case 9:
-                _context4.next = 11;
+              case 10:
+                _context4.next = 12;
                 return axios({
                   url: '/api/homeroom-teacher?page=' + paginate + '&orderby=' + order[0] + '&type=' + order[1] + '&columns=' + columns + '&search=' + data,
                   method: 'get',
@@ -5760,13 +5913,14 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                     'Authorization': 'Bearer ' + _this.$store.state.Users.success.token
                   }
                 }).then(function (result) {
-                  _this.TableStudy = result.data.data;
-                  _this.PaginateStudy = result.data;
+                  _this.TableHomeRoomTeacher = result.data.data;
+                  _this.PaginateHomeRoomTeacher = result.data;
+                  _this.loading = false;
                 })["catch"](function (error) {
                   _this.serverErrorPage(error, error.message);
                 });
 
-              case 11:
+              case 12:
               case "end":
                 return _context4.stop();
             }
@@ -5789,14 +5943,15 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 paginate = _arguments2.length > 1 && _arguments2[1] !== undefined ? _arguments2[1] : 1;
                 order = _this2.table.orderable.split(' ');
                 columns = _this2.table.columns;
+                _this2.loading = true;
                 /*search ''*/
 
                 if (!(data == '')) {
-                  _context5.next = 8;
+                  _context5.next = 9;
                   break;
                 }
 
-                _context5.next = 6;
+                _context5.next = 7;
                 return axios({
                   url: '/api/homeroom-teacher?page=' + paginate + '&orderby=' + order[0] + '&type=' + order[1] + '&columns=' + columns + '&search=default',
                   method: 'get',
@@ -5804,18 +5959,19 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                     'Authorization': 'Bearer ' + _this2.$store.state.Users.success.token
                   }
                 }).then(function (result) {
-                  _this2.TableStudy = result.data.data;
-                  _this2.PaginateStudy = result.data;
+                  _this2.TableHomeRoomTeacher = result.data.data;
+                  _this2.PaginateHomeRoomTeacher = result.data;
+                  _this2.loading = false;
                 })["catch"](function (error) {
                   _this2.Error(error, error.message);
                 });
 
-              case 6:
-                _context5.next = 10;
+              case 7:
+                _context5.next = 11;
                 break;
 
-              case 8:
-                _context5.next = 10;
+              case 9:
+                _context5.next = 11;
                 return axios({
                   url: '/api/homeroom-teacher?page=' + paginate + '&orderby=' + order[0] + '&type=' + order[1] + '&columns=' + columns + '&search=' + data,
                   method: 'get',
@@ -5823,13 +5979,14 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                     'Authorization': 'Bearer ' + _this2.$store.state.Users.success.token
                   }
                 }).then(function (result) {
-                  _this2.TableStudy = result.data.data;
-                  _this2.PaginateStudy = result.data;
+                  _this2.TableHomeRoomTeacher = result.data.data;
+                  _this2.PaginateHomeRoomTeacher = result.data;
+                  _this2.loading = false;
                 })["catch"](function (error) {
                   _this2.Error(error, error.message);
                 });
 
-              case 10:
+              case 11:
               case "end":
                 return _context5.stop();
             }
@@ -5853,14 +6010,15 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 data = _this3.table.searching;
                 type = order.split(' ');
                 columns = _this3.table.columns;
+                _this3.loading = true;
                 /*search ''*/
 
                 if (!(data == '')) {
-                  _context6.next = 9;
+                  _context6.next = 10;
                   break;
                 }
 
-                _context6.next = 7;
+                _context6.next = 8;
                 return axios({
                   url: '/api/homeroom-teacher?page=' + paginate + '&orderby=' + type[0] + '&type=' + type[1] + '&columns=' + columns + '&search=default',
                   method: 'get',
@@ -5868,18 +6026,19 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                     'Authorization': 'Bearer ' + _this3.$store.state.Users.success.token
                   }
                 }).then(function (result) {
-                  _this3.TableStudy = result.data.data;
-                  _this3.PaginateStudy = result.data;
+                  _this3.TableHomeRoomTeacher = result.data.data;
+                  _this3.PaginateHomeRoomTeacher = result.data;
+                  _this3.loading = false;
                 })["catch"](function (error) {
                   _this3.Error(error, error.message);
                 });
 
-              case 7:
-                _context6.next = 11;
+              case 8:
+                _context6.next = 12;
                 break;
 
-              case 9:
-                _context6.next = 11;
+              case 10:
+                _context6.next = 12;
                 return axios({
                   url: '/api/homeroom-teacher?page=' + paginate + '&orderby=' + type[0] + '&type=' + type[1] + '&columns=' + columns + '&search=' + data,
                   method: 'get',
@@ -5887,13 +6046,14 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                     'Authorization': 'Bearer ' + _this3.$store.state.Users.success.token
                   }
                 }).then(function (result) {
-                  _this3.TableStudy = result.data.data;
-                  _this3.PaginateStudy = result.data;
+                  _this3.TableHomeRoomTeacher = result.data.data;
+                  _this3.PaginateHomeRoomTeacher = result.data;
+                  _this3.loading = false;
                 })["catch"](function (error) {
                   _this3.Error(error, error.message);
                 });
 
-              case 11:
+              case 12:
               case "end":
                 return _context6.stop();
             }
@@ -5916,14 +6076,15 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 paginate = _arguments4.length > 1 && _arguments4[1] !== undefined ? _arguments4[1] : 1;
                 data = _this4.table.searching;
                 order = _this4.table.orderable.split(' ');
+                _this4.loading = true;
                 /*search ''*/
 
                 if (!(data == '')) {
-                  _context7.next = 8;
+                  _context7.next = 9;
                   break;
                 }
 
-                _context7.next = 6;
+                _context7.next = 7;
                 return axios({
                   url: '/api/homeroom-teacher?page=' + paginate + '&orderby=' + order[0] + '&type=' + order[1] + '&columns=' + _columns + '&search=default',
                   method: 'get',
@@ -5931,18 +6092,19 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                     'Authorization': 'Bearer ' + _this4.$store.state.Users.success.token
                   }
                 }).then(function (result) {
-                  _this4.TableStudy = result.data.data;
-                  _this4.PaginateStudy = result.data;
+                  _this4.TableHomeRoomTeacher = result.data.data;
+                  _this4.PaginateHomeRoomTeacher = result.data;
+                  _this4.loading = false;
                 })["catch"](function (error) {
                   _this4.Error(error, error.message);
                 });
 
-              case 6:
-                _context7.next = 10;
+              case 7:
+                _context7.next = 11;
                 break;
 
-              case 8:
-                _context7.next = 10;
+              case 9:
+                _context7.next = 11;
                 return axios({
                   url: '/api/homeroom-teacher?page=' + paginate + '&orderby=' + order[0] + '&type=' + order[1] + '&columns=' + _columns + '&search=' + data,
                   method: 'get',
@@ -5950,13 +6112,14 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                     'Authorization': 'Bearer ' + _this4.$store.state.Users.success.token
                   }
                 }).then(function (result) {
-                  _this4.TableStudy = result.data.data;
-                  _this4.PaginateStudy = result.data;
+                  _this4.TableHomeRoomTeacher = result.data.data;
+                  _this4.PaginateHomeRoomTeacher = result.data;
+                  _this4.loading = false;
                 })["catch"](function (error) {
                   _this4.Error(error, error.message);
                 });
 
-              case 10:
+              case 11:
               case "end":
                 return _context7.stop();
             }
@@ -6320,6 +6483,17 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   beforeMount: function beforeMount() {
@@ -6353,7 +6527,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         name: '',
         description: '',
         type: ''
-      }
+      },
+      loading: false
     };
   },
   created: function created() {
@@ -6438,14 +6613,15 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 data = _this.table.searching;
                 order = _this.table.orderable.split(' ');
                 columns = _this.table.columns;
+                _this.loading = true;
                 /*search ''*/
 
                 if (!(data == '')) {
-                  _context4.next = 9;
+                  _context4.next = 10;
                   break;
                 }
 
-                _context4.next = 7;
+                _context4.next = 8;
                 return axios({
                   url: '/api/school?page=' + paginate + '&orderby=' + order[0] + '&type=' + order[1] + '&columns=' + columns + '&search=default',
                   method: 'get',
@@ -6455,16 +6631,17 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 }).then(function (result) {
                   _this.TableSchool = result.data.data;
                   _this.PaginateSchool = result.data;
+                  _this.loading = false;
                 })["catch"](function (error) {
                   _this.serverErrorPage(error, error.message);
                 });
 
-              case 7:
-                _context4.next = 11;
+              case 8:
+                _context4.next = 12;
                 break;
 
-              case 9:
-                _context4.next = 11;
+              case 10:
+                _context4.next = 12;
                 return axios({
                   url: '/api/school?page=' + paginate + '&orderby=' + order[0] + '&type=' + order[1] + '&columns=' + columns + '&search=' + data,
                   method: 'get',
@@ -6474,11 +6651,12 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 }).then(function (result) {
                   _this.TableSchool = result.data.data;
                   _this.PaginateSchool = result.data;
+                  _this.loading = false;
                 })["catch"](function (error) {
                   _this.serverErrorPage(error, error.message);
                 });
 
-              case 11:
+              case 12:
               case "end":
                 return _context4.stop();
             }
@@ -6501,14 +6679,15 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 paginate = _arguments2.length > 1 && _arguments2[1] !== undefined ? _arguments2[1] : 1;
                 order = _this2.table.orderable.split(' ');
                 columns = _this2.table.columns;
+                _this2.loading = true;
                 /*search ''*/
 
                 if (!(data == '')) {
-                  _context5.next = 8;
+                  _context5.next = 9;
                   break;
                 }
 
-                _context5.next = 6;
+                _context5.next = 7;
                 return axios({
                   url: '/api/school?page=' + paginate + '&orderby=' + order[0] + '&type=' + order[1] + '&columns=' + columns + '&search=default',
                   method: 'get',
@@ -6518,16 +6697,17 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 }).then(function (result) {
                   _this2.TableSchool = result.data.data;
                   _this2.PaginateSchool = result.data;
+                  _this2.loading = false;
                 })["catch"](function (error) {
                   _this2.Error(error, error.message);
                 });
 
-              case 6:
-                _context5.next = 10;
+              case 7:
+                _context5.next = 11;
                 break;
 
-              case 8:
-                _context5.next = 10;
+              case 9:
+                _context5.next = 11;
                 return axios({
                   url: '/api/school?page=' + paginate + '&orderby=' + order[0] + '&type=' + order[1] + '&columns=' + columns + '&search=' + data,
                   method: 'get',
@@ -6537,11 +6717,12 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 }).then(function (result) {
                   _this2.TableSchool = result.data.data;
                   _this2.PaginateSchool = result.data;
+                  _this2.loading = false;
                 })["catch"](function (error) {
                   _this2.Error(error, error.message);
                 });
 
-              case 10:
+              case 11:
               case "end":
                 return _context5.stop();
             }
@@ -6565,14 +6746,15 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 data = _this3.table.searching;
                 type = order.split(' ');
                 columns = _this3.table.columns;
+                _this3.loading = true;
                 /*search ''*/
 
                 if (!(data == '')) {
-                  _context6.next = 9;
+                  _context6.next = 10;
                   break;
                 }
 
-                _context6.next = 7;
+                _context6.next = 8;
                 return axios({
                   url: '/api/school?page=' + paginate + '&orderby=' + type[0] + '&type=' + type[1] + '&columns=' + columns + '&search=default',
                   method: 'get',
@@ -6582,16 +6764,17 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 }).then(function (result) {
                   _this3.TableSchool = result.data.data;
                   _this3.PaginateSchool = result.data;
+                  _this3.loading = false;
                 })["catch"](function (error) {
                   _this3.Error(error, error.message);
                 });
 
-              case 7:
-                _context6.next = 11;
+              case 8:
+                _context6.next = 12;
                 break;
 
-              case 9:
-                _context6.next = 11;
+              case 10:
+                _context6.next = 12;
                 return axios({
                   url: '/api/school?page=' + paginate + '&orderby=' + type[0] + '&type=' + type[1] + '&columns=' + columns + '&search=' + data,
                   method: 'get',
@@ -6601,11 +6784,12 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 }).then(function (result) {
                   _this3.TableSchool = result.data.data;
                   _this3.PaginateSchool = result.data;
+                  _this3.loading = false;
                 })["catch"](function (error) {
                   _this3.Error(error, error.message);
                 });
 
-              case 11:
+              case 12:
               case "end":
                 return _context6.stop();
             }
@@ -6628,14 +6812,15 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 paginate = _arguments4.length > 1 && _arguments4[1] !== undefined ? _arguments4[1] : 1;
                 data = _this4.table.searching;
                 order = _this4.table.orderable.split(' ');
+                _this4.loading = true;
                 /*search ''*/
 
                 if (!(data == '')) {
-                  _context7.next = 8;
+                  _context7.next = 9;
                   break;
                 }
 
-                _context7.next = 6;
+                _context7.next = 7;
                 return axios({
                   url: '/api/school?page=' + paginate + '&orderby=' + order[0] + '&type=' + order[1] + '&columns=' + _columns + '&search=default',
                   method: 'get',
@@ -6645,16 +6830,17 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 }).then(function (result) {
                   _this4.TableSchool = result.data.data;
                   _this4.PaginateSchool = result.data;
+                  _this4.loading = false;
                 })["catch"](function (error) {
                   _this4.Error(error, error.message);
                 });
 
-              case 6:
-                _context7.next = 10;
+              case 7:
+                _context7.next = 11;
                 break;
 
-              case 8:
-                _context7.next = 10;
+              case 9:
+                _context7.next = 11;
                 return axios({
                   url: '/api/school?page=' + paginate + '&orderby=' + order[0] + '&type=' + order[1] + '&columns=' + _columns + '&search=' + data,
                   method: 'get',
@@ -6664,11 +6850,12 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 }).then(function (result) {
                   _this4.TableSchool = result.data.data;
                   _this4.PaginateSchool = result.data;
+                  _this4.loading = false;
                 })["catch"](function (error) {
                   _this4.Error(error, error.message);
                 });
 
-              case 10:
+              case 11:
               case "end":
                 return _context7.stop();
             }
@@ -7094,6 +7281,17 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   beforeMount: function beforeMount() {
@@ -7145,7 +7343,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         phone_father: '',
         phone_mother: '',
         generation: ''
-      }
+      },
+      loading: false
     };
   },
   created: function created() {
@@ -7233,14 +7432,15 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 data = _this.table.searching;
                 order = _this.table.orderable.split(' ');
                 columns = _this.table.columns;
+                _this.loading = true;
                 /*search ''*/
 
                 if (!(data == '')) {
-                  _context4.next = 9;
+                  _context4.next = 10;
                   break;
                 }
 
-                _context4.next = 7;
+                _context4.next = 8;
                 return axios({
                   url: '/api/student?page=' + paginate + '&orderby=' + order[0] + '&type=' + order[1] + '&columns=' + columns + '&search=default',
                   method: 'get',
@@ -7250,16 +7450,17 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 }).then(function (result) {
                   _this.TableStudent = result.data.data;
                   _this.PaginateStudent = result.data;
+                  _this.loading = false;
                 })["catch"](function (error) {
                   _this.serverErrorPage(error, error.message);
                 });
 
-              case 7:
-                _context4.next = 11;
+              case 8:
+                _context4.next = 12;
                 break;
 
-              case 9:
-                _context4.next = 11;
+              case 10:
+                _context4.next = 12;
                 return axios({
                   url: '/api/student?page=' + paginate + '&orderby=' + order[0] + '&type=' + order[1] + '&columns=' + columns + '&search=' + data,
                   method: 'get',
@@ -7269,11 +7470,12 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 }).then(function (result) {
                   _this.TableStudent = result.data.data;
                   _this.PaginateStudent = result.data;
+                  _this.loading = false;
                 })["catch"](function (error) {
                   _this.serverErrorPage(error, error.message);
                 });
 
-              case 11:
+              case 12:
               case "end":
                 return _context4.stop();
             }
@@ -7296,14 +7498,15 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 paginate = _arguments2.length > 1 && _arguments2[1] !== undefined ? _arguments2[1] : 1;
                 order = _this2.table.orderable.split(' ');
                 columns = _this2.table.columns;
+                _this2.loading = true;
                 /*search ''*/
 
                 if (!(data == '')) {
-                  _context5.next = 8;
+                  _context5.next = 9;
                   break;
                 }
 
-                _context5.next = 6;
+                _context5.next = 7;
                 return axios({
                   url: '/api/student?page=' + paginate + '&orderby=' + order[0] + '&type=' + order[1] + '&columns=' + columns + '&search=default',
                   method: 'get',
@@ -7313,16 +7516,17 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 }).then(function (result) {
                   _this2.TableStudent = result.data.data;
                   _this2.PaginateStudent = result.data;
+                  _this2.loading = false;
                 })["catch"](function (error) {
                   _this2.Error(error, error.message);
                 });
 
-              case 6:
-                _context5.next = 10;
+              case 7:
+                _context5.next = 11;
                 break;
 
-              case 8:
-                _context5.next = 10;
+              case 9:
+                _context5.next = 11;
                 return axios({
                   url: '/api/student?page=' + paginate + '&orderby=' + order[0] + '&type=' + order[1] + '&columns=' + columns + '&search=' + data,
                   method: 'get',
@@ -7332,11 +7536,12 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 }).then(function (result) {
                   _this2.TableStudent = result.data.data;
                   _this2.PaginateStudent = result.data;
+                  _this2.loading = false;
                 })["catch"](function (error) {
                   _this2.Error(error, error.message);
                 });
 
-              case 10:
+              case 11:
               case "end":
                 return _context5.stop();
             }
@@ -7360,14 +7565,15 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 data = _this3.table.searching;
                 type = order.split(' ');
                 columns = _this3.table.columns;
+                _this3.loading = true;
                 /*search ''*/
 
                 if (!(data == '')) {
-                  _context6.next = 9;
+                  _context6.next = 10;
                   break;
                 }
 
-                _context6.next = 7;
+                _context6.next = 8;
                 return axios({
                   url: '/api/student?page=' + paginate + '&orderby=' + type[0] + '&type=' + type[1] + '&columns=' + columns + '&search=default',
                   method: 'get',
@@ -7377,16 +7583,17 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 }).then(function (result) {
                   _this3.TableStudent = result.data.data;
                   _this3.PaginateStudent = result.data;
+                  _this3.loading = false;
                 })["catch"](function (error) {
                   _this3.Error(error, error.message);
                 });
 
-              case 7:
-                _context6.next = 11;
+              case 8:
+                _context6.next = 12;
                 break;
 
-              case 9:
-                _context6.next = 11;
+              case 10:
+                _context6.next = 12;
                 return axios({
                   url: '/api/student?page=' + paginate + '&orderby=' + type[0] + '&type=' + type[1] + '&columns=' + columns + '&search=' + data,
                   method: 'get',
@@ -7396,11 +7603,12 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 }).then(function (result) {
                   _this3.TableStudent = result.data.data;
                   _this3.PaginateStudent = result.data;
+                  _this3.loading = false;
                 })["catch"](function (error) {
                   _this3.Error(error, error.message);
                 });
 
-              case 11:
+              case 12:
               case "end":
                 return _context6.stop();
             }
@@ -7423,14 +7631,15 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 paginate = _arguments4.length > 1 && _arguments4[1] !== undefined ? _arguments4[1] : 1;
                 data = _this4.table.searching;
                 order = _this4.table.orderable.split(' ');
+                _this4.loading = true;
                 /*search ''*/
 
                 if (!(data == '')) {
-                  _context7.next = 8;
+                  _context7.next = 9;
                   break;
                 }
 
-                _context7.next = 6;
+                _context7.next = 7;
                 return axios({
                   url: '/api/student?page=' + paginate + '&orderby=' + order[0] + '&type=' + order[1] + '&columns=' + _columns + '&search=default',
                   method: 'get',
@@ -7440,16 +7649,17 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 }).then(function (result) {
                   _this4.TableStudent = result.data.data;
                   _this4.PaginateStudent = result.data;
+                  _this4.loading = false;
                 })["catch"](function (error) {
                   _this4.Error(error, error.message);
                 });
 
-              case 6:
-                _context7.next = 10;
+              case 7:
+                _context7.next = 11;
                 break;
 
-              case 8:
-                _context7.next = 10;
+              case 9:
+                _context7.next = 11;
                 return axios({
                   url: '/api/student?page=' + paginate + '&orderby=' + order[0] + '&type=' + order[1] + '&columns=' + _columns + '&search=' + data,
                   method: 'get',
@@ -7459,11 +7669,12 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 }).then(function (result) {
                   _this4.TableStudent = result.data.data;
                   _this4.PaginateStudent = result.data;
+                  _this4.loading = false;
                 })["catch"](function (error) {
                   _this4.Error(error, error.message);
                 });
 
-              case 10:
+              case 11:
               case "end":
                 return _context7.stop();
             }
@@ -7918,6 +8129,17 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   beforeMount: function beforeMount() {
@@ -7956,7 +8178,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         name: '',
         day: '',
         time: ''
-      }
+      },
+      loading: false
     };
   },
   created: function created() {
@@ -8041,14 +8264,15 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 data = _this.table.searching;
                 order = _this.table.orderable.split(' ');
                 columns = _this.table.columns;
+                _this.loading = true;
                 /*search ''*/
 
                 if (!(data == '')) {
-                  _context4.next = 9;
+                  _context4.next = 10;
                   break;
                 }
 
-                _context4.next = 7;
+                _context4.next = 8;
                 return axios({
                   url: '/api/study?page=' + paginate + '&orderby=' + order[0] + '&type=' + order[1] + '&columns=' + columns + '&search=default',
                   method: 'get',
@@ -8058,16 +8282,17 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 }).then(function (result) {
                   _this.TableStudy = result.data.data;
                   _this.PaginateStudy = result.data;
+                  _this.loading = false;
                 })["catch"](function (error) {
                   _this.serverErrorPage(error, error.message);
                 });
 
-              case 7:
-                _context4.next = 11;
+              case 8:
+                _context4.next = 12;
                 break;
 
-              case 9:
-                _context4.next = 11;
+              case 10:
+                _context4.next = 12;
                 return axios({
                   url: '/api/study?page=' + paginate + '&orderby=' + order[0] + '&type=' + order[1] + '&columns=' + columns + '&search=' + data,
                   method: 'get',
@@ -8077,11 +8302,12 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 }).then(function (result) {
                   _this.TableStudy = result.data.data;
                   _this.PaginateStudy = result.data;
+                  _this.loading = false;
                 })["catch"](function (error) {
                   _this.serverErrorPage(error, error.message);
                 });
 
-              case 11:
+              case 12:
               case "end":
                 return _context4.stop();
             }
@@ -8104,14 +8330,15 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 paginate = _arguments2.length > 1 && _arguments2[1] !== undefined ? _arguments2[1] : 1;
                 order = _this2.table.orderable.split(' ');
                 columns = _this2.table.columns;
+                _this2.loading = true;
                 /*search ''*/
 
                 if (!(data == '')) {
-                  _context5.next = 8;
+                  _context5.next = 9;
                   break;
                 }
 
-                _context5.next = 6;
+                _context5.next = 7;
                 return axios({
                   url: '/api/study?page=' + paginate + '&orderby=' + order[0] + '&type=' + order[1] + '&columns=' + columns + '&search=default',
                   method: 'get',
@@ -8121,16 +8348,17 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 }).then(function (result) {
                   _this2.TableStudy = result.data.data;
                   _this2.PaginateStudy = result.data;
+                  _this2.loading = false;
                 })["catch"](function (error) {
                   _this2.Error(error, error.message);
                 });
 
-              case 6:
-                _context5.next = 10;
+              case 7:
+                _context5.next = 11;
                 break;
 
-              case 8:
-                _context5.next = 10;
+              case 9:
+                _context5.next = 11;
                 return axios({
                   url: '/api/study?page=' + paginate + '&orderby=' + order[0] + '&type=' + order[1] + '&columns=' + columns + '&search=' + data,
                   method: 'get',
@@ -8140,11 +8368,12 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 }).then(function (result) {
                   _this2.TableStudy = result.data.data;
                   _this2.PaginateStudy = result.data;
+                  _this2.loading = false;
                 })["catch"](function (error) {
                   _this2.Error(error, error.message);
                 });
 
-              case 10:
+              case 11:
               case "end":
                 return _context5.stop();
             }
@@ -8168,14 +8397,15 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 data = _this3.table.searching;
                 type = order.split(' ');
                 columns = _this3.table.columns;
+                _this3.loading = true;
                 /*search ''*/
 
                 if (!(data == '')) {
-                  _context6.next = 9;
+                  _context6.next = 10;
                   break;
                 }
 
-                _context6.next = 7;
+                _context6.next = 8;
                 return axios({
                   url: '/api/study?page=' + paginate + '&orderby=' + type[0] + '&type=' + type[1] + '&columns=' + columns + '&search=default',
                   method: 'get',
@@ -8185,16 +8415,17 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 }).then(function (result) {
                   _this3.TableStudy = result.data.data;
                   _this3.PaginateStudy = result.data;
+                  _this3.loading = false;
                 })["catch"](function (error) {
                   _this3.Error(error, error.message);
                 });
 
-              case 7:
-                _context6.next = 11;
+              case 8:
+                _context6.next = 12;
                 break;
 
-              case 9:
-                _context6.next = 11;
+              case 10:
+                _context6.next = 12;
                 return axios({
                   url: '/api/study?page=' + paginate + '&orderby=' + type[0] + '&type=' + type[1] + '&columns=' + columns + '&search=' + data,
                   method: 'get',
@@ -8204,11 +8435,12 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 }).then(function (result) {
                   _this3.TableStudy = result.data.data;
                   _this3.PaginateStudy = result.data;
+                  _this3.loading = false;
                 })["catch"](function (error) {
                   _this3.Error(error, error.message);
                 });
 
-              case 11:
+              case 12:
               case "end":
                 return _context6.stop();
             }
@@ -8231,14 +8463,15 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 paginate = _arguments4.length > 1 && _arguments4[1] !== undefined ? _arguments4[1] : 1;
                 data = _this4.table.searching;
                 order = _this4.table.orderable.split(' ');
+                _this4.loading = true;
                 /*search ''*/
 
                 if (!(data == '')) {
-                  _context7.next = 8;
+                  _context7.next = 9;
                   break;
                 }
 
-                _context7.next = 6;
+                _context7.next = 7;
                 return axios({
                   url: '/api/study?page=' + paginate + '&orderby=' + order[0] + '&type=' + order[1] + '&columns=' + _columns + '&search=default',
                   method: 'get',
@@ -8248,16 +8481,17 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 }).then(function (result) {
                   _this4.TableStudy = result.data.data;
                   _this4.PaginateStudy = result.data;
+                  _this4.loading = false;
                 })["catch"](function (error) {
                   _this4.Error(error, error.message);
                 });
 
-              case 6:
-                _context7.next = 10;
+              case 7:
+                _context7.next = 11;
                 break;
 
-              case 8:
-                _context7.next = 10;
+              case 9:
+                _context7.next = 11;
                 return axios({
                   url: '/api/study?page=' + paginate + '&orderby=' + order[0] + '&type=' + order[1] + '&columns=' + _columns + '&search=' + data,
                   method: 'get',
@@ -8267,11 +8501,12 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 }).then(function (result) {
                   _this4.TableStudy = result.data.data;
                   _this4.PaginateStudy = result.data;
+                  _this4.loading = false;
                 })["catch"](function (error) {
                   _this4.Error(error, error.message);
                 });
 
-              case 10:
+              case 11:
               case "end":
                 return _context7.stop();
             }
@@ -8642,6 +8877,17 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   beforeMount: function beforeMount() {
@@ -8671,7 +8917,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         sc_school_id: '',
         title: '',
         graduate: ''
-      }
+      },
+      loading: false
     };
   },
   created: function created() {
@@ -8751,14 +8998,15 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 data = _this.table.searching;
                 order = _this.table.orderable.split(' ');
                 columns = _this.table.columns;
+                _this.loading = true;
                 /*search ''*/
 
                 if (!(data == '')) {
-                  _context4.next = 9;
+                  _context4.next = 10;
                   break;
                 }
 
-                _context4.next = 7;
+                _context4.next = 8;
                 return axios({
                   url: '/api/teacher?page=' + paginate + '&orderby=' + order[0] + '&type=' + order[1] + '&columns=' + columns + '&search=default',
                   method: 'get',
@@ -8768,16 +9016,17 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 }).then(function (result) {
                   _this.TableClass = result.data.data;
                   _this.PaginateClass = result.data;
+                  _this.loading = false;
                 })["catch"](function (error) {
                   _this.serverErrorPage(error, error.message);
                 });
 
-              case 7:
-                _context4.next = 11;
+              case 8:
+                _context4.next = 12;
                 break;
 
-              case 9:
-                _context4.next = 11;
+              case 10:
+                _context4.next = 12;
                 return axios({
                   url: '/api/teacher?page=' + paginate + '&orderby=' + order[0] + '&type=' + order[1] + '&columns=' + columns + '&search=' + data,
                   method: 'get',
@@ -8787,11 +9036,12 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 }).then(function (result) {
                   _this.TableClass = result.data.data;
                   _this.PaginateClass = result.data;
+                  _this.loading = false;
                 })["catch"](function (error) {
                   _this.serverErrorPage(error, error.message);
                 });
 
-              case 11:
+              case 12:
               case "end":
                 return _context4.stop();
             }
@@ -8814,14 +9064,15 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 paginate = _arguments2.length > 1 && _arguments2[1] !== undefined ? _arguments2[1] : 1;
                 order = _this2.table.orderable.split(' ');
                 columns = _this2.table.columns;
+                _this2.loading = true;
                 /*search ''*/
 
                 if (!(data == '')) {
-                  _context5.next = 8;
+                  _context5.next = 9;
                   break;
                 }
 
-                _context5.next = 6;
+                _context5.next = 7;
                 return axios({
                   url: '/api/teacher?page=' + paginate + '&orderby=' + order[0] + '&type=' + order[1] + '&columns=' + columns + '&search=default',
                   method: 'get',
@@ -8831,16 +9082,17 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 }).then(function (result) {
                   _this2.TableClass = result.data.data;
                   _this2.PaginateClass = result.data;
+                  _this2.loading = false;
                 })["catch"](function (error) {
                   _this2.Error(error, error.message);
                 });
 
-              case 6:
-                _context5.next = 10;
+              case 7:
+                _context5.next = 11;
                 break;
 
-              case 8:
-                _context5.next = 10;
+              case 9:
+                _context5.next = 11;
                 return axios({
                   url: '/api/teacher?page=' + paginate + '&orderby=' + order[0] + '&type=' + order[1] + '&columns=' + columns + '&search=' + data,
                   method: 'get',
@@ -8850,11 +9102,12 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 }).then(function (result) {
                   _this2.TableClass = result.data.data;
                   _this2.PaginateClass = result.data;
+                  _this2.loading = false;
                 })["catch"](function (error) {
                   _this2.Error(error, error.message);
                 });
 
-              case 10:
+              case 11:
               case "end":
                 return _context5.stop();
             }
@@ -8878,14 +9131,15 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 data = _this3.table.searching;
                 type = order.split(' ');
                 columns = _this3.table.columns;
+                _this3.loading = true;
                 /*search ''*/
 
                 if (!(data == '')) {
-                  _context6.next = 9;
+                  _context6.next = 10;
                   break;
                 }
 
-                _context6.next = 7;
+                _context6.next = 8;
                 return axios({
                   url: '/api/teacher?page=' + paginate + '&orderby=' + type[0] + '&type=' + type[1] + '&columns=' + columns + '&search=default',
                   method: 'get',
@@ -8895,16 +9149,17 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 }).then(function (result) {
                   _this3.TableClass = result.data.data;
                   _this3.PaginateClass = result.data;
+                  _this3.loading = false;
                 })["catch"](function (error) {
                   _this3.Error(error, error.message);
                 });
 
-              case 7:
-                _context6.next = 11;
+              case 8:
+                _context6.next = 12;
                 break;
 
-              case 9:
-                _context6.next = 11;
+              case 10:
+                _context6.next = 12;
                 return axios({
                   url: '/api/teacher?page=' + paginate + '&orderby=' + type[0] + '&type=' + type[1] + '&columns=' + columns + '&search=' + data,
                   method: 'get',
@@ -8914,11 +9169,12 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 }).then(function (result) {
                   _this3.TableClass = result.data.data;
                   _this3.PaginateClass = result.data;
+                  _this3.loading = false;
                 })["catch"](function (error) {
                   _this3.Error(error, error.message);
                 });
 
-              case 11:
+              case 12:
               case "end":
                 return _context6.stop();
             }
@@ -8941,14 +9197,15 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 paginate = _arguments4.length > 1 && _arguments4[1] !== undefined ? _arguments4[1] : 1;
                 data = _this4.table.searching;
                 order = _this4.table.orderable.split(' ');
+                _this4.loading = true;
                 /*search ''*/
 
                 if (!(data == '')) {
-                  _context7.next = 8;
+                  _context7.next = 9;
                   break;
                 }
 
-                _context7.next = 6;
+                _context7.next = 7;
                 return axios({
                   url: '/api/teacher?page=' + paginate + '&orderby=' + order[0] + '&type=' + order[1] + '&columns=' + _columns + '&search=default',
                   method: 'get',
@@ -8958,16 +9215,17 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 }).then(function (result) {
                   _this4.TableClass = result.data.data;
                   _this4.PaginateClass = result.data;
+                  _this4.loading = false;
                 })["catch"](function (error) {
                   _this4.Error(error, error.message);
                 });
 
-              case 6:
-                _context7.next = 10;
+              case 7:
+                _context7.next = 11;
                 break;
 
-              case 8:
-                _context7.next = 10;
+              case 9:
+                _context7.next = 11;
                 return axios({
                   url: '/api/teacher?page=' + paginate + '&orderby=' + order[0] + '&type=' + order[1] + '&columns=' + _columns + '&search=' + data,
                   method: 'get',
@@ -8977,11 +9235,12 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 }).then(function (result) {
                   _this4.TableClass = result.data.data;
                   _this4.PaginateClass = result.data;
+                  _this4.loading = false;
                 })["catch"](function (error) {
                   _this4.Error(error, error.message);
                 });
 
-              case 10:
+              case 11:
               case "end":
                 return _context7.stop();
             }
@@ -9356,6 +9615,17 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   beforeMount: function beforeMount() {
@@ -9389,7 +9659,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         id: '',
         name: '',
         sc_school_id: ''
-      }
+      },
+      loading: false
     };
   },
   created: function created() {
@@ -9477,14 +9748,15 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 data = _this.table.searching;
                 order = _this.table.orderable.split(' ');
                 columns = _this.table.columns;
+                _this.loading = true;
                 /*search ''*/
 
                 if (!(data == '')) {
-                  _context4.next = 9;
+                  _context4.next = 10;
                   break;
                 }
 
-                _context4.next = 7;
+                _context4.next = 8;
                 return axios({
                   url: '/api/class?page=' + paginate + '&orderby=' + order[0] + '&type=' + order[1] + '&columns=' + columns + '&search=default',
                   method: 'get',
@@ -9496,16 +9768,18 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                   _this.PaginateClass = result.data;
 
                   _this.$store.commit('ClassData', result.data);
+
+                  _this.loading = false;
                 })["catch"](function (error) {
                   _this.serverErrorPage(error, error.message);
                 });
 
-              case 7:
-                _context4.next = 11;
+              case 8:
+                _context4.next = 12;
                 break;
 
-              case 9:
-                _context4.next = 11;
+              case 10:
+                _context4.next = 12;
                 return axios({
                   url: '/api/class?page=' + paginate + '&orderby=' + order[0] + '&type=' + order[1] + '&columns=' + columns + '&search=' + data,
                   method: 'get',
@@ -9515,11 +9789,12 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 }).then(function (result) {
                   _this.TableClass = result.data.data;
                   _this.PaginateClass = result.data;
+                  _this.loading = false;
                 })["catch"](function (error) {
                   _this.serverErrorPage(error, error.message);
                 });
 
-              case 11:
+              case 12:
               case "end":
                 return _context4.stop();
             }
@@ -9542,14 +9817,15 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 paginate = _arguments2.length > 1 && _arguments2[1] !== undefined ? _arguments2[1] : 1;
                 order = _this2.table.orderable.split(' ');
                 columns = _this2.table.columns;
+                _this2.loading = true;
                 /*search ''*/
 
                 if (!(data == '')) {
-                  _context5.next = 8;
+                  _context5.next = 9;
                   break;
                 }
 
-                _context5.next = 6;
+                _context5.next = 7;
                 return axios({
                   url: '/api/class?page=' + paginate + '&orderby=' + order[0] + '&type=' + order[1] + '&columns=' + columns + '&search=default',
                   method: 'get',
@@ -9559,16 +9835,17 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 }).then(function (result) {
                   _this2.TableClass = result.data.data;
                   _this2.PaginateClass = result.data;
+                  _this2.loading = false;
                 })["catch"](function (error) {
                   _this2.Error(error, error.message);
                 });
 
-              case 6:
-                _context5.next = 10;
+              case 7:
+                _context5.next = 11;
                 break;
 
-              case 8:
-                _context5.next = 10;
+              case 9:
+                _context5.next = 11;
                 return axios({
                   url: '/api/class?page=' + paginate + '&orderby=' + order[0] + '&type=' + order[1] + '&columns=' + columns + '&search=' + data,
                   method: 'get',
@@ -9578,11 +9855,12 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 }).then(function (result) {
                   _this2.TableClass = result.data.data;
                   _this2.PaginateClass = result.data;
+                  _this2.loading = false;
                 })["catch"](function (error) {
                   _this2.Error(error, error.message);
                 });
 
-              case 10:
+              case 11:
               case "end":
                 return _context5.stop();
             }
@@ -9606,14 +9884,15 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 data = _this3.table.searching;
                 type = order.split(' ');
                 columns = _this3.table.columns;
+                _this3.loading = true;
                 /*search ''*/
 
                 if (!(data == '')) {
-                  _context6.next = 9;
+                  _context6.next = 10;
                   break;
                 }
 
-                _context6.next = 7;
+                _context6.next = 8;
                 return axios({
                   url: '/api/class?page=' + paginate + '&orderby=' + type[0] + '&type=' + type[1] + '&columns=' + columns + '&search=default',
                   method: 'get',
@@ -9623,16 +9902,17 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 }).then(function (result) {
                   _this3.TableClass = result.data.data;
                   _this3.PaginateClass = result.data;
+                  _this3.loading = false;
                 })["catch"](function (error) {
                   _this3.Error(error, error.message);
                 });
 
-              case 7:
-                _context6.next = 11;
+              case 8:
+                _context6.next = 12;
                 break;
 
-              case 9:
-                _context6.next = 11;
+              case 10:
+                _context6.next = 12;
                 return axios({
                   url: '/api/class?page=' + paginate + '&orderby=' + type[0] + '&type=' + type[1] + '&columns=' + columns + '&search=' + data,
                   method: 'get',
@@ -9642,11 +9922,12 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 }).then(function (result) {
                   _this3.TableClass = result.data.data;
                   _this3.PaginateClass = result.data;
+                  _this3.loading = false;
                 })["catch"](function (error) {
                   _this3.Error(error, error.message);
                 });
 
-              case 11:
+              case 12:
               case "end":
                 return _context6.stop();
             }
@@ -9669,14 +9950,15 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 paginate = _arguments4.length > 1 && _arguments4[1] !== undefined ? _arguments4[1] : 1;
                 data = _this4.table.searching;
                 order = _this4.table.orderable.split(' ');
+                _this4.loading = true;
                 /*search ''*/
 
                 if (!(data == '')) {
-                  _context7.next = 8;
+                  _context7.next = 9;
                   break;
                 }
 
-                _context7.next = 6;
+                _context7.next = 7;
                 return axios({
                   url: '/api/class?page=' + paginate + '&orderby=' + order[0] + '&type=' + order[1] + '&columns=' + _columns + '&search=default',
                   method: 'get',
@@ -9686,16 +9968,17 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 }).then(function (result) {
                   _this4.TableClass = result.data.data;
                   _this4.PaginateClass = result.data;
+                  _this4.loading = false;
                 })["catch"](function (error) {
                   _this4.Error(error, error.message);
                 });
 
-              case 6:
-                _context7.next = 10;
+              case 7:
+                _context7.next = 11;
                 break;
 
-              case 8:
-                _context7.next = 10;
+              case 9:
+                _context7.next = 11;
                 return axios({
                   url: '/api/class?page=' + paginate + '&orderby=' + order[0] + '&type=' + order[1] + '&columns=' + _columns + '&search=' + data,
                   method: 'get',
@@ -9705,11 +9988,12 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 }).then(function (result) {
                   _this4.TableClass = result.data.data;
                   _this4.PaginateClass = result.data;
+                  _this4.loading = false;
                 })["catch"](function (error) {
                   _this4.Error(error, error.message);
                 });
 
-              case 10:
+              case 11:
               case "end":
                 return _context7.stop();
             }
@@ -88738,9 +89022,7 @@ var render = function() {
               _c("div", { staticClass: "card-body p-4" }, [
                 _c("div", { staticClass: "p-2" }, [
                   _c("h5", { staticClass: "mb-5 text-center" }, [
-                    _vm._v(
-                      "Sign in to continue to web academic By Ferdiansyah."
-                    )
+                    _vm._v("Sign in")
                   ]),
                   _vm._v(" "),
                   _c(
@@ -90521,14 +90803,6 @@ var render = function() {
                         staticStyle: { color: "#3051d3" }
                       })
                     ]),
-                    _c(
-                      "span",
-                      {
-                        staticClass:
-                          "badge badge-pill badge-success float-right"
-                      },
-                      [_vm._v("3")]
-                    ),
                     _vm._v(" "),
                     _c("span", [_vm._v("Dashboard")])
                   ]
@@ -91048,527 +91322,779 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _vm._m(0)
+  return _c("div", { staticClass: "right-bar" }, [
+    _c("div", { staticClass: "h-100", attrs: { "data-simplebar": "" } }, [
+      _vm._m(0),
+      _vm._v(" "),
+      _c("div", { staticClass: "tab-content text-muted" }, [
+        _c(
+          "div",
+          {
+            staticClass: "tab-pane active",
+            attrs: { id: "chat-tab", role: "tabpanel" }
+          },
+          [
+            _vm._m(1),
+            _vm._v(" "),
+            _c("div", { staticClass: "w-100 float-left p-2" }, [
+              _c(
+                "button",
+                {
+                  staticClass:
+                    "btn btn-primary waves-effect waves-light col-12 float-left",
+                  on: { click: _vm.modalNoteAdd }
+                },
+                [_vm._v("Create note")]
+              )
+            ]),
+            _vm._v(" "),
+            _vm.loading
+              ? _c("div", { staticClass: "bs-spinner text-center" }, [
+                  _vm._m(2),
+                  _vm._v(" "),
+                  _vm._m(3),
+                  _vm._v(" "),
+                  _vm._m(4)
+                ])
+              : _vm._e(),
+            _vm._v(" "),
+            _vm._l(_vm.PaginateNote.data, function(data) {
+              return _c(
+                "div",
+                { key: data.id, staticClass: "w-100 float-left" },
+                [
+                  _c(
+                    "a",
+                    {
+                      staticClass:
+                        "text-reset notification-item pl-3 mb-2 d-block",
+                      attrs: { href: "javascript: void(0);" },
+                      on: {
+                        click: function($event) {
+                          return _vm.modalNoteEdit(data.id)
+                        }
+                      }
+                    },
+                    [
+                      _c("div", {
+                        staticClass: "dropdown-divider",
+                        staticStyle: { "border-top-color": "#bdbdbd" }
+                      }),
+                      _vm._v(" "),
+                      _c("span", { staticClass: "mb-0" }, [
+                        _vm._v(_vm._s(data.title))
+                      ]),
+                      _vm._v(" "),
+                      _c("p", { staticClass: "text-truncate" }, [
+                        _vm._v(_vm._s(data.note))
+                      ])
+                    ]
+                  )
+                ]
+              )
+            }),
+            _vm._v(" "),
+            _c("pagination", {
+              attrs: { data: _vm.PaginateNote },
+              on: { "pagination-change-page": _vm.appNote }
+            })
+          ],
+          2
+        ),
+        _vm._v(" "),
+        _vm._m(5),
+        _vm._v(" "),
+        _vm._m(6)
+      ])
+    ]),
+    _vm._v(" "),
+    _c(
+      "div",
+      {
+        staticClass: "modal fade",
+        attrs: {
+          id: "addNote",
+          tabindex: "-1",
+          role: "dialog",
+          "aria-labelledby": "modal-add-title",
+          "aria-hidden": "true"
+        }
+      },
+      [
+        _c("div", { staticClass: "modal-dialog modal-dialog-scrollable" }, [
+          _c("div", { staticClass: "modal-content" }, [
+            _vm._m(7),
+            _vm._v(" "),
+            _c("div", { staticClass: "modal-body" }, [
+              _c("div", { staticClass: "form-group" }, [
+                _c("label", { attrs: { for: "title" } }, [_vm._v("Title")]),
+                _vm._v(" "),
+                _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.addNotes.title,
+                      expression: "addNotes.title"
+                    }
+                  ],
+                  staticClass: "form-control",
+                  attrs: { type: "text", id: "title" },
+                  domProps: { value: _vm.addNotes.title },
+                  on: {
+                    input: function($event) {
+                      if ($event.target.composing) {
+                        return
+                      }
+                      _vm.$set(_vm.addNotes, "title", $event.target.value)
+                    }
+                  }
+                })
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "form-group" }, [
+                _c("label", { attrs: { for: "note" } }, [_vm._v("Note")]),
+                _vm._v(" "),
+                _c("textarea", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.addNotes.note,
+                      expression: "addNotes.note"
+                    }
+                  ],
+                  staticClass: "form-control",
+                  attrs: { type: "text", id: "note" },
+                  domProps: { value: _vm.addNotes.note },
+                  on: {
+                    input: function($event) {
+                      if ($event.target.composing) {
+                        return
+                      }
+                      _vm.$set(_vm.addNotes, "note", $event.target.value)
+                    }
+                  }
+                })
+              ])
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "modal-footer" }, [
+              _c(
+                "button",
+                {
+                  staticClass: "btn btn-secondary",
+                  attrs: { type: "button", "data-dismiss": "modal" }
+                },
+                [_vm._v("Close")]
+              ),
+              _vm._v(" "),
+              _c(
+                "button",
+                {
+                  staticClass: "btn btn-primary",
+                  attrs: { type: "button" },
+                  on: { click: _vm.createNote }
+                },
+                [_vm._v("Save changes")]
+              )
+            ])
+          ])
+        ])
+      ]
+    ),
+    _vm._v(" "),
+    _c(
+      "div",
+      {
+        staticClass: "modal fade",
+        attrs: {
+          id: "editNote",
+          tabindex: "-1",
+          role: "dialog",
+          "aria-labelledby": "modal-add-title",
+          "aria-hidden": "true"
+        }
+      },
+      [
+        _c("div", { staticClass: "modal-dialog modal-dialog-scrollable" }, [
+          _c("div", { staticClass: "modal-content" }, [
+            _vm._m(8),
+            _vm._v(" "),
+            _c("div", { staticClass: "modal-body" }, [
+              _c("div", { staticClass: "form-group" }, [
+                _c("label", { attrs: { for: "title" } }, [_vm._v("Title")]),
+                _vm._v(" "),
+                _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.editNotes.title,
+                      expression: "editNotes.title"
+                    }
+                  ],
+                  staticClass: "form-control",
+                  attrs: { type: "text", id: "title" },
+                  domProps: { value: _vm.editNotes.title },
+                  on: {
+                    input: function($event) {
+                      if ($event.target.composing) {
+                        return
+                      }
+                      _vm.$set(_vm.editNotes, "title", $event.target.value)
+                    }
+                  }
+                })
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "form-group" }, [
+                _c("label", { attrs: { for: "note" } }, [_vm._v("Note")]),
+                _vm._v(" "),
+                _c("textarea", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.editNotes.note,
+                      expression: "editNotes.note"
+                    }
+                  ],
+                  staticClass: "form-control",
+                  attrs: { type: "text", id: "note" },
+                  domProps: { value: _vm.editNotes.note },
+                  on: {
+                    input: function($event) {
+                      if ($event.target.composing) {
+                        return
+                      }
+                      _vm.$set(_vm.editNotes, "note", $event.target.value)
+                    }
+                  }
+                })
+              ])
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "modal-footer" }, [
+              _c(
+                "button",
+                {
+                  staticClass: "btn btn-danger",
+                  attrs: { type: "button" },
+                  on: { click: _vm.deleteNote }
+                },
+                [_vm._v("Delete")]
+              ),
+              _vm._v(" "),
+              _c(
+                "button",
+                {
+                  staticClass: "btn btn-secondary",
+                  attrs: { type: "button", "data-dismiss": "modal" }
+                },
+                [_vm._v("Close")]
+              ),
+              _vm._v(" "),
+              _c(
+                "button",
+                {
+                  staticClass: "btn btn-primary",
+                  attrs: { type: "button" },
+                  on: { click: _vm.createNote }
+                },
+                [_vm._v("Save changes")]
+              )
+            ])
+          ])
+        ])
+      ]
+    )
+  ])
 }
 var staticRenderFns = [
   function() {
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "right-bar" }, [
-      _c("div", { staticClass: "h-100", attrs: { "data-simplebar": "" } }, [
-        _c(
-          "ul",
-          {
-            staticClass:
-              "nav nav-tabs nav-tabs-custom rightbar-nav-tab nav-justified",
-            attrs: { role: "tablist" }
-          },
-          [
-            _c("li", { staticClass: "nav-item" }, [
+    return _c(
+      "ul",
+      {
+        staticClass:
+          "nav nav-tabs nav-tabs-custom rightbar-nav-tab nav-justified",
+        attrs: { role: "tablist" }
+      },
+      [
+        _c("li", { staticClass: "nav-item" }, [
+          _c(
+            "a",
+            {
+              staticClass: "nav-link py-3 active",
+              attrs: { "data-toggle": "tab", href: "#chat-tab", role: "tab" }
+            },
+            [_c("i", { staticClass: "mdi mdi-message-text font-size-22" })]
+          )
+        ]),
+        _vm._v(" "),
+        _c("li", { staticClass: "nav-item" }, [
+          _c(
+            "a",
+            {
+              staticClass: "nav-link py-3",
+              attrs: { "data-toggle": "tab", href: "#tasks-tab", role: "tab" }
+            },
+            [
+              _c("i", {
+                staticClass: "mdi mdi-format-list-checkbox font-size-22"
+              })
+            ]
+          )
+        ]),
+        _vm._v(" "),
+        _c("li", { staticClass: "nav-item" }, [
+          _c(
+            "a",
+            {
+              staticClass: "nav-link py-3",
+              attrs: {
+                "data-toggle": "tab",
+                href: "#settings-tab",
+                role: "tab"
+              }
+            },
+            [_c("i", { staticClass: "mdi mdi-settings font-size-22" })]
+          )
+        ])
+      ]
+    )
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("form", { staticClass: "search-bar py-4 px-3" }, [
+      _c("div", { staticClass: "position-relative" }, [
+        _c("input", {
+          staticClass: "form-control",
+          attrs: { type: "text", placeholder: "Search..." }
+        }),
+        _vm._v(" "),
+        _c("span", { staticClass: "mdi mdi-magnify" })
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "div",
+      {
+        staticClass: "spinner-grow text-danger mr-2 mt-2",
+        attrs: { role: "status" }
+      },
+      [_c("span", { staticClass: "sr-only" }, [_vm._v("Loading...")])]
+    )
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "div",
+      {
+        staticClass: "spinner-grow text-warning mr-2 mt-2",
+        attrs: { role: "status" }
+      },
+      [_c("span", { staticClass: "sr-only" }, [_vm._v("Loading...")])]
+    )
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "div",
+      {
+        staticClass: "spinner-grow text-success mr-2 mt-2",
+        attrs: { role: "status" }
+      },
+      [_c("span", { staticClass: "sr-only" }, [_vm._v("Loading...")])]
+    )
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "div",
+      { staticClass: "tab-pane", attrs: { id: "tasks-tab", role: "tabpanel" } },
+      [
+        _c("h6", { staticClass: "p-3 mb-0 mt-4 bg-light" }, [
+          _vm._v("Working Tasks")
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "p-2" }, [
+          _c(
+            "a",
+            {
+              staticClass: "text-reset item-hovered d-block p-3",
+              attrs: { href: "javascript: void(0);" }
+            },
+            [
+              _c("p", { staticClass: "text-muted mb-0" }, [
+                _vm._v("App Development"),
+                _c("span", { staticClass: "float-right" }, [_vm._v("75%")])
+              ]),
+              _vm._v(" "),
               _c(
-                "a",
+                "div",
                 {
-                  staticClass: "nav-link py-3 active",
-                  attrs: {
-                    "data-toggle": "tab",
-                    href: "#chat-tab",
-                    role: "tab"
-                  }
-                },
-                [_c("i", { staticClass: "mdi mdi-message-text font-size-22" })]
-              )
-            ]),
-            _vm._v(" "),
-            _c("li", { staticClass: "nav-item" }, [
-              _c(
-                "a",
-                {
-                  staticClass: "nav-link py-3",
-                  attrs: {
-                    "data-toggle": "tab",
-                    href: "#tasks-tab",
-                    role: "tab"
-                  }
+                  staticClass: "progress mt-2",
+                  staticStyle: { height: "4px" }
                 },
                 [
-                  _c("i", {
-                    staticClass: "mdi mdi-format-list-checkbox font-size-22"
+                  _c("div", {
+                    staticClass: "progress-bar bg-success",
+                    staticStyle: { width: "75%" },
+                    attrs: {
+                      role: "progressbar",
+                      "aria-valuenow": "75",
+                      "aria-valuemin": "0",
+                      "aria-valuemax": "100"
+                    }
                   })
                 ]
               )
-            ]),
-            _vm._v(" "),
-            _c("li", { staticClass: "nav-item" }, [
+            ]
+          ),
+          _vm._v(" "),
+          _c(
+            "a",
+            {
+              staticClass: "text-reset item-hovered d-block p-3",
+              attrs: { href: "javascript: void(0);" }
+            },
+            [
+              _c("p", { staticClass: "text-muted mb-0" }, [
+                _vm._v("Database Repair"),
+                _c("span", { staticClass: "float-right" }, [_vm._v("37%")])
+              ]),
+              _vm._v(" "),
               _c(
-                "a",
+                "div",
                 {
-                  staticClass: "nav-link py-3",
-                  attrs: {
-                    "data-toggle": "tab",
-                    href: "#settings-tab",
-                    role: "tab"
-                  }
+                  staticClass: "progress mt-2",
+                  staticStyle: { height: "4px" }
                 },
-                [_c("i", { staticClass: "mdi mdi-settings font-size-22" })]
+                [
+                  _c("div", {
+                    staticClass: "progress-bar bg-info",
+                    staticStyle: { width: "37%" },
+                    attrs: {
+                      role: "progressbar",
+                      "aria-valuenow": "37",
+                      "aria-valuemin": "0",
+                      "aria-valuemax": "100"
+                    }
+                  })
+                ]
               )
-            ])
-          ]
-        ),
-        _vm._v(" "),
-        _c("div", { staticClass: "tab-content text-muted" }, [
-          _c(
-            "div",
-            {
-              staticClass: "tab-pane active",
-              attrs: { id: "chat-tab", role: "tabpanel" }
-            },
-            [
-              _c("form", { staticClass: "search-bar py-4 px-3" }, [
-                _c("div", { staticClass: "position-relative" }, [
-                  _c("input", {
-                    staticClass: "form-control",
-                    attrs: { type: "text", placeholder: "Search..." }
-                  }),
-                  _vm._v(" "),
-                  _c("span", { staticClass: "mdi mdi-magnify" })
-                ])
-              ])
             ]
           ),
           _vm._v(" "),
           _c(
-            "div",
+            "a",
             {
-              staticClass: "tab-pane",
-              attrs: { id: "tasks-tab", role: "tabpanel" }
+              staticClass: "text-reset item-hovered d-block p-3",
+              attrs: { href: "javascript: void(0);" }
             },
             [
-              _c("h6", { staticClass: "p-3 mb-0 mt-4 bg-light" }, [
-                _vm._v("Working Tasks")
+              _c("p", { staticClass: "text-muted mb-0" }, [
+                _vm._v("Backup Create"),
+                _c("span", { staticClass: "float-right" }, [_vm._v("52%")])
               ]),
               _vm._v(" "),
-              _c("div", { staticClass: "p-2" }, [
-                _c(
-                  "a",
-                  {
-                    staticClass: "text-reset item-hovered d-block p-3",
-                    attrs: { href: "javascript: void(0);" }
-                  },
-                  [
-                    _c("p", { staticClass: "text-muted mb-0" }, [
-                      _vm._v("App Development"),
-                      _c("span", { staticClass: "float-right" }, [
-                        _vm._v("75%")
-                      ])
-                    ]),
-                    _vm._v(" "),
-                    _c(
-                      "div",
-                      {
-                        staticClass: "progress mt-2",
-                        staticStyle: { height: "4px" }
-                      },
-                      [
-                        _c("div", {
-                          staticClass: "progress-bar bg-success",
-                          staticStyle: { width: "75%" },
-                          attrs: {
-                            role: "progressbar",
-                            "aria-valuenow": "75",
-                            "aria-valuemin": "0",
-                            "aria-valuemax": "100"
-                          }
-                        })
-                      ]
-                    )
-                  ]
-                ),
-                _vm._v(" "),
-                _c(
-                  "a",
-                  {
-                    staticClass: "text-reset item-hovered d-block p-3",
-                    attrs: { href: "javascript: void(0);" }
-                  },
-                  [
-                    _c("p", { staticClass: "text-muted mb-0" }, [
-                      _vm._v("Database Repair"),
-                      _c("span", { staticClass: "float-right" }, [
-                        _vm._v("37%")
-                      ])
-                    ]),
-                    _vm._v(" "),
-                    _c(
-                      "div",
-                      {
-                        staticClass: "progress mt-2",
-                        staticStyle: { height: "4px" }
-                      },
-                      [
-                        _c("div", {
-                          staticClass: "progress-bar bg-info",
-                          staticStyle: { width: "37%" },
-                          attrs: {
-                            role: "progressbar",
-                            "aria-valuenow": "37",
-                            "aria-valuemin": "0",
-                            "aria-valuemax": "100"
-                          }
-                        })
-                      ]
-                    )
-                  ]
-                ),
-                _vm._v(" "),
-                _c(
-                  "a",
-                  {
-                    staticClass: "text-reset item-hovered d-block p-3",
-                    attrs: { href: "javascript: void(0);" }
-                  },
-                  [
-                    _c("p", { staticClass: "text-muted mb-0" }, [
-                      _vm._v("Backup Create"),
-                      _c("span", { staticClass: "float-right" }, [
-                        _vm._v("52%")
-                      ])
-                    ]),
-                    _vm._v(" "),
-                    _c(
-                      "div",
-                      {
-                        staticClass: "progress mt-2",
-                        staticStyle: { height: "4px" }
-                      },
-                      [
-                        _c("div", {
-                          staticClass: "progress-bar bg-warning",
-                          staticStyle: { width: "52%" },
-                          attrs: {
-                            role: "progressbar",
-                            "aria-valuenow": "52",
-                            "aria-valuemin": "0",
-                            "aria-valuemax": "100"
-                          }
-                        })
-                      ]
-                    )
-                  ]
-                )
-              ]),
-              _vm._v(" "),
-              _c("h6", { staticClass: "p-3 mb-0 mt-4 bg-light" }, [
-                _vm._v("Upcoming Tasks")
-              ]),
-              _vm._v(" "),
-              _c("div", { staticClass: "p-2" }, [
-                _c(
-                  "a",
-                  {
-                    staticClass: "text-reset item-hovered d-block p-3",
-                    attrs: { href: "javascript: void(0);" }
-                  },
-                  [
-                    _c("p", { staticClass: "text-muted mb-0" }, [
-                      _vm._v("Sales Reporting"),
-                      _c("span", { staticClass: "float-right" }, [
-                        _vm._v("12%")
-                      ])
-                    ]),
-                    _vm._v(" "),
-                    _c(
-                      "div",
-                      {
-                        staticClass: "progress mt-2",
-                        staticStyle: { height: "4px" }
-                      },
-                      [
-                        _c("div", {
-                          staticClass: "progress-bar bg-danger",
-                          staticStyle: { width: "12%" },
-                          attrs: {
-                            role: "progressbar",
-                            "aria-valuenow": "12",
-                            "aria-valuemin": "0",
-                            "aria-valuemax": "100"
-                          }
-                        })
-                      ]
-                    )
-                  ]
-                ),
-                _vm._v(" "),
-                _c(
-                  "a",
-                  {
-                    staticClass: "text-reset item-hovered d-block p-3",
-                    attrs: { href: "javascript: void(0);" }
-                  },
-                  [
-                    _c("p", { staticClass: "text-muted mb-0" }, [
-                      _vm._v("Redesign Website"),
-                      _c("span", { staticClass: "float-right" }, [
-                        _vm._v("67%")
-                      ])
-                    ]),
-                    _vm._v(" "),
-                    _c(
-                      "div",
-                      {
-                        staticClass: "progress mt-2",
-                        staticStyle: { height: "4px" }
-                      },
-                      [
-                        _c("div", {
-                          staticClass: "progress-bar bg-primary",
-                          staticStyle: { width: "67%" },
-                          attrs: {
-                            role: "progressbar",
-                            "aria-valuenow": "67",
-                            "aria-valuemin": "0",
-                            "aria-valuemax": "100"
-                          }
-                        })
-                      ]
-                    )
-                  ]
-                ),
-                _vm._v(" "),
-                _c(
-                  "a",
-                  {
-                    staticClass: "text-reset item-hovered d-block p-3",
-                    attrs: { href: "javascript: void(0);" }
-                  },
-                  [
-                    _c("p", { staticClass: "text-muted mb-0" }, [
-                      _vm._v("New Admin Design"),
-                      _c("span", { staticClass: "float-right" }, [
-                        _vm._v("84%")
-                      ])
-                    ]),
-                    _vm._v(" "),
-                    _c(
-                      "div",
-                      {
-                        staticClass: "progress mt-2",
-                        staticStyle: { height: "4px" }
-                      },
-                      [
-                        _c("div", {
-                          staticClass: "progress-bar bg-success",
-                          staticStyle: { width: "84%" },
-                          attrs: {
-                            role: "progressbar",
-                            "aria-valuenow": "84",
-                            "aria-valuemin": "0",
-                            "aria-valuemax": "100"
-                          }
-                        })
-                      ]
-                    )
-                  ]
-                )
-              ]),
-              _vm._v(" "),
-              _c("div", { staticClass: "p-3 mt-2" }, [
-                _c(
-                  "a",
-                  {
-                    staticClass:
-                      "btn btn-success btn-block waves-effect waves-light",
-                    attrs: { href: "javascript: void(0);" }
-                  },
-                  [_vm._v("Create Task")]
-                )
-              ])
-            ]
-          ),
-          _vm._v(" "),
-          _c(
-            "div",
-            {
-              staticClass: "tab-pane",
-              attrs: { id: "settings-tab", role: "tabpanel" }
-            },
-            [
-              _c("h6", { staticClass: "px-4 py-3 bg-light" }, [
-                _vm._v("General Settings")
-              ]),
-              _vm._v(" "),
-              _c("div", { staticClass: "p-4" }, [
-                _c("h6", { staticClass: "font-weight-medium" }, [
-                  _vm._v("Online Status")
-                ]),
-                _vm._v(" "),
-                _c(
-                  "div",
-                  { staticClass: "custom-control custom-switch mb-1" },
-                  [
-                    _c("input", {
-                      staticClass: "custom-control-input",
-                      attrs: {
-                        type: "checkbox",
-                        id: "settings-check1",
-                        name: "settings-check1",
-                        checked: ""
-                      }
-                    }),
-                    _vm._v(" "),
-                    _c(
-                      "label",
-                      {
-                        staticClass: "custom-control-label font-weight-normal",
-                        attrs: { for: "settings-check1" }
-                      },
-                      [_vm._v("Show your status to all")]
-                    )
-                  ]
-                ),
-                _vm._v(" "),
-                _c("h6", { staticClass: "mt-4" }, [_vm._v("Auto Updates")]),
-                _vm._v(" "),
-                _c(
-                  "div",
-                  { staticClass: "custom-control custom-switch mb-1" },
-                  [
-                    _c("input", {
-                      staticClass: "custom-control-input",
-                      attrs: {
-                        type: "checkbox",
-                        id: "settings-check2",
-                        name: "settings-check2",
-                        checked: ""
-                      }
-                    }),
-                    _vm._v(" "),
-                    _c(
-                      "label",
-                      {
-                        staticClass: "custom-control-label font-weight-normal",
-                        attrs: { for: "settings-check2" }
-                      },
-                      [_vm._v("Keep up to date")]
-                    )
-                  ]
-                ),
-                _vm._v(" "),
-                _c("h6", { staticClass: "mt-4" }, [_vm._v("Backup Setup")]),
-                _vm._v(" "),
-                _c(
-                  "div",
-                  { staticClass: "custom-control custom-switch mb-1" },
-                  [
-                    _c("input", {
-                      staticClass: "custom-control-input",
-                      attrs: {
-                        type: "checkbox",
-                        id: "settings-check3",
-                        name: "settings-check3"
-                      }
-                    }),
-                    _vm._v(" "),
-                    _c(
-                      "label",
-                      {
-                        staticClass: "custom-control-label font-weight-normal",
-                        attrs: { for: "settings-check3" }
-                      },
-                      [_vm._v("Auto backup")]
-                    )
-                  ]
-                )
-              ]),
-              _vm._v(" "),
-              _c("h6", { staticClass: "px-4 py-3 mt-2 bg-light" }, [
-                _vm._v("Advanced Settings")
-              ]),
-              _vm._v(" "),
-              _c("div", { staticClass: "p-4" }, [
-                _c("h6", { staticClass: "font-weight-medium" }, [
-                  _vm._v("Application Alerts")
-                ]),
-                _vm._v(" "),
-                _c(
-                  "div",
-                  { staticClass: "custom-control custom-switch mb-1" },
-                  [
-                    _c("input", {
-                      staticClass: "custom-control-input",
-                      attrs: {
-                        type: "checkbox",
-                        id: "settings-check4",
-                        name: "settings-check4",
-                        checked: ""
-                      }
-                    }),
-                    _vm._v(" "),
-                    _c(
-                      "label",
-                      {
-                        staticClass: "custom-control-label font-weight-normal",
-                        attrs: { for: "settings-check4" }
-                      },
-                      [_vm._v("Email Notifications")]
-                    )
-                  ]
-                ),
-                _vm._v(" "),
-                _c(
-                  "div",
-                  { staticClass: "custom-control custom-switch mb-1" },
-                  [
-                    _c("input", {
-                      staticClass: "custom-control-input",
-                      attrs: {
-                        type: "checkbox",
-                        id: "settings-check5",
-                        name: "settings-check5"
-                      }
-                    }),
-                    _vm._v(" "),
-                    _c(
-                      "label",
-                      {
-                        staticClass: "custom-control-label font-weight-normal",
-                        attrs: { for: "settings-check5" }
-                      },
-                      [_vm._v("SMS Notifications")]
-                    )
-                  ]
-                ),
-                _vm._v(" "),
-                _c("h6", { staticClass: "mt-4" }, [_vm._v("API")]),
-                _vm._v(" "),
-                _c(
-                  "div",
-                  { staticClass: "custom-control custom-switch mb-1" },
-                  [
-                    _c("input", {
-                      staticClass: "custom-control-input",
-                      attrs: {
-                        type: "checkbox",
-                        id: "settings-check6",
-                        name: "settings-check6"
-                      }
-                    }),
-                    _vm._v(" "),
-                    _c(
-                      "label",
-                      {
-                        staticClass: "custom-control-label font-weight-normal",
-                        attrs: { for: "settings-check6" }
-                      },
-                      [_vm._v("Enable access")]
-                    )
-                  ]
-                )
-              ])
+              _c(
+                "div",
+                {
+                  staticClass: "progress mt-2",
+                  staticStyle: { height: "4px" }
+                },
+                [
+                  _c("div", {
+                    staticClass: "progress-bar bg-warning",
+                    staticStyle: { width: "52%" },
+                    attrs: {
+                      role: "progressbar",
+                      "aria-valuenow": "52",
+                      "aria-valuemin": "0",
+                      "aria-valuemax": "100"
+                    }
+                  })
+                ]
+              )
             ]
           )
+        ]),
+        _vm._v(" "),
+        _c("h6", { staticClass: "p-3 mb-0 mt-4 bg-light" }, [
+          _vm._v("Upcoming Tasks")
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "p-2" }, [
+          _c(
+            "a",
+            {
+              staticClass: "text-reset item-hovered d-block p-3",
+              attrs: { href: "javascript: void(0);" }
+            },
+            [
+              _c("p", { staticClass: "text-muted mb-0" }, [
+                _vm._v("Sales Reporting"),
+                _c("span", { staticClass: "float-right" }, [_vm._v("12%")])
+              ]),
+              _vm._v(" "),
+              _c(
+                "div",
+                {
+                  staticClass: "progress mt-2",
+                  staticStyle: { height: "4px" }
+                },
+                [
+                  _c("div", {
+                    staticClass: "progress-bar bg-danger",
+                    staticStyle: { width: "12%" },
+                    attrs: {
+                      role: "progressbar",
+                      "aria-valuenow": "12",
+                      "aria-valuemin": "0",
+                      "aria-valuemax": "100"
+                    }
+                  })
+                ]
+              )
+            ]
+          ),
+          _vm._v(" "),
+          _c(
+            "a",
+            {
+              staticClass: "text-reset item-hovered d-block p-3",
+              attrs: { href: "javascript: void(0);" }
+            },
+            [
+              _c("p", { staticClass: "text-muted mb-0" }, [
+                _vm._v("Redesign Website"),
+                _c("span", { staticClass: "float-right" }, [_vm._v("67%")])
+              ]),
+              _vm._v(" "),
+              _c(
+                "div",
+                {
+                  staticClass: "progress mt-2",
+                  staticStyle: { height: "4px" }
+                },
+                [
+                  _c("div", {
+                    staticClass: "progress-bar bg-primary",
+                    staticStyle: { width: "67%" },
+                    attrs: {
+                      role: "progressbar",
+                      "aria-valuenow": "67",
+                      "aria-valuemin": "0",
+                      "aria-valuemax": "100"
+                    }
+                  })
+                ]
+              )
+            ]
+          ),
+          _vm._v(" "),
+          _c(
+            "a",
+            {
+              staticClass: "text-reset item-hovered d-block p-3",
+              attrs: { href: "javascript: void(0);" }
+            },
+            [
+              _c("p", { staticClass: "text-muted mb-0" }, [
+                _vm._v("New Admin Design"),
+                _c("span", { staticClass: "float-right" }, [_vm._v("84%")])
+              ]),
+              _vm._v(" "),
+              _c(
+                "div",
+                {
+                  staticClass: "progress mt-2",
+                  staticStyle: { height: "4px" }
+                },
+                [
+                  _c("div", {
+                    staticClass: "progress-bar bg-success",
+                    staticStyle: { width: "84%" },
+                    attrs: {
+                      role: "progressbar",
+                      "aria-valuenow": "84",
+                      "aria-valuemin": "0",
+                      "aria-valuemax": "100"
+                    }
+                  })
+                ]
+              )
+            ]
+          )
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "p-3 mt-2" }, [
+          _c(
+            "a",
+            {
+              staticClass: "btn btn-success btn-block waves-effect waves-light",
+              attrs: { href: "javascript: void(0);" }
+            },
+            [_vm._v("Create Task")]
+          )
         ])
-      ])
+      ]
+    )
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "div",
+      {
+        staticClass: "tab-pane",
+        attrs: { id: "settings-tab", role: "tabpanel" }
+      },
+      [
+        _c("h6", { staticClass: "px-4 py-3 bg-light" }, [
+          _vm._v("General Settings")
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "p-4" }, [
+          _c("h6", { staticClass: "font-weight-medium" }, [
+            _vm._v("Online Status")
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "custom-control custom-switch mb-1" }, [
+            _c("input", {
+              staticClass: "custom-control-input",
+              attrs: {
+                type: "checkbox",
+                id: "settings-check1",
+                name: "settings-check1",
+                checked: ""
+              }
+            }),
+            _vm._v(" "),
+            _c(
+              "label",
+              {
+                staticClass: "custom-control-label font-weight-normal",
+                attrs: { for: "settings-check1" }
+              },
+              [_vm._v("Show your status to all")]
+            )
+          ]),
+          _vm._v(" "),
+          _c("h6", { staticClass: "mt-4" }, [_vm._v("Auto Updates")]),
+          _vm._v(" "),
+          _c("div", { staticClass: "custom-control custom-switch mb-1" }, [
+            _c("input", {
+              staticClass: "custom-control-input",
+              attrs: {
+                type: "checkbox",
+                id: "settings-check2",
+                name: "settings-check2",
+                checked: ""
+              }
+            }),
+            _vm._v(" "),
+            _c(
+              "label",
+              {
+                staticClass: "custom-control-label font-weight-normal",
+                attrs: { for: "settings-check2" }
+              },
+              [_vm._v("Keep up to date")]
+            )
+          ]),
+          _vm._v(" "),
+          _c("h6", { staticClass: "mt-4" }, [_vm._v("Backup Setup")]),
+          _vm._v(" "),
+          _c("div", { staticClass: "custom-control custom-switch mb-1" }, [
+            _c("input", {
+              staticClass: "custom-control-input",
+              attrs: {
+                type: "checkbox",
+                id: "settings-check3",
+                name: "settings-check3"
+              }
+            }),
+            _vm._v(" "),
+            _c(
+              "label",
+              {
+                staticClass: "custom-control-label font-weight-normal",
+                attrs: { for: "settings-check3" }
+              },
+              [_vm._v("Auto backup")]
+            )
+          ])
+        ])
+      ]
+    )
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "modal-header" }, [
+      _c(
+        "h5",
+        { staticClass: "modal-title mt-0", attrs: { id: "modal-add-title" } },
+        [_vm._v("Add data")]
+      ),
+      _vm._v(" "),
+      _c(
+        "button",
+        {
+          staticClass: "close",
+          attrs: {
+            type: "button",
+            "data-dismiss": "modal",
+            "aria-label": "Close"
+          }
+        },
+        [_c("span", { attrs: { "aria-hidden": "true" } }, [_vm._v("×")])]
+      )
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "modal-header" }, [
+      _c(
+        "h5",
+        { staticClass: "modal-title mt-0", attrs: { id: "modal-add-title" } },
+        [_vm._v("Edit data")]
+      ),
+      _vm._v(" "),
+      _c(
+        "button",
+        {
+          staticClass: "close",
+          attrs: {
+            type: "button",
+            "data-dismiss": "modal",
+            "aria-label": "Close"
+          }
+        },
+        [_c("span", { attrs: { "aria-hidden": "true" } }, [_vm._v("×")])]
+      )
     ])
   }
 ]
@@ -92116,77 +92642,96 @@ var render = function() {
                 "div",
                 { staticClass: "table-responsive" },
                 [
-                  _c(
-                    "table",
-                    { staticClass: "table mb-0" },
-                    [
-                      _vm._m(2),
-                      _vm._v(" "),
-                      _vm._l(_vm.TableSchool, function(data) {
-                        return _c("tbody", [
-                          _c("tr", [
-                            _c("td", [_vm._v(_vm._s(data.id))]),
-                            _vm._v(" "),
-                            _c("td", [_vm._v(_vm._s(data.sc_school_name))]),
-                            _vm._v(" "),
-                            _c("td", [_vm._v(_vm._s(data.sc_class_name))]),
-                            _vm._v(" "),
-                            _c("td", [_vm._v(_vm._s(data.user_name))]),
-                            _vm._v(" "),
-                            _c("td", [_vm._v(_vm._s(data.title))]),
-                            _vm._v(" "),
-                            _c("td", [_vm._v(_vm._s(data.score))]),
-                            _vm._v(" "),
-                            _c("th", [_vm._v(_vm._s(data.updated_at))]),
-                            _vm._v(" "),
-                            _c("th", [
-                              _c(
-                                "button",
-                                {
-                                  staticClass:
-                                    "btn btn-primary btn-sm waves-effect waves-light",
-                                  on: {
-                                    click: function($event) {
-                                      return _vm.editRequest(data.id)
-                                    }
-                                  }
-                                },
-                                [
-                                  _c("i", {
-                                    staticClass: "mdi mdi-square-edit-outline"
-                                  })
-                                ]
-                              ),
-                              _vm._v(" "),
-                              _c(
-                                "button",
-                                {
-                                  staticClass:
-                                    "btn btn-danger btn-sm waves-effect waves-light",
-                                  on: {
-                                    click: function($event) {
-                                      return _vm.deleted(data.id)
-                                    }
-                                  }
-                                },
-                                [
-                                  _c("i", {
-                                    staticClass: "mdi mdi-plus-box-outline"
-                                  })
-                                ]
-                              )
-                            ])
-                          ])
-                        ])
-                      })
-                    ],
-                    2
-                  ),
+                  _vm.loading
+                    ? _c(
+                        "div",
+                        { staticClass: "d-flex justify-content-center mt-4" },
+                        [
+                          _vm._m(2),
+                          _vm._v(" "),
+                          _vm._m(3),
+                          _vm._v(" "),
+                          _vm._m(4)
+                        ]
+                      )
+                    : _vm._e(),
                   _vm._v(" "),
-                  _c("pagination", {
-                    attrs: { data: _vm.PaginateSchool },
-                    on: { "pagination-change-page": _vm.appSchool }
-                  })
+                  _vm.loading == false
+                    ? _c(
+                        "table",
+                        { staticClass: "table mb-0" },
+                        [
+                          _vm._m(5),
+                          _vm._v(" "),
+                          _vm._l(_vm.TableSchool, function(data) {
+                            return _c("tbody", [
+                              _c("tr", [
+                                _c("td", [_vm._v(_vm._s(data.id))]),
+                                _vm._v(" "),
+                                _c("td", [_vm._v(_vm._s(data.sc_school_name))]),
+                                _vm._v(" "),
+                                _c("td", [_vm._v(_vm._s(data.sc_class_name))]),
+                                _vm._v(" "),
+                                _c("td", [_vm._v(_vm._s(data.user_name))]),
+                                _vm._v(" "),
+                                _c("td", [_vm._v(_vm._s(data.title))]),
+                                _vm._v(" "),
+                                _c("td", [_vm._v(_vm._s(data.score))]),
+                                _vm._v(" "),
+                                _c("th", [_vm._v(_vm._s(data.updated_at))]),
+                                _vm._v(" "),
+                                _c("th", [
+                                  _c(
+                                    "button",
+                                    {
+                                      staticClass:
+                                        "btn btn-primary btn-sm waves-effect waves-light",
+                                      on: {
+                                        click: function($event) {
+                                          return _vm.editRequest(data.id)
+                                        }
+                                      }
+                                    },
+                                    [
+                                      _c("i", {
+                                        staticClass:
+                                          "mdi mdi-square-edit-outline"
+                                      })
+                                    ]
+                                  ),
+                                  _vm._v(" "),
+                                  _c(
+                                    "button",
+                                    {
+                                      staticClass:
+                                        "btn btn-danger btn-sm waves-effect waves-light",
+                                      on: {
+                                        click: function($event) {
+                                          return _vm.deleted(data.id)
+                                        }
+                                      }
+                                    },
+                                    [
+                                      _c("i", {
+                                        staticClass: "mdi mdi-plus-box-outline"
+                                      })
+                                    ]
+                                  )
+                                ])
+                              ])
+                            ])
+                          })
+                        ],
+                        2
+                      )
+                    : _vm._e(),
+                  _vm._v(" "),
+                  _vm.loading == false
+                    ? _c("pagination", {
+                        attrs: { data: _vm.PaginateSchool },
+                        on: { "pagination-change-page": _vm.appSchool }
+                      })
+                    : _vm._e()
                 ],
                 1
               )
@@ -92211,7 +92756,7 @@ var render = function() {
       [
         _c("div", { staticClass: "modal-dialog modal-dialog-scrollable" }, [
           _c("div", { staticClass: "modal-content" }, [
-            _vm._m(3),
+            _vm._m(6),
             _vm._v(" "),
             _c("div", { staticClass: "modal-body" }, [
               _c(
@@ -92392,7 +92937,7 @@ var render = function() {
       [
         _c("div", { staticClass: "modal-dialog modal-dialog-scrollable" }, [
           _c("div", { staticClass: "modal-content" }, [
-            _vm._m(4),
+            _vm._m(7),
             _vm._v(" "),
             _c("div", { staticClass: "modal-body" }, [
               _c(
@@ -92596,6 +93141,45 @@ var staticRenderFns = [
         _c("i", { staticClass: "mdi mdi-settings-outline mr-1" }),
         _vm._v(" Settings\n                            ")
       ]
+    )
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "div",
+      {
+        staticClass: "spinner-grow text-danger mr-2 mt-2",
+        attrs: { role: "status" }
+      },
+      [_c("span", { staticClass: "sr-only" }, [_vm._v("Loading...")])]
+    )
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "div",
+      {
+        staticClass: "spinner-grow text-warning mr-2 mt-2",
+        attrs: { role: "status" }
+      },
+      [_c("span", { staticClass: "sr-only" }, [_vm._v("Loading...")])]
+    )
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "div",
+      {
+        staticClass: "spinner-grow text-success mr-2 mt-2",
+        attrs: { role: "status" }
+      },
+      [_c("span", { staticClass: "sr-only" }, [_vm._v("Loading...")])]
     )
   },
   function() {
@@ -92912,79 +93496,98 @@ var render = function() {
                 "div",
                 { staticClass: "table-responsive" },
                 [
-                  _c(
-                    "table",
-                    { staticClass: "table mb-0" },
-                    [
-                      _vm._m(2),
-                      _vm._v(" "),
-                      _vm._l(_vm.TableReportCard, function(data) {
-                        return _c("tbody", [
-                          _c("tr", [
-                            _c("td", [_vm._v(_vm._s(data.id))]),
-                            _vm._v(" "),
-                            _c("td", [
-                              _vm._v(_vm._s(data.home_room_teacher_id))
-                            ]),
-                            _vm._v(" "),
-                            _c("td", [_vm._v(_vm._s(data.student_name))]),
-                            _vm._v(" "),
-                            _c("td", [_vm._v(_vm._s(data.study_name))]),
-                            _vm._v(" "),
-                            _c("td", [_vm._v(_vm._s(data.score))]),
-                            _vm._v(" "),
-                            _c("td", [_vm._v(_vm._s(data.status))]),
-                            _vm._v(" "),
-                            _c("th", [_vm._v(_vm._s(data.updated_at))]),
-                            _vm._v(" "),
-                            _c("th", [
-                              _c(
-                                "button",
-                                {
-                                  staticClass:
-                                    "btn btn-primary btn-sm waves-effect waves-light",
-                                  on: {
-                                    click: function($event) {
-                                      return _vm.editRequest(data.id)
-                                    }
-                                  }
-                                },
-                                [
-                                  _c("i", {
-                                    staticClass: "mdi mdi-square-edit-outline"
-                                  })
-                                ]
-                              ),
-                              _vm._v(" "),
-                              _c(
-                                "button",
-                                {
-                                  staticClass:
-                                    "btn btn-danger btn-sm waves-effect waves-light",
-                                  on: {
-                                    click: function($event) {
-                                      return _vm.deleted(data.id)
-                                    }
-                                  }
-                                },
-                                [
-                                  _c("i", {
-                                    staticClass: "mdi mdi-plus-box-outline"
-                                  })
-                                ]
-                              )
-                            ])
-                          ])
-                        ])
-                      })
-                    ],
-                    2
-                  ),
+                  _vm.loading
+                    ? _c(
+                        "div",
+                        { staticClass: "d-flex justify-content-center mt-4" },
+                        [
+                          _vm._m(2),
+                          _vm._v(" "),
+                          _vm._m(3),
+                          _vm._v(" "),
+                          _vm._m(4)
+                        ]
+                      )
+                    : _vm._e(),
                   _vm._v(" "),
-                  _c("pagination", {
-                    attrs: { data: _vm.PaginateSchool },
-                    on: { "pagination-change-page": _vm.appSchool }
-                  })
+                  _vm.loading == false
+                    ? _c(
+                        "table",
+                        { staticClass: "table mb-0" },
+                        [
+                          _vm._m(5),
+                          _vm._v(" "),
+                          _vm._l(_vm.TableReportCard, function(data) {
+                            return _c("tbody", [
+                              _c("tr", [
+                                _c("td", [_vm._v(_vm._s(data.id))]),
+                                _vm._v(" "),
+                                _c("td", [
+                                  _vm._v(_vm._s(data.home_room_teacher_id))
+                                ]),
+                                _vm._v(" "),
+                                _c("td", [_vm._v(_vm._s(data.student_name))]),
+                                _vm._v(" "),
+                                _c("td", [_vm._v(_vm._s(data.study_name))]),
+                                _vm._v(" "),
+                                _c("td", [_vm._v(_vm._s(data.score))]),
+                                _vm._v(" "),
+                                _c("td", [_vm._v(_vm._s(data.status))]),
+                                _vm._v(" "),
+                                _c("th", [_vm._v(_vm._s(data.updated_at))]),
+                                _vm._v(" "),
+                                _c("th", [
+                                  _c(
+                                    "button",
+                                    {
+                                      staticClass:
+                                        "btn btn-primary btn-sm waves-effect waves-light",
+                                      on: {
+                                        click: function($event) {
+                                          return _vm.editRequest(data.id)
+                                        }
+                                      }
+                                    },
+                                    [
+                                      _c("i", {
+                                        staticClass:
+                                          "mdi mdi-square-edit-outline"
+                                      })
+                                    ]
+                                  ),
+                                  _vm._v(" "),
+                                  _c(
+                                    "button",
+                                    {
+                                      staticClass:
+                                        "btn btn-danger btn-sm waves-effect waves-light",
+                                      on: {
+                                        click: function($event) {
+                                          return _vm.deleted(data.id)
+                                        }
+                                      }
+                                    },
+                                    [
+                                      _c("i", {
+                                        staticClass: "mdi mdi-plus-box-outline"
+                                      })
+                                    ]
+                                  )
+                                ])
+                              ])
+                            ])
+                          })
+                        ],
+                        2
+                      )
+                    : _vm._e(),
+                  _vm._v(" "),
+                  _vm.loading == false
+                    ? _c("pagination", {
+                        attrs: { data: _vm.PaginateSchool },
+                        on: { "pagination-change-page": _vm.appSchool }
+                      })
+                    : _vm._e()
                 ],
                 1
               )
@@ -93009,7 +93612,7 @@ var render = function() {
       [
         _c("div", { staticClass: "modal-dialog modal-dialog-scrollable" }, [
           _c("div", { staticClass: "modal-content" }, [
-            _vm._m(3),
+            _vm._m(6),
             _vm._v(" "),
             _c("div", { staticClass: "modal-body" }, [
               _c("div", { staticClass: "float-left" }, [
@@ -93881,7 +94484,7 @@ var render = function() {
       [
         _c("div", { staticClass: "modal-dialog modal-dialog-scrollable" }, [
           _c("div", { staticClass: "modal-content" }, [
-            _vm._m(4),
+            _vm._m(7),
             _vm._v(" "),
             _c("div", { staticClass: "modal-body" }, [
               _c("div", { staticClass: "float-left" }, [
@@ -94788,6 +95391,45 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
+    return _c(
+      "div",
+      {
+        staticClass: "spinner-grow text-danger mr-2 mt-2",
+        attrs: { role: "status" }
+      },
+      [_c("span", { staticClass: "sr-only" }, [_vm._v("Loading...")])]
+    )
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "div",
+      {
+        staticClass: "spinner-grow text-warning mr-2 mt-2",
+        attrs: { role: "status" }
+      },
+      [_c("span", { staticClass: "sr-only" }, [_vm._v("Loading...")])]
+    )
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "div",
+      {
+        staticClass: "spinner-grow text-success mr-2 mt-2",
+        attrs: { role: "status" }
+      },
+      [_c("span", { staticClass: "sr-only" }, [_vm._v("Loading...")])]
+    )
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
     return _c("thead", [
       _c("tr", [
         _c("th", [_vm._v("#")]),
@@ -95123,77 +95765,96 @@ var render = function() {
                 "div",
                 { staticClass: "table-responsive" },
                 [
-                  _c(
-                    "table",
-                    { staticClass: "table mb-0" },
-                    [
-                      _vm._m(2),
-                      _vm._v(" "),
-                      _vm._l(_vm.TableStudy, function(data) {
-                        return _c("tbody", [
-                          _c("tr", [
-                            _c("td", [_vm._v(_vm._s(data.id))]),
-                            _vm._v(" "),
-                            _c("td", [_vm._v(_vm._s(data.sc_school_name))]),
-                            _vm._v(" "),
-                            _c("td", [_vm._v(_vm._s(data.sc_class_name))]),
-                            _vm._v(" "),
-                            _c("td", [_vm._v(_vm._s(data.user_name))]),
-                            _vm._v(" "),
-                            _c("td", [_vm._v(_vm._s(data.start_period))]),
-                            _vm._v(" "),
-                            _c("td", [_vm._v(_vm._s(data.end_period))]),
-                            _vm._v(" "),
-                            _c("th", [_vm._v(_vm._s(data.updated_at))]),
-                            _vm._v(" "),
-                            _c("th", [
-                              _c(
-                                "button",
-                                {
-                                  staticClass:
-                                    "btn btn-primary btn-sm waves-effect waves-light",
-                                  on: {
-                                    click: function($event) {
-                                      return _vm.editRequest(data.id)
-                                    }
-                                  }
-                                },
-                                [
-                                  _c("i", {
-                                    staticClass: "mdi mdi-square-edit-outline"
-                                  })
-                                ]
-                              ),
-                              _vm._v(" "),
-                              _c(
-                                "button",
-                                {
-                                  staticClass:
-                                    "btn btn-danger btn-sm waves-effect waves-light",
-                                  on: {
-                                    click: function($event) {
-                                      return _vm.deleted(data.id)
-                                    }
-                                  }
-                                },
-                                [
-                                  _c("i", {
-                                    staticClass: "mdi mdi-plus-box-outline"
-                                  })
-                                ]
-                              )
-                            ])
-                          ])
-                        ])
-                      })
-                    ],
-                    2
-                  ),
+                  _vm.loading
+                    ? _c(
+                        "div",
+                        { staticClass: "d-flex justify-content-center mt-4" },
+                        [
+                          _vm._m(2),
+                          _vm._v(" "),
+                          _vm._m(3),
+                          _vm._v(" "),
+                          _vm._m(4)
+                        ]
+                      )
+                    : _vm._e(),
                   _vm._v(" "),
-                  _c("pagination", {
-                    attrs: { data: _vm.PaginateStudy },
-                    on: { "pagination-change-page": _vm.appSchool }
-                  })
+                  _vm.loading == false
+                    ? _c(
+                        "table",
+                        { staticClass: "table mb-0" },
+                        [
+                          _vm._m(5),
+                          _vm._v(" "),
+                          _vm._l(_vm.TableHomeRoomTeacher, function(data) {
+                            return _c("tbody", [
+                              _c("tr", [
+                                _c("td", [_vm._v(_vm._s(data.id))]),
+                                _vm._v(" "),
+                                _c("td", [_vm._v(_vm._s(data.sc_school_name))]),
+                                _vm._v(" "),
+                                _c("td", [_vm._v(_vm._s(data.sc_class_name))]),
+                                _vm._v(" "),
+                                _c("td", [_vm._v(_vm._s(data.user_name))]),
+                                _vm._v(" "),
+                                _c("td", [_vm._v(_vm._s(data.start_period))]),
+                                _vm._v(" "),
+                                _c("td", [_vm._v(_vm._s(data.end_period))]),
+                                _vm._v(" "),
+                                _c("th", [_vm._v(_vm._s(data.updated_at))]),
+                                _vm._v(" "),
+                                _c("th", [
+                                  _c(
+                                    "button",
+                                    {
+                                      staticClass:
+                                        "btn btn-primary btn-sm waves-effect waves-light",
+                                      on: {
+                                        click: function($event) {
+                                          return _vm.editRequest(data.id)
+                                        }
+                                      }
+                                    },
+                                    [
+                                      _c("i", {
+                                        staticClass:
+                                          "mdi mdi-square-edit-outline"
+                                      })
+                                    ]
+                                  ),
+                                  _vm._v(" "),
+                                  _c(
+                                    "button",
+                                    {
+                                      staticClass:
+                                        "btn btn-danger btn-sm waves-effect waves-light",
+                                      on: {
+                                        click: function($event) {
+                                          return _vm.deleted(data.id)
+                                        }
+                                      }
+                                    },
+                                    [
+                                      _c("i", {
+                                        staticClass: "mdi mdi-plus-box-outline"
+                                      })
+                                    ]
+                                  )
+                                ])
+                              ])
+                            ])
+                          })
+                        ],
+                        2
+                      )
+                    : _vm._e(),
+                  _vm._v(" "),
+                  _vm.loading == false
+                    ? _c("pagination", {
+                        attrs: { data: _vm.PaginateHomeRoomTeacher },
+                        on: { "pagination-change-page": _vm.appSchool }
+                      })
+                    : _vm._e()
                 ],
                 1
               )
@@ -95218,7 +95879,7 @@ var render = function() {
       [
         _c("div", { staticClass: "modal-dialog modal-dialog-scrollable" }, [
           _c("div", { staticClass: "modal-content" }, [
-            _vm._m(3),
+            _vm._m(6),
             _vm._v(" "),
             _c("div", { staticClass: "modal-body" }, [
               _c(
@@ -95406,7 +96067,7 @@ var render = function() {
       [
         _c("div", { staticClass: "modal-dialog modal-dialog-scrollable" }, [
           _c("div", { staticClass: "modal-content" }, [
-            _vm._m(4),
+            _vm._m(7),
             _vm._v(" "),
             _c("div", { staticClass: "modal-body" }, [
               _c(
@@ -95620,6 +96281,45 @@ var staticRenderFns = [
         _c("i", { staticClass: "mdi mdi-settings-outline mr-1" }),
         _vm._v(" Settings\n                            ")
       ]
+    )
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "div",
+      {
+        staticClass: "spinner-grow text-danger mr-2 mt-2",
+        attrs: { role: "status" }
+      },
+      [_c("span", { staticClass: "sr-only" }, [_vm._v("Loading...")])]
+    )
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "div",
+      {
+        staticClass: "spinner-grow text-warning mr-2 mt-2",
+        attrs: { role: "status" }
+      },
+      [_c("span", { staticClass: "sr-only" }, [_vm._v("Loading...")])]
+    )
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "div",
+      {
+        staticClass: "spinner-grow text-success mr-2 mt-2",
+        attrs: { role: "status" }
+      },
+      [_c("span", { staticClass: "sr-only" }, [_vm._v("Loading...")])]
     )
   },
   function() {
@@ -95936,71 +96636,90 @@ var render = function() {
                 "div",
                 { staticClass: "table-responsive" },
                 [
-                  _c(
-                    "table",
-                    { staticClass: "table mb-0" },
-                    [
-                      _vm._m(2),
-                      _vm._v(" "),
-                      _vm._l(_vm.TableSchool, function(data) {
-                        return _c("tbody", [
-                          _c("tr", [
-                            _c("td", [_vm._v(_vm._s(data.id))]),
-                            _vm._v(" "),
-                            _c("td", [_vm._v(_vm._s(data.user_id))]),
-                            _vm._v(" "),
-                            _c("td", [_vm._v(_vm._s(data.name))]),
-                            _vm._v(" "),
-                            _c("th", [_vm._v(_vm._s(data.updated_at))]),
-                            _vm._v(" "),
-                            _c("th", [
-                              _c(
-                                "button",
-                                {
-                                  staticClass:
-                                    "btn btn-primary btn-sm waves-effect waves-light",
-                                  on: {
-                                    click: function($event) {
-                                      return _vm.editRequest(data.id)
-                                    }
-                                  }
-                                },
-                                [
-                                  _c("i", {
-                                    staticClass: "mdi mdi-square-edit-outline"
-                                  })
-                                ]
-                              ),
-                              _vm._v(" "),
-                              _c(
-                                "button",
-                                {
-                                  staticClass:
-                                    "btn btn-danger btn-sm waves-effect waves-light",
-                                  on: {
-                                    click: function($event) {
-                                      return _vm.deleted(data.id)
-                                    }
-                                  }
-                                },
-                                [
-                                  _c("i", {
-                                    staticClass: "mdi mdi-plus-box-outline"
-                                  })
-                                ]
-                              )
-                            ])
-                          ])
-                        ])
-                      })
-                    ],
-                    2
-                  ),
+                  _vm.loading
+                    ? _c(
+                        "div",
+                        { staticClass: "d-flex justify-content-center mt-4" },
+                        [
+                          _vm._m(2),
+                          _vm._v(" "),
+                          _vm._m(3),
+                          _vm._v(" "),
+                          _vm._m(4)
+                        ]
+                      )
+                    : _vm._e(),
                   _vm._v(" "),
-                  _c("pagination", {
-                    attrs: { data: _vm.PaginateSchool },
-                    on: { "pagination-change-page": _vm.appSchool }
-                  })
+                  _vm.loading == false
+                    ? _c(
+                        "table",
+                        { staticClass: "table mb-0" },
+                        [
+                          _vm._m(5),
+                          _vm._v(" "),
+                          _vm._l(_vm.TableSchool, function(data) {
+                            return _c("tbody", [
+                              _c("tr", [
+                                _c("td", [_vm._v(_vm._s(data.id))]),
+                                _vm._v(" "),
+                                _c("td", [_vm._v(_vm._s(data.user_id))]),
+                                _vm._v(" "),
+                                _c("td", [_vm._v(_vm._s(data.name))]),
+                                _vm._v(" "),
+                                _c("th", [_vm._v(_vm._s(data.updated_at))]),
+                                _vm._v(" "),
+                                _c("th", [
+                                  _c(
+                                    "button",
+                                    {
+                                      staticClass:
+                                        "btn btn-primary btn-sm waves-effect waves-light",
+                                      on: {
+                                        click: function($event) {
+                                          return _vm.editRequest(data.id)
+                                        }
+                                      }
+                                    },
+                                    [
+                                      _c("i", {
+                                        staticClass:
+                                          "mdi mdi-square-edit-outline"
+                                      })
+                                    ]
+                                  ),
+                                  _vm._v(" "),
+                                  _c(
+                                    "button",
+                                    {
+                                      staticClass:
+                                        "btn btn-danger btn-sm waves-effect waves-light",
+                                      on: {
+                                        click: function($event) {
+                                          return _vm.deleted(data.id)
+                                        }
+                                      }
+                                    },
+                                    [
+                                      _c("i", {
+                                        staticClass: "mdi mdi-plus-box-outline"
+                                      })
+                                    ]
+                                  )
+                                ])
+                              ])
+                            ])
+                          })
+                        ],
+                        2
+                      )
+                    : _vm._e(),
+                  _vm._v(" "),
+                  _vm.loading == false
+                    ? _c("pagination", {
+                        attrs: { data: _vm.PaginateSchool },
+                        on: { "pagination-change-page": _vm.appSchool }
+                      })
+                    : _vm._e()
                 ],
                 1
               )
@@ -96025,7 +96744,7 @@ var render = function() {
       [
         _c("div", { staticClass: "modal-dialog modal-dialog-scrollable" }, [
           _c("div", { staticClass: "modal-content" }, [
-            _vm._m(3),
+            _vm._m(6),
             _vm._v(" "),
             _c("div", { staticClass: "modal-body" }, [
               _c("div", { staticClass: "form-group" }, [
@@ -96214,7 +96933,7 @@ var render = function() {
       [
         _c("div", { staticClass: "modal-dialog modal-dialog-scrollable" }, [
           _c("div", { staticClass: "modal-content" }, [
-            _vm._m(4),
+            _vm._m(7),
             _vm._v(" "),
             _c("div", { staticClass: "modal-body" }, [
               _c("div", { staticClass: "form-group" }, [
@@ -96424,6 +97143,45 @@ var staticRenderFns = [
         _c("i", { staticClass: "mdi mdi-settings-outline mr-1" }),
         _vm._v(" Settings\n                            ")
       ]
+    )
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "div",
+      {
+        staticClass: "spinner-grow text-danger mr-2 mt-2",
+        attrs: { role: "status" }
+      },
+      [_c("span", { staticClass: "sr-only" }, [_vm._v("Loading...")])]
+    )
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "div",
+      {
+        staticClass: "spinner-grow text-warning mr-2 mt-2",
+        attrs: { role: "status" }
+      },
+      [_c("span", { staticClass: "sr-only" }, [_vm._v("Loading...")])]
+    )
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "div",
+      {
+        staticClass: "spinner-grow text-success mr-2 mt-2",
+        attrs: { role: "status" }
+      },
+      [_c("span", { staticClass: "sr-only" }, [_vm._v("Loading...")])]
     )
   },
   function() {
@@ -96742,75 +97500,94 @@ var render = function() {
                 "div",
                 { staticClass: "table-responsive" },
                 [
-                  _c(
-                    "table",
-                    { staticClass: "table mb-0" },
-                    [
-                      _vm._m(2),
-                      _vm._v(" "),
-                      _vm._l(_vm.TableStudent, function(data) {
-                        return _c("tbody", [
-                          _c("tr", [
-                            _c("td", [_vm._v(_vm._s(data.id))]),
-                            _vm._v(" "),
-                            _c("td", [_vm._v(_vm._s(data.sc_school_name))]),
-                            _vm._v(" "),
-                            _c("td", [_vm._v(_vm._s(data.nisn))]),
-                            _vm._v(" "),
-                            _c("td", [_vm._v(_vm._s(data.user_name))]),
-                            _vm._v(" "),
-                            _c("td", [_vm._v(_vm._s(data.generation))]),
-                            _vm._v(" "),
-                            _c("th", [_vm._v(_vm._s(data.updated_at))]),
-                            _vm._v(" "),
-                            _c("th", [
-                              _c(
-                                "button",
-                                {
-                                  staticClass:
-                                    "btn btn-primary btn-sm waves-effect waves-light",
-                                  on: {
-                                    click: function($event) {
-                                      return _vm.editRequest(data.id)
-                                    }
-                                  }
-                                },
-                                [
-                                  _c("i", {
-                                    staticClass: "mdi mdi-square-edit-outline"
-                                  })
-                                ]
-                              ),
-                              _vm._v(" "),
-                              _c(
-                                "button",
-                                {
-                                  staticClass:
-                                    "btn btn-danger btn-sm waves-effect waves-light",
-                                  on: {
-                                    click: function($event) {
-                                      return _vm.deleted(data.id)
-                                    }
-                                  }
-                                },
-                                [
-                                  _c("i", {
-                                    staticClass: "mdi mdi-plus-box-outline"
-                                  })
-                                ]
-                              )
-                            ])
-                          ])
-                        ])
-                      })
-                    ],
-                    2
-                  ),
+                  _vm.loading
+                    ? _c(
+                        "div",
+                        { staticClass: "d-flex justify-content-center mt-4" },
+                        [
+                          _vm._m(2),
+                          _vm._v(" "),
+                          _vm._m(3),
+                          _vm._v(" "),
+                          _vm._m(4)
+                        ]
+                      )
+                    : _vm._e(),
                   _vm._v(" "),
-                  _c("pagination", {
-                    attrs: { data: _vm.PaginateStudent },
-                    on: { "pagination-change-page": _vm.appSchool }
-                  })
+                  _vm.loading == false
+                    ? _c(
+                        "table",
+                        { staticClass: "table mb-0" },
+                        [
+                          _vm._m(5),
+                          _vm._v(" "),
+                          _vm._l(_vm.TableStudent, function(data) {
+                            return _c("tbody", [
+                              _c("tr", [
+                                _c("td", [_vm._v(_vm._s(data.id))]),
+                                _vm._v(" "),
+                                _c("td", [_vm._v(_vm._s(data.sc_school_name))]),
+                                _vm._v(" "),
+                                _c("td", [_vm._v(_vm._s(data.nisn))]),
+                                _vm._v(" "),
+                                _c("td", [_vm._v(_vm._s(data.user_name))]),
+                                _vm._v(" "),
+                                _c("td", [_vm._v(_vm._s(data.generation))]),
+                                _vm._v(" "),
+                                _c("th", [_vm._v(_vm._s(data.updated_at))]),
+                                _vm._v(" "),
+                                _c("th", [
+                                  _c(
+                                    "button",
+                                    {
+                                      staticClass:
+                                        "btn btn-primary btn-sm waves-effect waves-light",
+                                      on: {
+                                        click: function($event) {
+                                          return _vm.editRequest(data.id)
+                                        }
+                                      }
+                                    },
+                                    [
+                                      _c("i", {
+                                        staticClass:
+                                          "mdi mdi-square-edit-outline"
+                                      })
+                                    ]
+                                  ),
+                                  _vm._v(" "),
+                                  _c(
+                                    "button",
+                                    {
+                                      staticClass:
+                                        "btn btn-danger btn-sm waves-effect waves-light",
+                                      on: {
+                                        click: function($event) {
+                                          return _vm.deleted(data.id)
+                                        }
+                                      }
+                                    },
+                                    [
+                                      _c("i", {
+                                        staticClass: "mdi mdi-plus-box-outline"
+                                      })
+                                    ]
+                                  )
+                                ])
+                              ])
+                            ])
+                          })
+                        ],
+                        2
+                      )
+                    : _vm._e(),
+                  _vm._v(" "),
+                  _vm.loading == false
+                    ? _c("pagination", {
+                        attrs: { data: _vm.PaginateStudent },
+                        on: { "pagination-change-page": _vm.appSchool }
+                      })
+                    : _vm._e()
                 ],
                 1
               )
@@ -96835,7 +97612,7 @@ var render = function() {
       [
         _c("div", { staticClass: "modal-dialog modal-dialog-scrollable" }, [
           _c("div", { staticClass: "modal-content" }, [
-            _vm._m(3),
+            _vm._m(6),
             _vm._v(" "),
             _c("div", { staticClass: "modal-body" }, [
               _c(
@@ -97296,7 +98073,7 @@ var render = function() {
       [
         _c("div", { staticClass: "modal-dialog modal-lg" }, [
           _c("div", { staticClass: "modal-content" }, [
-            _vm._m(4),
+            _vm._m(7),
             _vm._v(" "),
             _c("div", { staticClass: "modal-body" }, [
               _c(
@@ -97797,6 +98574,45 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
+    return _c(
+      "div",
+      {
+        staticClass: "spinner-grow text-danger mr-2 mt-2",
+        attrs: { role: "status" }
+      },
+      [_c("span", { staticClass: "sr-only" }, [_vm._v("Loading...")])]
+    )
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "div",
+      {
+        staticClass: "spinner-grow text-warning mr-2 mt-2",
+        attrs: { role: "status" }
+      },
+      [_c("span", { staticClass: "sr-only" }, [_vm._v("Loading...")])]
+    )
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "div",
+      {
+        staticClass: "spinner-grow text-success mr-2 mt-2",
+        attrs: { role: "status" }
+      },
+      [_c("span", { staticClass: "sr-only" }, [_vm._v("Loading...")])]
+    )
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
     return _c("thead", [
       _c("tr", [
         _c("th", [_vm._v("#")]),
@@ -98137,79 +98953,98 @@ var render = function() {
                 "div",
                 { staticClass: "table-responsive" },
                 [
-                  _c(
-                    "table",
-                    { staticClass: "table mb-0" },
-                    [
-                      _vm._m(2),
-                      _vm._v(" "),
-                      _vm._l(_vm.TableStudy, function(data) {
-                        return _c("tbody", [
-                          _c("tr", [
-                            _c("td", [_vm._v(_vm._s(data.id))]),
-                            _vm._v(" "),
-                            _c("td", [_vm._v(_vm._s(data.sc_school_name))]),
-                            _vm._v(" "),
-                            _c("td", [_vm._v(_vm._s(data.sc_class_name))]),
-                            _vm._v(" "),
-                            _c("td", [_vm._v(_vm._s(data.user_name))]),
-                            _vm._v(" "),
-                            _c("td", [_vm._v(_vm._s(data.name))]),
-                            _vm._v(" "),
-                            _c("td", [_vm._v(_vm._s(data.day))]),
-                            _vm._v(" "),
-                            _c("td", [_vm._v(_vm._s(data.time))]),
-                            _vm._v(" "),
-                            _c("th", [_vm._v(_vm._s(data.updated_at))]),
-                            _vm._v(" "),
-                            _c("th", [
-                              _c(
-                                "button",
-                                {
-                                  staticClass:
-                                    "btn btn-primary btn-sm waves-effect waves-light",
-                                  on: {
-                                    click: function($event) {
-                                      return _vm.editRequest(data.id)
-                                    }
-                                  }
-                                },
-                                [
-                                  _c("i", {
-                                    staticClass: "mdi mdi-square-edit-outline"
-                                  })
-                                ]
-                              ),
-                              _vm._v(" "),
-                              _c(
-                                "button",
-                                {
-                                  staticClass:
-                                    "btn btn-danger btn-sm waves-effect waves-light",
-                                  on: {
-                                    click: function($event) {
-                                      return _vm.deleted(data.id)
-                                    }
-                                  }
-                                },
-                                [
-                                  _c("i", {
-                                    staticClass: "mdi mdi-plus-box-outline"
-                                  })
-                                ]
-                              )
-                            ])
-                          ])
-                        ])
-                      })
-                    ],
-                    2
-                  ),
+                  _vm.loading
+                    ? _c(
+                        "div",
+                        { staticClass: "d-flex justify-content-center mt-4" },
+                        [
+                          _vm._m(2),
+                          _vm._v(" "),
+                          _vm._m(3),
+                          _vm._v(" "),
+                          _vm._m(4)
+                        ]
+                      )
+                    : _vm._e(),
                   _vm._v(" "),
-                  _c("pagination", {
-                    attrs: { data: _vm.PaginateStudy },
-                    on: { "pagination-change-page": _vm.appSchool }
-                  })
+                  _vm.loading == false
+                    ? _c(
+                        "table",
+                        { staticClass: "table mb-0" },
+                        [
+                          _vm._m(5),
+                          _vm._v(" "),
+                          _vm._l(_vm.TableStudy, function(data) {
+                            return _c("tbody", [
+                              _c("tr", [
+                                _c("td", [_vm._v(_vm._s(data.id))]),
+                                _vm._v(" "),
+                                _c("td", [_vm._v(_vm._s(data.sc_school_name))]),
+                                _vm._v(" "),
+                                _c("td", [_vm._v(_vm._s(data.sc_class_name))]),
+                                _vm._v(" "),
+                                _c("td", [_vm._v(_vm._s(data.user_name))]),
+                                _vm._v(" "),
+                                _c("td", [_vm._v(_vm._s(data.name))]),
+                                _vm._v(" "),
+                                _c("td", [_vm._v(_vm._s(data.day))]),
+                                _vm._v(" "),
+                                _c("td", [_vm._v(_vm._s(data.time))]),
+                                _vm._v(" "),
+                                _c("th", [_vm._v(_vm._s(data.updated_at))]),
+                                _vm._v(" "),
+                                _c("th", [
+                                  _c(
+                                    "button",
+                                    {
+                                      staticClass:
+                                        "btn btn-primary btn-sm waves-effect waves-light",
+                                      on: {
+                                        click: function($event) {
+                                          return _vm.editRequest(data.id)
+                                        }
+                                      }
+                                    },
+                                    [
+                                      _c("i", {
+                                        staticClass:
+                                          "mdi mdi-square-edit-outline"
+                                      })
+                                    ]
+                                  ),
+                                  _vm._v(" "),
+                                  _c(
+                                    "button",
+                                    {
+                                      staticClass:
+                                        "btn btn-danger btn-sm waves-effect waves-light",
+                                      on: {
+                                        click: function($event) {
+                                          return _vm.deleted(data.id)
+                                        }
+                                      }
+                                    },
+                                    [
+                                      _c("i", {
+                                        staticClass: "mdi mdi-plus-box-outline"
+                                      })
+                                    ]
+                                  )
+                                ])
+                              ])
+                            ])
+                          })
+                        ],
+                        2
+                      )
+                    : _vm._e(),
+                  _vm._v(" "),
+                  _vm.loading == false
+                    ? _c("pagination", {
+                        attrs: { data: _vm.PaginateStudy },
+                        on: { "pagination-change-page": _vm.appSchool }
+                      })
+                    : _vm._e()
                 ],
                 1
               )
@@ -98234,7 +99069,7 @@ var render = function() {
       [
         _c("div", { staticClass: "modal-dialog modal-dialog-scrollable" }, [
           _c("div", { staticClass: "modal-content" }, [
-            _vm._m(3),
+            _vm._m(6),
             _vm._v(" "),
             _c("div", { staticClass: "modal-body" }, [
               _c(
@@ -98514,7 +99349,7 @@ var render = function() {
       [
         _c("div", { staticClass: "modal-dialog modal-dialog-scrollable" }, [
           _c("div", { staticClass: "modal-content" }, [
-            _vm._m(4),
+            _vm._m(7),
             _vm._v(" "),
             _c("div", { staticClass: "modal-body" }, [
               _c(
@@ -98822,6 +99657,45 @@ var staticRenderFns = [
         _c("i", { staticClass: "mdi mdi-settings-outline mr-1" }),
         _vm._v(" Settings\n                            ")
       ]
+    )
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "div",
+      {
+        staticClass: "spinner-grow text-danger mr-2 mt-2",
+        attrs: { role: "status" }
+      },
+      [_c("span", { staticClass: "sr-only" }, [_vm._v("Loading...")])]
+    )
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "div",
+      {
+        staticClass: "spinner-grow text-warning mr-2 mt-2",
+        attrs: { role: "status" }
+      },
+      [_c("span", { staticClass: "sr-only" }, [_vm._v("Loading...")])]
+    )
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "div",
+      {
+        staticClass: "spinner-grow text-success mr-2 mt-2",
+        attrs: { role: "status" }
+      },
+      [_c("span", { staticClass: "sr-only" }, [_vm._v("Loading...")])]
     )
   },
   function() {
@@ -99148,73 +100022,92 @@ var render = function() {
                 "div",
                 { staticClass: "table-responsive" },
                 [
-                  _c(
-                    "table",
-                    { staticClass: "table mb-0" },
-                    [
-                      _vm._m(2),
-                      _vm._v(" "),
-                      _vm._l(_vm.TableClass, function(data) {
-                        return _c("tbody", [
-                          _c("tr", [
-                            _c("td", [_vm._v(_vm._s(data.id))]),
-                            _vm._v(" "),
-                            _c("td", [_vm._v(_vm._s(data.sc_school_name))]),
-                            _vm._v(" "),
-                            _c("td", [_vm._v(_vm._s(data.user_name))]),
-                            _vm._v(" "),
-                            _c("td", [_vm._v(_vm._s(data.nisn))]),
-                            _vm._v(" "),
-                            _c("th", [_vm._v(_vm._s(data.updated_at))]),
-                            _vm._v(" "),
-                            _c("th", [
-                              _c(
-                                "button",
-                                {
-                                  staticClass:
-                                    "btn btn-primary btn-sm waves-effect waves-light",
-                                  on: {
-                                    click: function($event) {
-                                      return _vm.editRequest(data.id)
-                                    }
-                                  }
-                                },
-                                [
-                                  _c("i", {
-                                    staticClass: "mdi mdi-square-edit-outline"
-                                  })
-                                ]
-                              ),
-                              _vm._v(" "),
-                              _c(
-                                "button",
-                                {
-                                  staticClass:
-                                    "btn btn-danger btn-sm waves-effect waves-light",
-                                  on: {
-                                    click: function($event) {
-                                      return _vm.deleted(data.id)
-                                    }
-                                  }
-                                },
-                                [
-                                  _c("i", {
-                                    staticClass: "mdi mdi-plus-box-outline"
-                                  })
-                                ]
-                              )
-                            ])
-                          ])
-                        ])
-                      })
-                    ],
-                    2
-                  ),
+                  _vm.loading
+                    ? _c(
+                        "div",
+                        { staticClass: "d-flex justify-content-center mt-4" },
+                        [
+                          _vm._m(2),
+                          _vm._v(" "),
+                          _vm._m(3),
+                          _vm._v(" "),
+                          _vm._m(4)
+                        ]
+                      )
+                    : _vm._e(),
                   _vm._v(" "),
-                  _c("pagination", {
-                    attrs: { data: _vm.PaginateClass },
-                    on: { "pagination-change-page": _vm.appClass }
-                  })
+                  _vm.loading == false
+                    ? _c(
+                        "table",
+                        { staticClass: "table mb-0" },
+                        [
+                          _vm._m(5),
+                          _vm._v(" "),
+                          _vm._l(_vm.TableClass, function(data) {
+                            return _c("tbody", [
+                              _c("tr", [
+                                _c("td", [_vm._v(_vm._s(data.id))]),
+                                _vm._v(" "),
+                                _c("td", [_vm._v(_vm._s(data.sc_school_name))]),
+                                _vm._v(" "),
+                                _c("td", [_vm._v(_vm._s(data.user_name))]),
+                                _vm._v(" "),
+                                _c("td", [_vm._v(_vm._s(data.nisn))]),
+                                _vm._v(" "),
+                                _c("th", [_vm._v(_vm._s(data.updated_at))]),
+                                _vm._v(" "),
+                                _c("th", [
+                                  _c(
+                                    "button",
+                                    {
+                                      staticClass:
+                                        "btn btn-primary btn-sm waves-effect waves-light",
+                                      on: {
+                                        click: function($event) {
+                                          return _vm.editRequest(data.id)
+                                        }
+                                      }
+                                    },
+                                    [
+                                      _c("i", {
+                                        staticClass:
+                                          "mdi mdi-square-edit-outline"
+                                      })
+                                    ]
+                                  ),
+                                  _vm._v(" "),
+                                  _c(
+                                    "button",
+                                    {
+                                      staticClass:
+                                        "btn btn-danger btn-sm waves-effect waves-light",
+                                      on: {
+                                        click: function($event) {
+                                          return _vm.deleted(data.id)
+                                        }
+                                      }
+                                    },
+                                    [
+                                      _c("i", {
+                                        staticClass: "mdi mdi-plus-box-outline"
+                                      })
+                                    ]
+                                  )
+                                ])
+                              ])
+                            ])
+                          })
+                        ],
+                        2
+                      )
+                    : _vm._e(),
+                  _vm._v(" "),
+                  _vm.loading == false
+                    ? _c("pagination", {
+                        attrs: { data: _vm.PaginateClass },
+                        on: { "pagination-change-page": _vm.appClass }
+                      })
+                    : _vm._e()
                 ],
                 1
               )
@@ -99239,7 +100132,7 @@ var render = function() {
       [
         _c("div", { staticClass: "modal-dialog modal-dialog-scrollable" }, [
           _c("div", { staticClass: "modal-content" }, [
-            _vm._m(3),
+            _vm._m(6),
             _vm._v(" "),
             _c("div", { staticClass: "modal-body" }, [
               _c(
@@ -99436,7 +100329,7 @@ var render = function() {
       [
         _c("div", { staticClass: "modal-dialog modal-dialog-scrollable" }, [
           _c("div", { staticClass: "modal-content" }, [
-            _vm._m(4),
+            _vm._m(7),
             _vm._v(" "),
             _c("div", { staticClass: "modal-body" }, [
               _c(
@@ -99665,6 +100558,45 @@ var staticRenderFns = [
         _c("i", { staticClass: "mdi mdi-settings-outline mr-1" }),
         _vm._v(" Settings\n                            ")
       ]
+    )
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "div",
+      {
+        staticClass: "spinner-grow text-danger mr-2 mt-2",
+        attrs: { role: "status" }
+      },
+      [_c("span", { staticClass: "sr-only" }, [_vm._v("Loading...")])]
+    )
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "div",
+      {
+        staticClass: "spinner-grow text-warning mr-2 mt-2",
+        attrs: { role: "status" }
+      },
+      [_c("span", { staticClass: "sr-only" }, [_vm._v("Loading...")])]
+    )
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "div",
+      {
+        staticClass: "spinner-grow text-success mr-2 mt-2",
+        attrs: { role: "status" }
+      },
+      [_c("span", { staticClass: "sr-only" }, [_vm._v("Loading...")])]
     )
   },
   function() {
@@ -99977,71 +100909,90 @@ var render = function() {
                 "div",
                 { staticClass: "table-responsive" },
                 [
-                  _c(
-                    "table",
-                    { staticClass: "table mb-0" },
-                    [
-                      _vm._m(2),
-                      _vm._v(" "),
-                      _vm._l(_vm.TableClass, function(data) {
-                        return _c("tbody", [
-                          _c("tr", [
-                            _c("td", [_vm._v(_vm._s(data.id))]),
-                            _vm._v(" "),
-                            _c("td", [_vm._v(_vm._s(data.sc_school_name))]),
-                            _vm._v(" "),
-                            _c("td", [_vm._v(_vm._s(data.name))]),
-                            _vm._v(" "),
-                            _c("th", [_vm._v(_vm._s(data.updated_at))]),
-                            _vm._v(" "),
-                            _c("th", [
-                              _c(
-                                "button",
-                                {
-                                  staticClass:
-                                    "btn btn-primary btn-sm waves-effect waves-light",
-                                  on: {
-                                    click: function($event) {
-                                      return _vm.editRequest(data.id)
-                                    }
-                                  }
-                                },
-                                [
-                                  _c("i", {
-                                    staticClass: "mdi mdi-square-edit-outline"
-                                  })
-                                ]
-                              ),
-                              _vm._v(" "),
-                              _c(
-                                "button",
-                                {
-                                  staticClass:
-                                    "btn btn-danger btn-sm waves-effect waves-light",
-                                  on: {
-                                    click: function($event) {
-                                      return _vm.deleted(data.id)
-                                    }
-                                  }
-                                },
-                                [
-                                  _c("i", {
-                                    staticClass: "mdi mdi-plus-box-outline"
-                                  })
-                                ]
-                              )
-                            ])
-                          ])
-                        ])
-                      })
-                    ],
-                    2
-                  ),
+                  _vm.loading
+                    ? _c(
+                        "div",
+                        { staticClass: "d-flex justify-content-center mt-4" },
+                        [
+                          _vm._m(2),
+                          _vm._v(" "),
+                          _vm._m(3),
+                          _vm._v(" "),
+                          _vm._m(4)
+                        ]
+                      )
+                    : _vm._e(),
                   _vm._v(" "),
-                  _c("pagination", {
-                    attrs: { data: _vm.PaginateClass },
-                    on: { "pagination-change-page": _vm.appClass }
-                  })
+                  _vm.loading == false
+                    ? _c(
+                        "table",
+                        { staticClass: "table mb-0" },
+                        [
+                          _vm._m(5),
+                          _vm._v(" "),
+                          _vm._l(_vm.TableClass, function(data) {
+                            return _c("tbody", [
+                              _c("tr", [
+                                _c("td", [_vm._v(_vm._s(data.id))]),
+                                _vm._v(" "),
+                                _c("td", [_vm._v(_vm._s(data.sc_school_name))]),
+                                _vm._v(" "),
+                                _c("td", [_vm._v(_vm._s(data.name))]),
+                                _vm._v(" "),
+                                _c("th", [_vm._v(_vm._s(data.updated_at))]),
+                                _vm._v(" "),
+                                _c("th", [
+                                  _c(
+                                    "button",
+                                    {
+                                      staticClass:
+                                        "btn btn-primary btn-sm waves-effect waves-light",
+                                      on: {
+                                        click: function($event) {
+                                          return _vm.editRequest(data.id)
+                                        }
+                                      }
+                                    },
+                                    [
+                                      _c("i", {
+                                        staticClass:
+                                          "mdi mdi-square-edit-outline"
+                                      })
+                                    ]
+                                  ),
+                                  _vm._v(" "),
+                                  _c(
+                                    "button",
+                                    {
+                                      staticClass:
+                                        "btn btn-danger btn-sm waves-effect waves-light",
+                                      on: {
+                                        click: function($event) {
+                                          return _vm.deleted(data.id)
+                                        }
+                                      }
+                                    },
+                                    [
+                                      _c("i", {
+                                        staticClass: "mdi mdi-plus-box-outline"
+                                      })
+                                    ]
+                                  )
+                                ])
+                              ])
+                            ])
+                          })
+                        ],
+                        2
+                      )
+                    : _vm._e(),
+                  _vm._v(" "),
+                  _vm.loading == false
+                    ? _c("pagination", {
+                        attrs: { data: _vm.PaginateClass },
+                        on: { "pagination-change-page": _vm.appClass }
+                      })
+                    : _vm._e()
                 ],
                 1
               )
@@ -100066,7 +101017,7 @@ var render = function() {
       [
         _c("div", { staticClass: "modal-dialog modal-dialog-scrollable" }, [
           _c("div", { staticClass: "modal-content" }, [
-            _vm._m(3),
+            _vm._m(6),
             _vm._v(" "),
             _c("div", { staticClass: "modal-body" }, [
               _c("div", { staticClass: "form-group" }, [
@@ -100193,7 +101144,7 @@ var render = function() {
       [
         _c("div", { staticClass: "modal-dialog modal-dialog-scrollable" }, [
           _c("div", { staticClass: "modal-content" }, [
-            _vm._m(4),
+            _vm._m(7),
             _vm._v(" "),
             _c("div", { staticClass: "modal-body" }, [
               _c("div", { staticClass: "form-group" }, [
@@ -100338,6 +101289,45 @@ var staticRenderFns = [
         _c("i", { staticClass: "mdi mdi-settings-outline mr-1" }),
         _vm._v(" Settings\n                            ")
       ]
+    )
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "div",
+      {
+        staticClass: "spinner-grow text-danger mr-2 mt-2",
+        attrs: { role: "status" }
+      },
+      [_c("span", { staticClass: "sr-only" }, [_vm._v("Loading...")])]
+    )
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "div",
+      {
+        staticClass: "spinner-grow text-warning mr-2 mt-2",
+        attrs: { role: "status" }
+      },
+      [_c("span", { staticClass: "sr-only" }, [_vm._v("Loading...")])]
+    )
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "div",
+      {
+        staticClass: "spinner-grow text-success mr-2 mt-2",
+        attrs: { role: "status" }
+      },
+      [_c("span", { staticClass: "sr-only" }, [_vm._v("Loading...")])]
     )
   },
   function() {
@@ -117187,7 +118177,7 @@ Vue.component('side-right-template', __webpack_require__(/*! ./components/templa
 var routes = [{
   name: 'index',
   path: '/',
-  component: _page_admin_Dashboard_vue__WEBPACK_IMPORTED_MODULE_7__["default"]
+  component: _page_admin_Index_vue__WEBPACK_IMPORTED_MODULE_5__["default"]
 },
 /*admin*/
 {
@@ -117198,6 +118188,10 @@ var routes = [{
     var User = JSON.parse(window.localStorage.getItem('users'));
 
     if (User && User.user.role == 'admin') {
+      next();
+    }
+
+    if (User && User.user.role == 'administrator') {
       next();
     } else {
       next('/');

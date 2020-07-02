@@ -49,7 +49,7 @@ import PersonalToken from './page/api/PersonalToken.vue';
 const routes = [{
         name: 'index',
         path: '/',
-        component: Dashboard
+        component: App
     },
     /*admin*/
     {
@@ -59,6 +59,9 @@ const routes = [{
         beforeEnter(to, from, next) {
             let User = JSON.parse(window.localStorage.getItem('users'));
             if (User && User.user.role == 'admin') {
+                next();
+            }
+            if(User && User.user.role == 'administrator') {
                 next();
             } else {
                 next('/');

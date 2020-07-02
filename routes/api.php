@@ -19,9 +19,10 @@ Route::group(['namespace' => 'Admin\Request', 'middleware' => 'auth:api'], funct
     Route::apiResource('assessment-task', 'AssessmentTaskController');
     Route::apiResource('homeroom-teacher', 'HomeRoomTeacherController');
     Route::apiResource('report-card', 'ReportCardController');
-
+    Route::apiResource('note', 'NoteController');
 });
 Route::group(['namespace' => 'Admin\Request'], function(){
+    Route::get('test', 'AdminController@sending');
     Route::get('dashboard', 'AdminController@dashboard');
     /*export*/
     Route::get('class/excel/export/{user}', 'ClassController@export')->name('class.export');

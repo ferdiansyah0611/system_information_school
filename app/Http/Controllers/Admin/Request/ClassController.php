@@ -116,7 +116,8 @@ class ClassController extends Controller
         }else{
             ScClass::where('id', $scClass)->update([
                 'sc_school_id' => $request->sc_school_id,
-                'name' => $request->name
+                'name' => $request->name,
+                'updated_at' => $this->timestamp
             ]);
             return response()->json(['message' => 'Successfuly update data'], 200);
         }
