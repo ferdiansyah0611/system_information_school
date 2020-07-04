@@ -86,6 +86,15 @@ class StudentController extends Controller
         if($validator->fails()){
             return response()->json(['message' => $validator->errors()], 401);
         }else{
+            if($request->file('file')){
+                $file = $request->file('file');
+                $file->move(storage_path('app/public/image'), $file->getClientOriginalName());
+                User::where('id', $request->user_id)->update([
+                    'avatar' => $file->getClientOriginalName(),
+                    'role' => 'student',
+                    'updated_at' => $this->timestamp
+                ]);
+            }
             $app = new ScStudent;
             $app->id = $this->random;
             $app->user_id = $request->user_id;
@@ -99,6 +108,7 @@ class StudentController extends Controller
             $app->phone_father = $request->phone_father;
             $app->phone_mother = $request->phone_mother;
             $app->generation = $request->generation;
+            $app->save();
             return response()->json(['message' => 'Successfuly create data'], 200);
         }
     }

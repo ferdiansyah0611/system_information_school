@@ -51,7 +51,6 @@
     </div>
 </template>
 <script>
-var UserData = JSON.parse(window.localStorage.getItem('users'));
 export default {
     beforeMount() {
         document.title = 'Login';

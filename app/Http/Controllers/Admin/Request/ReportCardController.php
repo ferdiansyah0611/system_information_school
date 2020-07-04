@@ -209,7 +209,7 @@ class ReportCardController extends Controller
                     'sc_report_card_seniors.id as sc_report_card_senior_id', 'sc_report_card_seniors.score',
                     'sc_report_card_seniors.kkm_k3', 'sc_report_card_seniors.kkm_k4', 'sc_report_card_seniors.k3_ph',
                     'sc_report_card_seniors.k3_pts', 'sc_report_card_seniors.k4_pr', 'sc_report_card_seniors.status',
-                    'sc_report_card_seniors.predicate',
+                    'sc_report_card_seniors.predicate'
                 )
                 ->get(), 200);
             }

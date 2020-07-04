@@ -38,7 +38,7 @@
                             <div class="card-body">
                                 <h5 class="header-title mb-4">Profile</h5>
                                 <div class="text-center">
-                                    <img src="/vendor/template/images/users/avatar-1.jpg" alt="Header Avatar" class="rounded-circle">
+                                    <img :src="'/storage/image/' + user.avatar" alt="Avatar Profile" width="100%" class="rounded-circle">
                                 </div>
                                 <div class="col-4 float-left mt-3">
                                     <p>Name</p>

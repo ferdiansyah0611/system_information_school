@@ -27,7 +27,7 @@ Vue.component('side-right-template', require('./components/template/one/SideRigh
 // data in here
 import Store from './store.js';
 // page in heres
-import App from './page/admin/Index.vue';
+import App from './page/Index.vue';
 // admin
 import TemplateAdmin from './components/template/one/Template.vue';
 import Dashboard from './page/admin/Dashboard.vue';
@@ -39,6 +39,8 @@ import ManageTeacher from './page/admin/ManageTeacher.vue';
 import ManageAssessmentTask from './page/admin/ManageAssessmentTask.vue';
 import ManageScHomeRoomTeacher from './page/admin/ManageScHomeRoomTeacher.vue';
 import ManageReportCard from './page/admin/ManageReportCard.vue';
+// teacher
+import TemplateTeacher from './components/template/one/Template.vue';
 // authenticate
 import Login from './components/auth/Login.vue';
 import Client from './page/api/Client.vue';
@@ -63,8 +65,9 @@ const routes = [{
             }
             if(User && User.user.role == 'administrator') {
                 next();
-            } else {
-                next('/');
+            }
+            if(User == null) {
+                next('/login');
             }
         },
         children: [{
@@ -118,9 +121,22 @@ const routes = [{
         ]
     },
     {
+        name: 'teacher',
+        path: '/teacher',
+        component: TemplateTeacher,
+        beforeEnter(to, from, next) {
+            let User = JSON.parse(window.localStorage.getItem('users'));
+            if (User && User.user.role == 'teacher') {
+                next();
+            }
+            if(User == null) {
+                next('/login');
+            }
+        }
+    },
+    {
         name: 'login',
         path: '/login',
-        title: 'Login System Academic',
         component: Login,
         beforeEnter(to, from, next) {
             let User = JSON.parse(window.localStorage.getItem('users'));

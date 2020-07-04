@@ -51,69 +51,15 @@
                     <pagination :data="PaginateNote" @pagination-change-page="appNote"></pagination>
                 </div>
                 <div class="tab-pane" id="tasks-tab" role="tabpanel">
-                    <h6 class="p-3 mb-0 mt-4 bg-light">Working Tasks</h6>
-                    <div class="p-2">
-                        <a href="javascript: void(0);" class="text-reset item-hovered d-block p-3">
-                            <p class="text-muted mb-0">App Development<span class="float-right">75%</span></p>
-                            <div class="progress mt-2" style="height: 4px;">
-                                <div class="progress-bar bg-success" role="progressbar" style="width: 75%" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
-                            </div>
-                        </a>
-                        <a href="javascript: void(0);" class="text-reset item-hovered d-block p-3">
-                            <p class="text-muted mb-0">Database Repair<span class="float-right">37%</span></p>
-                            <div class="progress mt-2" style="height: 4px;">
-                                <div class="progress-bar bg-info" role="progressbar" style="width: 37%" aria-valuenow="37" aria-valuemin="0" aria-valuemax="100"></div>
-                            </div>
-                        </a>
-                        <a href="javascript: void(0);" class="text-reset item-hovered d-block p-3">
-                            <p class="text-muted mb-0">Backup Create<span class="float-right">52%</span></p>
-                            <div class="progress mt-2" style="height: 4px;">
-                                <div class="progress-bar bg-warning" role="progressbar" style="width: 52%" aria-valuenow="52" aria-valuemin="0" aria-valuemax="100"></div>
-                            </div>
-                        </a>
-                    </div>
-                    <h6 class="p-3 mb-0 mt-4 bg-light">Upcoming Tasks</h6>
-                    <div class="p-2">
-                        <a href="javascript: void(0);" class="text-reset item-hovered d-block p-3">
-                            <p class="text-muted mb-0">Sales Reporting<span class="float-right">12%</span></p>
-                            <div class="progress mt-2" style="height: 4px;">
-                                <div class="progress-bar bg-danger" role="progressbar" style="width: 12%" aria-valuenow="12" aria-valuemin="0" aria-valuemax="100"></div>
-                            </div>
-                        </a>
-                        <a href="javascript: void(0);" class="text-reset item-hovered d-block p-3">
-                            <p class="text-muted mb-0">Redesign Website<span class="float-right">67%</span></p>
-                            <div class="progress mt-2" style="height: 4px;">
-                                <div class="progress-bar bg-primary" role="progressbar" style="width: 67%" aria-valuenow="67" aria-valuemin="0" aria-valuemax="100"></div>
-                            </div>
-                        </a>
-                        <a href="javascript: void(0);" class="text-reset item-hovered d-block p-3">
-                            <p class="text-muted mb-0">New Admin Design<span class="float-right">84%</span></p>
-                            <div class="progress mt-2" style="height: 4px;">
-                                <div class="progress-bar bg-success" role="progressbar" style="width: 84%" aria-valuenow="84" aria-valuemin="0" aria-valuemax="100"></div>
-                            </div>
-                        </a>
-                    </div>
-                    <div class="p-3 mt-2">
-                        <a href="javascript: void(0);" class="btn btn-success btn-block waves-effect waves-light">Create Task</a>
-                    </div>
+                    <h6 class="p-3 mb-0 bg-light">Coming Soon...</h6>
                 </div>
                 <div class="tab-pane" id="settings-tab" role="tabpanel">
                     <h6 class="px-4 py-3 bg-light">General Settings</h6>
                     <div class="p-4">
-                        <h6 class="font-weight-medium">Online Status</h6>
-                        <div class="custom-control custom-switch mb-1">
-                            <input type="checkbox" class="custom-control-input" id="settings-check1" name="settings-check1" checked="">
-                            <label class="custom-control-label font-weight-normal" for="settings-check1">Show your status to all</label>
-                        </div>
                         <h6 class="mt-4">Auto Updates</h6>
                         <div class="custom-control custom-switch mb-1">
                             <input type="checkbox" class="custom-control-input" id="settings-check2" name="settings-check2" checked="">
                             <label class="custom-control-label font-weight-normal" for="settings-check2">Keep up to date</label>
-                        </div>
-                        <h6 class="mt-4">Backup Setup</h6>
-                        <div class="custom-control custom-switch mb-1">
-                            <input type="checkbox" class="custom-control-input" id="settings-check3" name="settings-check3">
-                            <label class="custom-control-label font-weight-normal" for="settings-check3">Auto backup</label>
                         </div>
                     </div>
                 </div>
@@ -131,12 +77,12 @@
                     </div>
                     <div class="modal-body">
                         <div class="form-group">
-                            <label for="title">Title</label>
-                            <input type="text" id="title" class="form-control" v-model="addNotes.title">
+                            <label for="title_note_add">Title</label>
+                            <input type="text" id="title_note_add" class="form-control" v-model="addNotes.title">
                         </div>
                         <div class="form-group">
-                            <label for="note">Note</label>
-                            <textarea type="text" id="note" class="form-control" v-model="addNotes.note"></textarea>
+                            <label for="note_note_add">Note</label>
+                            <textarea type="text" id="note_note_add" class="form-control" v-model="addNotes.note"></textarea>
                         </div>
                     </div>
                     <div class="modal-footer">
@@ -158,12 +104,12 @@
                     </div>
                     <div class="modal-body">
                         <div class="form-group">
-                            <label for="title">Title</label>
-                            <input type="text" id="title" class="form-control" v-model="editNotes.title">
+                            <label for="title_note">Title</label>
+                            <input type="text" id="title_note" class="form-control" v-model="editNotes.title">
                         </div>
                         <div class="form-group">
-                            <label for="note">Note</label>
-                            <textarea type="text" id="note" class="form-control" v-model="editNotes.note"></textarea>
+                            <label for="note_note">Note</label>
+                            <textarea type="text" id="note_note" class="form-control" v-model="editNotes.note"></textarea>
                         </div>
                     </div>
                     <div class="modal-footer">

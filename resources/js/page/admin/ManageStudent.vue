@@ -163,6 +163,10 @@
                             <label for="generation_add">Generation</label>
                             <input type="text" class="form-control" id="generation_add" required v-model="addStudent.generation">
                         </div>
+                        <div class="form-group col-sm-12 col-md-6 float-left">
+                            <label for="avatars">Avatars</label>
+                            <input type="file" class="form-control" id="avatars" ref="file" v-on:change="changeFile()">
+                        </div>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -276,7 +280,8 @@ export default {
                 work_mother: '',
                 phone_father: '',
                 phone_mother: '',
-                generation: ''
+                generation: '',
+                file: ''
             },
             /*data for edit student*/
             editStudent: {
@@ -481,7 +486,8 @@ export default {
                 url: '/api/school?type=default',
                 method: 'get',
                 headers : {
-                    'Authorization' : 'Bearer ' + this.$store.state.Users.success.token
+                    'Authorization' : 'Bearer ' + this.$store.state.Users.success.token,
+                    'Content-Type' : 'multipart/form-data'
                 }
             }).then(result => {
                 this.school = result.data.data;
@@ -491,24 +497,22 @@ export default {
         },
         /*save data for add modal*/
         async createSave() {
-            await axios({
-                url: '/api/student',
-                method: 'post',
+            var formData = new FormData();
+            formData.append('file', this.addStudent.file);
+            formData.append('user_id', this.addStudent.user_id);
+            formData.append('sc_school_id', this.addStudent.sc_school_id);
+            formData.append('sc_class_id', this.addStudent.sc_class_id);
+            formData.append('phone', this.addStudent.phone);
+            formData.append('father', this.addStudent.father);
+            formData.append('mother', this.addStudent.mother);
+            formData.append('work_father', this.addStudent.work_father);
+            formData.append('work_mother', this.addStudent.work_mother);
+            formData.append('phone_father', this.addStudent.phone_father);
+            formData.append('phone_mother', this.addStudent.phone_mother);
+            formData.append('generation', this.addStudent.generation);
+            await axios.post('/api/student', formData, {
                 headers : {
                     'Authorization' : 'Bearer ' + this.$store.state.Users.success.token
-                },
-                data: {
-                    user_id: this.addStudent.user_id,
-                    sc_school_id: this.addStudent.sc_school_id,
-                    sc_class_id: this.addStudent.sc_class_id,
-                    phone: this.addStudent.phone,
-                    father: this.addStudent.father,
-                    mother: this.addStudent.mother,
-                    work_father: this.addStudent.work_father,
-                    work_mother: this.addStudent.work_mother,
-                    phone_father: this.addStudent.phone_father,
-                    phone_mother: this.addStudent.phone_mother,
-                    generation: this.addStudent.generation,
                 }
             }).then(result => {
                 $('#modal-add').modal('hide');
@@ -609,7 +613,9 @@ export default {
             });
         },
         /*change event in here...*/
-
+        changeFile() {
+            this.addStudent.file = this.$refs.file.files[0];
+        }
     }
 }
 
