@@ -6,7 +6,7 @@
                 <ul class="metismenu list-unstyled" id="side-menu">
                     <li class="menu-title">Menu</li>
                     <li>
-                        <router-link to="/admin/dashboard" class="waves-effect">
+                        <router-link to="/teacher/dashboard" class="waves-effect">
                             <div class="d-inline-block icons-sm mr-1"><i class="fas fa-chart-line" style="color: #3051d3;"></i></div>
                             <span>Dashboard</span>
                         </router-link>
@@ -18,9 +18,8 @@
                             <span>Student</span>
                         </a>
                         <ul class="sub-menu" aria-expanded="true">
-                            <li><a href="#">Create</a></li>
                             <li>
-                                <router-link to="/admin/manage/student" class="waves-effect">Data</router-link>
+                                <router-link to="/teacher/manage/student" class="waves-effect">Data</router-link>
                             </li>
                         </ul>
                     </li>
@@ -30,9 +29,8 @@
                             <span>Study</span>
                         </a>
                         <ul class="sub-menu" aria-expanded="true">
-                            <li><a href="#">Create</a></li>
                             <li>
-                                <router-link to="/admin/manage/study" class="waves-effect">Data</router-link>
+                                <router-link to="/teacher/manage/study" class="waves-effect">Data</router-link>
                             </li>
                         </ul>
                     </li>
@@ -45,7 +43,7 @@
                         <ul class="sub-menu" aria-expanded="true">
                             <li><a href="#">Create</a></li>
                             <li>
-                                <router-link to="/admin/manage/assessment-task" class="waves-effect">Data</router-link>
+                                <router-link to="/teacher/manage/assessment-task" class="waves-effect">Data</router-link>
                             </li>
                         </ul>
                     </li>
@@ -57,7 +55,7 @@
                         <ul class="sub-menu" aria-expanded="true">
                             <li><a href="#">Print</a></li>
                             <li>
-                                <router-link to="/admin/manage/report-card" class="waves-effect">Data</router-link>
+                                <router-link to="/teacher/manage/report-card" class="waves-effect">Data</router-link>
                             </li>
                         </ul>
                     </li>

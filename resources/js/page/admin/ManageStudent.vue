@@ -19,8 +19,8 @@
                                 <div class="dropdown-menu dropdown-menu-right dropdown-menu-animated">
                                     <a class="dropdown-item" href="#" data-toggle="modal" data-target="#modal-add">Add new data</a>
                                     <div class="dropdown-divider"></div>
-                                    <a class="dropdown-item" href="#">Import Excel</a>
-                                    <a class="dropdown-item" :href="'/api/student/excel/export/' + user_id" download>Export Excel</a>
+                                    <a class="dropdown-item" href="#" data-toggle="modal" data-target="#modal-import">Import Excel</a>
+                                    <a class="dropdown-item" :href="'/api/student/excel/export/' + user.id + '/' + user.email" download>Export Excel</a>
                                 </div>
                             </div>
                         </div>
@@ -132,6 +132,10 @@
                             <input type="text" class="form-control" id="sc_class_id_add" required v-model="addStudent.sc_class_id">
                         </div>
                         <div class="form-group col-sm-12 col-md-6 float-left">
+                            <label for="nisn_add">NISN</label>
+                            <input type="text" class="form-control" id="nisn_add" required v-model="addStudent.nisn">
+                        </div>
+                        <div class="form-group col-sm-12 col-md-6 float-left">
                             <label for="phone_add">Phone</label>
                             <input type="text" class="form-control" id="phone_add" required v-model="addStudent.phone">
                         </div>
@@ -186,6 +190,9 @@
                         </button>
                     </div>
                     <div class="modal-body">
+                        <div class="form-group col-sm-12 col-md-6 float-left text-center" v-if="editStudent.avatar">
+                            <img :src="'/storage/image/' + editStudent.avatar" height="200px" class="img-thumbnail">
+                        </div>
                         <div class="form-group col-sm-12 col-md-6 float-left">
                             <label for="user_id">User ID</label>
                             <input type="text" class="form-control" id="user_id" required v-model="editStudent.user_id">
@@ -201,12 +208,12 @@
                             <input type="text" class="form-control" id="sc_class_id" required v-model="editStudent.sc_class_id">
                         </div>
                         <div class="form-group col-sm-12 col-md-6 float-left">
-                            <label for="phone">Phone</label>
-                            <input type="text" class="form-control" id="phone" required v-model="editStudent.phone">
-                        </div>
-                        <div class="form-group col-sm-12 col-md-6 float-left">
                             <label for="nisn">NISN</label>
                             <input type="text" class="form-control" id="nisn" required v-model="editStudent.nisn">
+                        </div>
+                        <div class="form-group col-sm-12 col-md-6 float-left">
+                            <label for="phone">Phone</label>
+                            <input type="text" class="form-control" id="phone" required v-model="editStudent.phone">
                         </div>
                         <div class="form-group col-sm-12 col-md-6 float-left">
                             <label for="father">Father</label>
@@ -236,10 +243,32 @@
                             <label for="generation">Generation</label>
                             <input type="text" class="form-control" id="generation" required v-model="editStudent.generation">
                         </div>
+                        <div class="form-group col-sm-12 col-md-6 float-left">
+                            <label for="avatars">Avatars</label>
+                            <input type="file" class="form-control" id="avatars" ref="fileEdit" v-on:change="changeFileUpdate()">
+                        </div>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                         <button type="button" class="btn btn-primary" v-on:click="editSave">Save changes</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- modal import -->
+        <div class="modal fade" id="modal-import" tabindex="-1" role="dialog" aria-labelledby="modal-import-title" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-scrollable">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title mt-0" id="modal-import-title">Import data</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <label for="imports">File format .xls / .xlsx</label>
+                        <input type="file" ref="fileImport" v-on:change="changeFileImport()" class="form-control" id="imports">
+                        <button class="btn btn-primary mt-2" @click="importData">Import</button>
                     </div>
                 </div>
             </div>
@@ -256,7 +285,7 @@ export default {
     },
     data() {
         return {
-            user_id : this.$store.state.Users.user.id,
+            user : this.$store.state.Users.user,
             /*table data*/
             TableStudent: [],
             PaginateStudent: {},
@@ -273,6 +302,7 @@ export default {
                 user_id: '',
                 sc_school_id: '',
                 sc_class_id: '',
+                nisn: '',
                 phone: '',
                 father: '',
                 mother: '',
@@ -281,6 +311,7 @@ export default {
                 phone_father: '',
                 phone_mother: '',
                 generation: '',
+
                 file: ''
             },
             /*data for edit student*/
@@ -290,14 +321,18 @@ export default {
                 sc_school_id: '',
                 sc_class_id: '',
                 phone: '',
+                nisn: '',
                 father: '',
                 mother: '',
                 work_father: '',
                 work_mother: '',
                 phone_father: '',
                 phone_mother: '',
-                generation: ''
+                generation: '',
+                file: '',
+                avatar: ''
             },
+            imports: '',
             loading : false
         }
     },
@@ -503,6 +538,7 @@ export default {
             formData.append('sc_school_id', this.addStudent.sc_school_id);
             formData.append('sc_class_id', this.addStudent.sc_class_id);
             formData.append('phone', this.addStudent.phone);
+            formData.append('nisn', this.addStudent.nisn);
             formData.append('father', this.addStudent.father);
             formData.append('mother', this.addStudent.mother);
             formData.append('work_father', this.addStudent.work_father);
@@ -525,25 +561,27 @@ export default {
         },
         /*save data for edit modal*/
         async editSave() {
+            var formData = new FormData();
+            formData.append('file', this.editStudent.file);
+            formData.append('user_id', this.editStudent.user_id);
+            formData.append('sc_school_id', this.editStudent.sc_school_id);
+            formData.append('sc_class_id', this.editStudent.sc_class_id);
+            formData.append('phone', this.editStudent.phone);
+            formData.append('nisn', this.editStudent.nisn);
+            formData.append('father', this.editStudent.father);
+            formData.append('mother', this.editStudent.mother);
+            formData.append('work_father', this.editStudent.work_father);
+            formData.append('work_mother', this.editStudent.work_mother);
+            formData.append('phone_father', this.editStudent.phone_father);
+            formData.append('phone_mother', this.editStudent.phone_mother);
+            formData.append('generation', this.editStudent.generation);
             await axios({
-                url: '/api/student/' + this.editStudent.id,
-                method: 'put',
+                url: '/api/student/update/' + this.editStudent.id,
+                method: 'post',
                 headers : {
                     'Authorization' : 'Bearer ' + this.$store.state.Users.success.token
                 },
-                data: {
-                    user_id: this.editStudent.user_id,
-                    sc_school_id: this.editStudent.sc_school_id,
-                    sc_class_id: this.editStudent.sc_class_id,
-                    phone: this.editStudent.phone,
-                    father: this.editStudent.father,
-                    mother: this.editStudent.mother,
-                    work_father: this.editStudent.work_father,
-                    work_mother: this.editStudent.work_mother,
-                    phone_father: this.editStudent.phone_father,
-                    phone_mother: this.editStudent.phone_mother,
-                    generation: this.editStudent.generation,
-                }
+                data: formData
             }).then(result => {
                 $('#modal-1').modal('hide');
                 this.RequestSuccess(result.data.message);
@@ -569,6 +607,7 @@ export default {
                     this.editStudent.sc_school_id = val.sc_school_id;
                     this.editStudent.sc_class_id = val.sc_class_id;
                     this.editStudent.nisn = val.nisn;
+                    this.editStudent.avatar = val.avatar;
                     this.editStudent.phone = val.phone;
                     this.editStudent.father = val.father;
                     this.editStudent.mother = val.mother;
@@ -612,9 +651,29 @@ export default {
                 }
             });
         },
+        async importData() {
+            var formData = new FormData();
+            formData.append('import', this.imports);
+            await axios({
+                url : '/api/student/excel/import/' + this.user.id,
+                method : 'post',
+                data : formData,
+                headers : {
+                    'Authorization' : 'Bearer ' + this.$store.state.Users.success.token
+                }
+            }).then(result => {
+                $('#modal-import').modal('hide');
+                this.RequestSuccess(result.data.message);
+            }).catch(error => {
+                this.Error(error, error.message);
+            })
+        },
         /*change event in here...*/
         changeFile() {
             this.addStudent.file = this.$refs.file.files[0];
+        },
+        changeFileUpdate() {
+            this.editStudent.file = this.$refs.fileEdit.files[0];
         }
     }
 }

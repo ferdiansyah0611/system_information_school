@@ -6,7 +6,6 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <title></title>
-    <script src="{{url('vendor/template/')}}/libs/jquery/jquery.min.js"></script>
     <!-- {{-- <script src="url('vendor/template/')}}/libs/bootstrap/js/bootstrap.bundle.min.js"></script> --}} -->
     <script src="{{url('vendor/template/')}}/libs/simplebar/simplebar.min.js"></script>
     <script src="{{url('vendor/template/')}}/libs/node-waves/waves.min.js"></script>

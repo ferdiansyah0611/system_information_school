@@ -28,7 +28,9 @@ Vue.component('side-right-template', require('./components/template/one/SideRigh
 import Store from './store.js';
 // page in heres
 import App from './page/Index.vue';
-// admin
+import SearchData from './page/Search.vue';
+import Error404 from './components/404.vue';
+// admin {teacher}
 import TemplateAdmin from './components/template/one/Template.vue';
 import Dashboard from './page/admin/Dashboard.vue';
 import ManageClass from './page/admin/Manageclass.vue';
@@ -40,7 +42,7 @@ import ManageAssessmentTask from './page/admin/ManageAssessmentTask.vue';
 import ManageScHomeRoomTeacher from './page/admin/ManageScHomeRoomTeacher.vue';
 import ManageReportCard from './page/admin/ManageReportCard.vue';
 // teacher
-import TemplateTeacher from './components/template/one/Template.vue';
+import TemplateTeacher from './components/template/teacher/Template.vue';
 // authenticate
 import Login from './components/auth/Login.vue';
 import Client from './page/api/Client.vue';
@@ -51,7 +53,29 @@ import PersonalToken from './page/api/PersonalToken.vue';
 const routes = [{
         name: 'index',
         path: '/',
-        component: App
+        component: Login,
+        beforeEnter(to, from, next) {
+            let User = JSON.parse(window.localStorage.getItem('users'));
+            if (User && User.user.id !== undefined) {
+                if(User.user.role == 'admin' || User.user.role == 'administrator'){
+                    next('/admin/dashboard');
+                }
+                if(User.user.role == 'teacher'){
+                    next('/teacher/dashboard');
+                }
+                if(User.user.role == undefined && User.user.role !== 'admin' && User.user.role !== 'administrator' && User.user.role == 'teacher') {
+                    next('/404');
+
+                }
+            }
+            if(User == null) {
+                next();
+            }
+        }
+    },
+    {
+        path: '/404',
+        component: Error404
     },
     /*admin*/
     {
@@ -67,7 +91,7 @@ const routes = [{
                 next();
             }
             if(User == null) {
-                next('/login');
+                next('/');
             }
         },
         children: [{
@@ -118,6 +142,11 @@ const routes = [{
                 path: 'setting/api/personal-token',
                 component: PersonalToken
             },
+            {
+                path : 'search/:search',
+                component: SearchData,
+                params : true,
+            }
         ]
     },
     {
@@ -132,39 +161,34 @@ const routes = [{
             if(User == null) {
                 next('/login');
             }
-        }
-    },
-    {
-        name: 'login',
-        path: '/login',
-        component: Login,
-        beforeEnter(to, from, next) {
-            let User = JSON.parse(window.localStorage.getItem('users'));
-            if (User && User.user.id !== undefined) {
-                if(User.user.role == 'admin'){
-                    next('/admin/dashboard');
-                }else{
-                    next('/');
-                }
-            } else {
-                next();
+        },
+        children : [{
+                path: 'dashboard',
+                component: Dashboard
+            },
+            {
+                path: 'manage/student',
+                component: ManageStudent
+            },
+            {
+                path: 'manage/study',
+                component: ManageStudy
+            },
+            {
+                path: 'manage/assessment-task',
+                component: ManageAssessmentTask
+            },
+            {
+                path: 'manage/report-card',
+                component: ManageReportCard
+            },
+            {
+                path : 'search/:search',
+                component: SearchData,
+                params : true,
             }
-        }
-    },
-    /*{
-        name : 'showProduct',
-        path : '/products/:product',
-        title : 'View Products',
-        component: viewProduct,
-        params : true
-    },
-    {
-        name : 'showCategory',
-        path: '/category/:category',
-        title : 'Show category',
-        component: viewCategory,
-        params : true
-    },*/
+        ]
+    }
 ];
 const router = new VueRouter({
     mode: 'history',

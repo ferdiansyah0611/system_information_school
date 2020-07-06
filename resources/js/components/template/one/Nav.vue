@@ -23,9 +23,9 @@
                 <button type="button" class="btn btn-sm px-3 font-size-24 header-item waves-effect" id="vertical-menu-btn">
                     <i class="mdi mdi-backburger"></i>
                 </button>
-                <form class="app-search d-none d-lg-block">
+                <form class="app-search d-none d-lg-block" @submit.prevent="searchData">
                     <div class="position-relative">
-                        <input type="text" class="form-control" placeholder="Search...">
+                        <input type="text" class="form-control" placeholder="Search..." v-model="searchingData">
                         <span class="mdi mdi-magnify"></span>
                     </div>
                 </form>
@@ -36,10 +36,10 @@
                         <i class="mdi mdi-magnify"></i>
                     </button>
                     <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right p-0" aria-labelledby="page-header-search-dropdown">
-                        <form class="p-3">
+                        <form class="p-3" @submit.prevent="searchData">
                             <div class="form-group m-0">
                                 <div class="input-group">
-                                    <input type="text" class="form-control" placeholder="Search ..." aria-label="Recipient's username">
+                                    <input type="text" class="form-control" placeholder="Search ..." aria-label="Recipient's username" v-model="searchingData">
                                     <div class="input-group-append">
                                         <button class="btn btn-primary" type="submit"><i class="mdi mdi-magnify"></i></button>
                                     </div>
@@ -86,13 +86,27 @@
 export default{
     data() {
         return {
-            user : this.$store.state.Users.user
+            user : this.$store.state.Users.user,
+            searchingData : ''
         }
     },
     methods : {
+        async searchData() {
+            if(this.searchingData == '') {
+                return false;
+            } else {
+                let User = JSON.parse(window.localStorage.getItem('users'));
+                if (User && User.user.role == 'admin' || User.user.role == 'administrator') {
+                    return window.location.href = '/admin/search/' + this.searchingData;
+                }
+                if(User && User.user.role == 'teacher') {
+                    return window.location.href = '/teacher/search/' + this.searchingData;
+                } 
+            }
+        },
         logout() {
             window.localStorage.removeItem('users');
-            return window.location.href = '/login';
+            return window.location.href = '/';
         }
     }
 }

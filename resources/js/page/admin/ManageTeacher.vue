@@ -19,8 +19,8 @@
                                 <div class="dropdown-menu dropdown-menu-right dropdown-menu-animated">
                                     <a class="dropdown-item" href="#" data-toggle="modal" data-target="#modal-add">Add new data</a>
                                     <div class="dropdown-divider"></div>
-                                    <a class="dropdown-item" href="#">Import Excel</a>
-                                    <a class="dropdown-item" :href="'/api/teacher/excel/export/' + user_id" download>Export Excel</a>
+                                    <a class="dropdown-item" href="#" data-toggle="modal" data-target="#modal-import">Import Excel</a>
+                                    <a class="dropdown-item" :href="'/api/teacher/excel/export/' + user.id + '/' + user.email " download>Export Excel</a>
                                 </div>
                             </div>
                         </div>
@@ -133,6 +133,14 @@
                             <label for="add_graduate">Graduate</label>
                             <input type="text" class="form-control" id="add_graduate" v-model="addTeacher.graduate">
                         </div>
+                        <div class="form-group col-12 float-left">
+                            <label for="add_nisn">NISN</label>
+                            <input type="text" class="form-control" id="add_nisn" required v-model="addTeacher.nisn">
+                        </div>
+                        <div class="form-group col-12 float-left">
+                            <label for="avatars">Avatars</label>
+                            <input type="file" class="form-control" id="avatars" ref="file" v-on:change="changeFile()">
+                        </div>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -152,6 +160,9 @@
                         </button>
                     </div>
                     <div class="modal-body">
+                        <div class="form-group col-12 float-left text-center" v-if="editTeacher.avatar">
+                            <img :src="'/storage/image/' + editTeacher.avatar" height="200px" class="img-fluid">
+                        </div>
                         <div class="form-group col-sm-12 col-md-6 float-left">
                             <label for="user_id">User ID</label>
                             <input type="number" class="form-control" id="user_id" v-model="editTeacher.user_id">
@@ -171,10 +182,36 @@
                             <label for="graduate">Graduate</label>
                             <input type="text" class="form-control" id="graduate" v-model="editTeacher.graduate">
                         </div>
+                        <div class="form-group col-12 float-left">
+                            <label for="nisn">NISN</label>
+                            <input type="text" class="form-control" id="nisn" required v-model="editTeacher.nisn">
+                        </div>
+                        <div class="form-group col-12 float-left">
+                            <label for="avatars">Avatars</label>
+                            <input type="file" class="form-control" id="avatars" ref="fileEdit" v-on:change="changeFileUpdate()">
+                        </div>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                         <button type="button" class="btn btn-primary" v-on:click="editSave">Save changes</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- modal import -->
+        <div class="modal fade" id="modal-import" tabindex="-1" role="dialog" aria-labelledby="modal-import-title" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-scrollable">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title mt-0" id="modal-import-title">Import data</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <label for="imports">File format .xls / .xlsx</label>
+                        <input type="file" ref="fileImport" v-on:change="changeFileImport()" class="form-control" id="imports">
+                        <button class="btn btn-primary mt-2" @click="importData">Import</button>
                     </div>
                 </div>
             </div>
@@ -191,7 +228,7 @@ export default {
     },
     data() {
         return {
-            user_id : this.$store.state.Users.user.id,
+            user : this.$store.state.Users.user,
             TableClass: [],
             PaginateClass: {},
             table: {
@@ -205,15 +242,22 @@ export default {
                 user_id: '',
                 sc_school_id: '',
                 title : '',
-                graduate : ''
+                graduate : '',
+                nisn : '',
+                file : ''
             },
             editTeacher: {
                 id : '',
                 user_id: '',
                 sc_school_id: '',
                 title : '',
-                graduate : ''
+                graduate : '',
+                nisn : '',
+                file : '',
+
+                avatar : ''
             },
+            imports: '',
             loading : false
         }
     },
@@ -407,18 +451,20 @@ export default {
         },
         /*save data for add modal*/
         async createSave() {
+            var formData = new FormData();
+            formData.append('file', this.addTeacher.file);
+            formData.append('user_id', this.addTeacher.user_id);
+            formData.append('sc_school_id', this.addTeacher.sc_school_id);
+            formData.append('title', this.addTeacher.title);
+            formData.append('graduate', this.addTeacher.graduate);
+            formData.append('nisn', this.addTeacher.nisn);
         	await axios({
         		url : '/api/teacher',
         		method : 'post',
                 headers : {
                     'Authorization' : 'Bearer ' + this.$store.state.Users.success.token
                 },
-        		data : {
-                    user_id: this.addTeacher.user_id,
-                    sc_school_id: this.addTeacher.sc_school_id,
-                    title : this.addTeacher.title,
-                    graduate : this.addTeacher.graduate
-        		}
+        		data : formData
         	}).then(result => {
         		$('#modal-add').modal('hide');
                 this.RequestSuccess(result.data.message);
@@ -430,18 +476,20 @@ export default {
         },
         /*save data for edit modal*/
         async editSave() {
+            var formData = new FormData();
+            formData.append('file', this.editTeacher.file);
+            formData.append('user_id', this.editTeacher.user_id);
+            formData.append('sc_school_id', this.editTeacher.sc_school_id);
+            formData.append('title', this.editTeacher.title);
+            formData.append('graduate', this.editTeacher.graduate);
+            formData.append('nisn', this.editTeacher.nisn);
             await axios({
-                url: '/api/teacher/' + this.editTeacher.id,
-                method: 'put',
+                url: '/api/teacher/update/' + this.editTeacher.id,
+                method: 'post',
                 headers : {
                     'Authorization' : 'Bearer ' + this.$store.state.Users.success.token
                 },
-                data: {
-                    user_id: this.editTeacher.user_id,
-                    sc_school_id: this.editTeacher.sc_school_id,
-                    title : this.editTeacher.title,
-                    graduate : this.editTeacher.graduate
-                }
+                data: formData
             }).then(result => {
                 $('#modal-1').modal('hide');
                 this.RequestSuccess(result.data.message);
@@ -467,6 +515,8 @@ export default {
                     this.editTeacher.sc_school_id = val.sc_school_id;
                     this.editTeacher.title = val.title;
                     this.editTeacher.graduate = val.graduate;
+                    this.editTeacher.avatar = val.avatar;
+                    this.editTeacher.nisn = val.nisn;
                 });
             }).catch(error => {
                 this.Error(error, error.message);
@@ -501,6 +551,33 @@ export default {
                     Swal.fire('Cancelled', 'Your data is safe', 'error')
                 }
             });
+        },
+        async importData() {
+            var formData = new FormData();
+            formData.append('import', this.imports);
+            await axios({
+                url : '/api/teacher/excel/import/' + this.user.id,
+                method : 'post',
+                data : formData,
+                headers : {
+                    'Authorization' : 'Bearer ' + this.$store.state.Users.success.token
+                }
+            }).then(result => {
+                $('#modal-import').modal('hide');
+                this.RequestSuccess(result.data.message);
+            }).catch(error => {
+                this.Error(error, error.message);
+            })
+        },
+        /*change event in here...*/
+        async changeFile() {
+            this.addTeacher.file = this.$refs.file.files[0];
+        },
+        async changeFileUpdate() {
+            this.editTeacher.file = this.$refs.fileEdit.files[0];
+        },
+        async changeFileImport() {
+            this.imports = this.$refs.fileImport.files[0];
         }
     }
 }

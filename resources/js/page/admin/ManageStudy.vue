@@ -19,8 +19,8 @@
                                 <div class="dropdown-menu dropdown-menu-right dropdown-menu-animated">
                                     <a class="dropdown-item" href="#" data-toggle="modal" data-target="#modal-add">Add new data</a>
                                     <div class="dropdown-divider"></div>
-                                    <a class="dropdown-item" href="#">Import Excel</a>
-                                    <a class="dropdown-item" :href="'/api/study/excel/export/' + user_id" download>Export Excel</a>
+                                    <a class="dropdown-item" href="#" data-toggle="modal" data-target="#modal-import">Import Excel</a>
+                                    <a class="dropdown-item" :href="'/api/study/excel/export/' + user.id + '/' + user.email" download>Export Excel</a>
                                 </div>
                             </div>
                         </div>
@@ -214,6 +214,24 @@
                 </div>
             </div>
         </div>
+        <!-- modal import -->
+        <div class="modal fade" id="modal-import" tabindex="-1" role="dialog" aria-labelledby="modal-import-title" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-scrollable">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title mt-0" id="modal-import-title">Import data</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <label for="imports">File format .xls / .xlsx</label>
+                        <input type="file" ref="fileImport" v-on:change="changeFileImport()" class="form-control" id="imports">
+                        <button class="btn btn-primary mt-2" @click="importData">Import</button>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </template>
 <script>
@@ -226,7 +244,7 @@ export default {
     },
     data() {
         return {
-            user_id : this.$store.state.Users.user.id,
+            user : this.$store.state.Users.user,
             /*table data*/
             TableStudy: [],
             PaginateStudy: {},
@@ -255,6 +273,7 @@ export default {
                 day : '',
                 time : ''
             },
+            imports: '',
             loading : false
         }
     },
@@ -536,7 +555,24 @@ export default {
                     Swal.fire('Cancelled', 'Your data is safe', 'error')
                 }
             });
-        }
+        },
+        async importData() {
+            var formData = new FormData();
+            formData.append('import', this.imports);
+            await axios({
+                url : '/api/study/excel/import/' + this.user.id,
+                method : 'post',
+                data : formData,
+                headers : {
+                    'Authorization' : 'Bearer ' + this.$store.state.Users.success.token
+                }
+            }).then(result => {
+                $('#modal-import').modal('hide');
+                this.RequestSuccess(result.data.message);
+            }).catch(error => {
+                this.Error(error, error.message);
+            })
+        },
         /*change event in here...*/
         
     }

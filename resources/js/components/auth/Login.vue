@@ -35,9 +35,6 @@
                                                 <div class="mt-4">
                                                     <button class="btn btn-success btn-block waves-effect waves-light" type="submit">Log In</button>
                                                 </div>
-                                                <div class="mt-4 text-center">
-                                                    <a href="#" class="text-muted"><i class="mdi mdi-account-circle mr-1"></i> Create an account</a>
-                                                </div>
                                             </div>
                                         </div>
                                     </form>
@@ -90,7 +87,11 @@ export default {
                 if(result.data.user.role == 'admin' || result.data.user.role == 'administrator') {
     			     return window.location.href = '/admin';
 
-                }else{
+                }
+                if(result.data.user.role == 'teacher') {
+                    return window.location.href = '/teacher';
+                }
+                else{
                     return window.location.href = '/';
                 }
     		}).catch(e => {
