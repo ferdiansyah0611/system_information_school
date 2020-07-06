@@ -5,8 +5,9 @@ namespace App\Http\Controllers\Admin\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Validator;
-// exports
+// excel
 use App\Exports\SchoolExport;
+use App\Imports\SchoolImport;
 // vendor
 use Carbon\Carbon;
 use Maatwebsite\Excel\Facades\Excel;
@@ -193,8 +194,40 @@ class SchoolController extends Controller
      * @param $user
      * @return Maatwebsite\Excel\Facades\Excel
      */
-    public function export($user) 
+    public function export($user, $email) 
     {
-        return Excel::download(new SchoolExport, 'school_export.xlsx');
+        $check = User::where('id', $user)->pluck('email');
+        if($check[0] == $email) {
+            return Excel::download(new SchoolExport, 'school_export.xlsx');
+        } else {
+            return response()->json(['message' => 'Not allowed'], 401);
+        }
+    }
+
+    /**
+     * Import a file excel of the export.
+     *
+     * @param $user
+     * @return \Illuminate\Http\Response
+     */
+    public function import(Request $request, $user)
+    {
+        $validator = Validator::make($request->all(), [
+            'import' => 'file|mimes:xls,xlsx|max:5000',
+        ]);
+        if($validator->fails()) {
+            return response()->json(['message' => $validator->errors()], 401);
+        } else {
+            $check = User::where('id', $user)->pluck('id');
+            if($check[0] !== null || $check[0] !== undefined) {
+
+                $file = $request->file('import');
+                $file->move(storage_path('app/public/office'), $file->getClientOriginalName());
+                Excel::import(new SchoolImport, storage_path('app/public/office/' . $file->getClientOriginalName() ));
+                return response()->json(['message' => 'Successfuly import data'], 200);
+            } else {
+                return response()->json(['message' => 'Not allowed'], 401);
+            }
+        }
     }
 }

@@ -5,8 +5,10 @@ namespace App\Http\Controllers\Admin\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Validator;
-// exports
+use File;
+// excel
 use App\Exports\StudentExport;
+use App\Imports\StudentImport;
 // vendor
 use Carbon\Carbon;
 use Maatwebsite\Excel\Facades\Excel;
@@ -86,14 +88,28 @@ class StudentController extends Controller
         if($validator->fails()){
             return response()->json(['message' => $validator->errors()], 401);
         }else{
-            if($request->file('file')){
-                $file = $request->file('file');
-                $file->move(storage_path('app/public/image'), $file->getClientOriginalName());
-                User::where('id', $request->user_id)->update([
-                    'avatar' => $file->getClientOriginalName(),
-                    'role' => 'student',
-                    'updated_at' => $this->timestamp
+            if($request->file('file')) {
+                $validator = Validator::make($request->all(), [
+                    'file' => 'image|mimes:jpg,png,jpeg|max:2000',
                 ]);
+                if($validator->fails()){
+                    return response()->json(['message' => $validator->errors()], 401);
+                }else{
+                    $file = $request->file('file');
+                    $fileDefault = User::where('id', $request->user_id)->pluck('avatar')[0];
+                    // if name image upload except avatar in table users
+                    if($file->getClientOriginalName() !== $fileDefault) {
+                        $file->move(storage_path('app/public/image'), $file->getClientOriginalName());
+                    }
+                    if($fileDefault !== 'avatar-admin.png' || $fileDefault !== 'avatar-student-female.png' || $fileDefault !== 'avatar-student-male.png' || $fileDefault !== 'avatar-teacher-female.png' || $fileDefault !== 'avatar-teacher-male.png') {
+                        File::delete(storage_path('app/public/image/' . $fileDefault));
+                    }
+                    User::where('id', $request->user_id)->update([
+                        'avatar' => $file->getClientOriginalName(),
+                        'role' => 'student',
+                        'updated_at' => $this->timestamp
+                    ]);
+                }
             }
             $app = new ScStudent;
             $app->id = $this->random;
@@ -130,7 +146,7 @@ class StudentController extends Controller
                 'sc_students.created_at','sc_students.updated_at',
                 'sc_schools.name as sc_school_name', 'sc_schools.id as sc_school_id',
                 'sc_classes.name as sc_class_name', 'sc_classes.id as sc_class_id',
-                'users.name as user_name', 'users.id as user_id', 'users.nisn')
+                'users.name as user_name', 'users.id as user_id', 'users.nisn', 'users.avatar')
             ->get(), 200);
         return response()->json($scStudent->get(), 200);
     }
@@ -160,6 +176,30 @@ class StudentController extends Controller
         if($validator->fails()){
             return response()->json(['message' => $validator->errors()], 401);
         }else{
+            if($request->file('file')) {
+                $validator = Validator::make($request->all(), [
+                    'file' => 'image|mimes:jpg,png,jpeg|max:2000',
+                ]);
+                if($validator->fails()){
+                    return response()->json(['message' => $validator->errors()], 401);
+                }else{
+                    $file = $request->file('file');
+                    $fileDefault = User::where('id', $request->user_id)->pluck('avatar')[0];
+                    // if name image upload except avatar in table users
+                    if($file->getClientOriginalName() !== $fileDefault) {
+                        $file->move(storage_path('app/public/image'), $file->getClientOriginalName());
+                    }
+                    if($fileDefault !== 'avatar-admin.png' || $fileDefault !== 'avatar-student-female.png' || $fileDefault !== 'avatar-student-male.png' || $fileDefault !== 'avatar-teacher-female.png' || $fileDefault !== 'avatar-teacher-male.png') {
+                        File::delete(storage_path('app/public/image/' . $fileDefault));
+                    }
+                    User::where('id', $request->user_id)->update([
+                        'nisn' => $request->nisn,
+                        'avatar' => $file->getClientOriginalName(),
+                        'role' => 'student',
+                        'updated_at' => $this->timestamp
+                    ]);
+                }
+            }
             ScStudent::where('id', $scStudent)->update([
                 'user_id' => $request->user_id,
                 'sc_school_id' => $request->sc_school_id,
@@ -174,9 +214,6 @@ class StudentController extends Controller
                 'generation' => $request->generation,
                 'updated_at' => $this->timestamp
             ]);
-            User::where('id', $request->user_id)->update([
-                'nisn' => $request->nisn
-            ]);
             return response()->json(['message' => 'Successfuly update data'], 200);
         }
     }
@@ -189,7 +226,14 @@ class StudentController extends Controller
      */
     public function destroy($scStudent)
     {
-        ScSchool::where('id', $scStudent)->delete();
+        $id = ScStudent::where('id', $scTeacher);
+        $fileDefault = User::where('id', $id->pluck('user_id')[0])->pluck('avatar')[0];
+        // if name image upload except avatar in table users
+        if($fileDefault !== 'avatar-admin.png' || $fileDefault !== 'avatar-student-female.png' || $fileDefault !== 'avatar-student-male.png' || $fileDefault !== 'avatar-teacher-female.png' || $fileDefault !== 'avatar-teacher-male.png') {
+            File::delete(storage_path('app/public/image/' . $fileDefault));
+        }
+        $id->delete();
+        User::where('id', $id->pluck('user_id'))->delete();
         return response()->json(['message' => 'Successfuly delete data'], 200);
     }
     ////////////////////////////////end resources////////////////////////////////
@@ -252,8 +296,40 @@ class StudentController extends Controller
      * @param $user
      * @return Maatwebsite\Excel\Facades\Excel
      */
-    public function export($user) 
+    public function export($user, $email) 
     {
-        return Excel::download(new StudentExport, 'student_export.xlsx');
+        $check = User::where('id', $user)->pluck('email');
+        if($check[0] == $email) {
+            return Excel::download(new StudentExport, 'student_export.xlsx');
+        } else {
+            return response()->json(['message' => 'Not allowed'], 401);
+        }
+    }
+
+    /**
+     * Import a file excel of the export.
+     *
+     * @param $user
+     * @return \Illuminate\Http\Response
+     */
+    public function import(Request $request, $user)
+    {
+        $validator = Validator::make($request->all(), [
+            'import' => 'file|mimes:xls,xlsx|max:5000',
+        ]);
+        if($validator->fails()) {
+            return response()->json(['message' => $validator->errors()], 401);
+        } else {
+            $check = User::where('id', $user)->pluck('id');
+            if($check[0] !== null || $check[0] !== undefined) {
+
+                $file = $request->file('import');
+                $file->move(storage_path('app/public/office'), $file->getClientOriginalName());
+                Excel::import(new StudentImport, storage_path('app/public/office/' . $file->getClientOriginalName() ));
+                return response()->json(['message' => 'Successfuly import data'], 200);
+            } else {
+                return response()->json(['message' => 'Not allowed'], 401);
+            }
+        }
     }
 }
