@@ -11,6 +11,7 @@ use Carbon\Carbon;
 use Maatwebsite\Excel\Facades\Excel;
 // model
 use App\Models\ScHomeRoomTeacher;
+use App\User;
 
 class HomeRoomTeacherController extends Controller
 {

@@ -20,6 +20,7 @@ use App\Models\ScReportCardSenior;
 use App\Models\ScReportCardJunior;
 use App\Models\ScReportCardElementary;
 use App\Models\ScReportCardExtraCurricular;
+use App\User;
 
 class ReportCardController extends Controller
 {

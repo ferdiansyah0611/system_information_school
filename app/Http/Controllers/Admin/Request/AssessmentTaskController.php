@@ -12,6 +12,7 @@ use Carbon\Carbon;
 use Maatwebsite\Excel\Facades\Excel;
 // model
 use App\Models\ScAssessmentTask;
+use App\User;
 
 class AssessmentTaskController extends Controller
 {

@@ -13,6 +13,7 @@ use Carbon\Carbon;
 use Maatwebsite\Excel\Facades\Excel;
 //model
 use App\Models\ScClass;
+use App\User;
 
 class ClassController extends Controller
 {
