@@ -35,7 +35,6 @@
                             <span>Class</span>
                         </a>
                         <ul class="sub-menu" aria-expanded="true">
-                            <li><a href="#">Create</a></li>
                             <li>
                                 <router-link to="/admin/manage/class" class="waves-effect">Data</router-link>
                             </li>
@@ -47,7 +46,6 @@
                             <span>School</span>
                         </a>
                         <ul class="sub-menu" aria-expanded="true">
-                            <li><a href="#">Create</a></li>
                             <li>
                                 <router-link to="/admin/manage/school" class="waves-effect">Data</router-link>
                             </li>
@@ -59,7 +57,6 @@
                             <span>Student</span>
                         </a>
                         <ul class="sub-menu" aria-expanded="true">
-                            <li><a href="#">Create</a></li>
                             <li>
                                 <router-link to="/admin/manage/student" class="waves-effect">Data</router-link>
                             </li>
@@ -71,7 +68,6 @@
                             <span>Study</span>
                         </a>
                         <ul class="sub-menu" aria-expanded="true">
-                            <li><a href="#">Create</a></li>
                             <li>
                                 <router-link to="/admin/manage/study" class="waves-effect">Data</router-link>
                             </li>
@@ -83,7 +79,6 @@
                             <span>Teacher</span>
                         </a>
                         <ul class="sub-menu" aria-expanded="true">
-                            <li><a href="#">Create</a></li>
                             <li>
                                 <router-link to="/admin/manage/teacher" class="waves-effect">Data</router-link>
                             </li>
@@ -99,7 +94,6 @@
                             <span>Assessment Task</span>
                         </a>
                         <ul class="sub-menu" aria-expanded="true">
-                            <li><a href="#">Create</a></li>
                             <li>
                                 <router-link to="/admin/manage/assessment-task" class="waves-effect">Data</router-link>
                             </li>
@@ -111,7 +105,6 @@
                             <span>Report Card</span>
                         </a>
                         <ul class="sub-menu" aria-expanded="true">
-                            <li><a href="#">Print</a></li>
                             <li>
                                 <router-link to="/admin/manage/report-card" class="waves-effect">Data</router-link>
                             </li>
@@ -123,7 +116,6 @@
     </div>
 </template>
 <script>
-/*import $ from 'jquery';*/
 import metisMenu from 'metismenu';
 export default {
     mounted() {
