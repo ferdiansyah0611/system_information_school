@@ -91,6 +91,7 @@ class StudyController extends Controller
             $app->name = $request->name;
             $app->day = $request->day;
             $app->time = $request->time;
+            $app->save();
             return response()->json(['message' => 'Successfuly create data'], 200);
         }
     }

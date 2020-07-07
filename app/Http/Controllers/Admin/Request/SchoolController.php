@@ -146,6 +146,10 @@ class SchoolController extends Controller
     public function destroy($scSchool)
     {
         ScSchool::where('id', $scSchool)->delete();
+        ScClass::where('sc_school_id', $scSchool)->delete();
+        ScStudent::where('sc_school_id', $scSchool)->delete();
+        ScStudy::where('sc_school_id', $scSchool)->delete();
+        ScTeacher::where('sc_school_id', $scSchool)->delete();
         return response()->json(['message' => 'Successfuly delete data'], 200);
     }
     ////////////////////////////////end resources////////////////////////////////

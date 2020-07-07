@@ -194,14 +194,15 @@ class TeacherController extends Controller
      */
     public function destroy($scTeacher)
     {
+        $pluck = ScTeacher::where('id', $scTeacher)->pluck('user_id')[0];
         $id = ScTeacher::where('id', $scTeacher);
         $fileDefault = User::where('id', $id->pluck('user_id')[0])->pluck('avatar')[0];
         // if name image upload except avatar in table users
-        if($fileDefault !== 'avatar-admin.png' || $fileDefault !== 'avatar-student-female.png' || $fileDefault !== 'avatar-student-male.png' || $fileDefault !== 'avatar-teacher-female.png' || $fileDefault !== 'avatar-teacher-male.png') {
+        if($fileDefault !== 'avatar-admin.png' && $fileDefault !== 'avatar-student-female.png' && $fileDefault !== 'avatar-student-male.png' && $fileDefault !== 'avatar-teacher-female.png' && $fileDefault !== 'avatar-teacher-male.png') {
             File::delete(storage_path('app/public/image/' . $fileDefault));
         }
+        User::where('id', $pluck)->delete();
         $id->delete();
-        User::where('id', $id->pluck('user_id'))->delete();
         return response()->json(['message' => 'Successfuly delete data'], 200);
     }
     ////////////////////////////////end resources////////////////////////////////

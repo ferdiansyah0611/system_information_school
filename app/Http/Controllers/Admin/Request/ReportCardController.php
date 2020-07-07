@@ -239,7 +239,7 @@ class ReportCardController extends Controller
                 'sc_type_report_cards.created_at', 'sc_type_report_cards.updated_at',
                 'users.name as student_name', 'users.id as user_id', 'sc_type_report_cards.sc_home_room_teacher_id',
                 'sc_studies.name as study_name',
-                'sc_report_card_seniors.id as sc_report_card_senior_id', 'sc_report_card_seniors.score',
+                'sc_report_card_seniors.id as sc_report_card_senior_id', 'sc_report_card_seniors.score', 'sc_report_card_seniors.sc_study_id',
                 'sc_report_card_seniors.kkm_k3', 'sc_report_card_seniors.kkm_k4', 'sc_report_card_seniors.k3_ph',
                 'sc_report_card_seniors.k3_pts', 'sc_report_card_seniors.k4_pr', 'sc_report_card_seniors.status',
                 'sc_report_card_seniors.predicate'
@@ -261,7 +261,7 @@ class ReportCardController extends Controller
                 'sc_type_report_cards.created_at', 'sc_type_report_cards.updated_at',
                 'users.name as student_name', 'users.id as user_id', 'sc_type_report_cards.sc_home_room_teacher_id',
                 'sc_studies.name as study_name',
-                'sc_report_card_juniors.id as sc_report_card_senior_id', 'sc_report_card_juniors.score',
+                'sc_report_card_juniors.id as sc_report_card_senior_id', 'sc_report_card_juniors.score', 'sc_report_card_juniors.sc_study_id',
                 'sc_report_card_juniors.kkm_k3', 'sc_report_card_juniors.kkm_k4', 'sc_report_card_juniors.k3_ph',
                 'sc_report_card_juniors.k3_pts', 'sc_report_card_juniors.k4_pr', 'sc_report_card_juniors.status',
                 'sc_report_card_juniors.predicate'
@@ -283,7 +283,7 @@ class ReportCardController extends Controller
                 'sc_type_report_cards.created_at', 'sc_type_report_cards.updated_at',
                 'users.name as student_name', 'users.id as user_id', 'sc_type_report_cards.sc_home_room_teacher_id',
                 'sc_studies.name as study_name',
-                'sc_report_card_elementaries.id as sc_report_card_senior_id', 'sc_report_card_elementaries.score',
+                'sc_report_card_elementaries.id as sc_report_card_senior_id', 'sc_report_card_elementaries.score', 'sc_report_card_elementaries.sc_study_id',
                 'sc_report_card_elementaries.kkm_k3', 'sc_report_card_elementaries.kkm_k4', 'sc_report_card_elementaries.k3_ph',
                 'sc_report_card_elementaries.k3_pts', 'sc_report_card_elementaries.k4_pr', 'sc_report_card_elementaries.status',
                 'sc_report_card_elementaries.predicate'
@@ -299,7 +299,7 @@ class ReportCardController extends Controller
      * @param  \App\Models\ScTypeReportCard  $scTypeReportCard
      * @return \Illuminate\Http\Response
      */
-    public function update($scTypeReportCard)
+    public function update(Request $request, $scTypeReportCard)
     {
         // validation variable
         $numeric = 'required|numeric';
@@ -323,7 +323,7 @@ class ReportCardController extends Controller
             return response()->json(['message' => $validator->errors()], 401);
         }else{
             // type
-            ScTypeReportCard::where('id', $$scTypeReportCard)->update([
+            ScTypeReportCard::where('id', $scTypeReportCard)->update([
                 'sc_home_room_teacher_id' => $request->sc_home_room_teacher_id,
                 'sc_student_id' => $request->sc_student_id,
                 'type' => $request->type,
@@ -357,7 +357,7 @@ class ReportCardController extends Controller
                     return response()->json(['message' => $validator_senior->errors()], 401);
                 }else{
                     // senior
-                    ScReportCardSenior::where('id', $$scTypeReportCard)->update([
+                    ScReportCardSenior::where('id', $scTypeReportCard)->update([
                         'sc_study_id' => $request->sc_study_id,
                         'score' => $request->score,
                         'kkm_k3' => $request->kkm_k3,
@@ -388,7 +388,7 @@ class ReportCardController extends Controller
                     return response()->json(['message' => $validator_senior->errors()], 401);
                 }else{
                     // senior
-                    ScReportCardJunior::where('id', $$scTypeReportCard)->update([
+                    ScReportCardJunior::where('id', $scTypeReportCard)->update([
                         'id' => $this->random,
                         'sc_study_id' => $request->sc_study_id,
                         'score' => $request->score,
@@ -420,7 +420,7 @@ class ReportCardController extends Controller
                     return response()->json(['message' => $validator_senior->errors()], 401);
                 }else{
                     // elementary
-                    ScReportCardElementary::where('id', $$scTypeReportCard)->update([
+                    ScReportCardElementary::where('id', $scTypeReportCard)->update([
                         'sc_study_id' => $request->sc_study_id,
                         'score' => $request->score,
                         'kkm_k3' => $request->kkm_k3,
