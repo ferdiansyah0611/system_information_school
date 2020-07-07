@@ -2,7 +2,6 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use App\User;
 /*authentication api*/
 Route::post('login', 'AuthenticateController@login');
 Route::post('register', 'AuthenticateController@register');
@@ -51,8 +50,3 @@ Route::group(['middleware' => 'auth:api'], function(){
     /*search*/
     Route::get('search/{any}', 'HomeController@search')->name('search');
 });
-Route::get('pdf', 'Admin\Request\AdminController@printPDF');
-/*Route::get('example', function(){http://system.school/api/pdf
-    dd(User::where('id', '1')->pluck('avatar')[0]);
-    return response()->json(User::where('id', '1')->pluck('avatar'),200);
-});*/

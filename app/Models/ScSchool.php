@@ -15,8 +15,4 @@ class ScSchool extends Model
     protected $fillable = [
         'id', 'user_id', 'name', 'description', 'type'
     ];
-    public function user()
-    {
-    	return $this->hasOne('App\User');
-    }
 }
