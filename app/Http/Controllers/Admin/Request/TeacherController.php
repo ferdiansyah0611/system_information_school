@@ -216,14 +216,32 @@ class TeacherController extends Controller
     {
         /*school = name*/
         /*teacher = id title join users = name nisn*/
-        return response()->json(ScTeacher::join('sc_schools', 'sc_teachers.sc_school_id', '=', 'sc_schools.id')
-            ->join('users', 'sc_teachers.user_id', '=', 'users.id')
-            ->orderBy($order, $type)
-            ->select(
-                'sc_teachers.id', 'sc_teachers.title', 'sc_teachers.graduate', 'sc_teachers.created_at', 'sc_teachers.updated_at',
-                'sc_schools.name as sc_school_name',
-                'users.name as user_name', 'users.id as user_id', 'users.nisn')
-            ->paginate($columns), 200);
+        $role = request()->user()->role;
+        if($role == 'administrator' || $role == 'admin' || $role == 'teacher') {
+            if($role == 'administrator') {
+                return response()->json(ScTeacher::join('sc_schools', 'sc_teachers.sc_school_id', '=', 'sc_schools.id')
+                    ->join('users', 'sc_teachers.user_id', '=', 'users.id')
+                    ->orderBy($order, $type)
+                    ->select(
+                        'sc_teachers.id', 'sc_teachers.title', 'sc_teachers.graduate', 'sc_teachers.created_at', 'sc_teachers.updated_at',
+                        'sc_schools.name as sc_school_name',
+                        'users.name as user_name', 'users.id as user_id', 'users.nisn')
+                    ->paginate($columns), 200);
+            }
+            if($role == 'admin' || $role == 'teacher') {
+                return response()->json(ScTeacher::join('sc_schools', 'sc_teachers.sc_school_id', '=', 'sc_schools.id')
+                    ->where('sc_schools.id', request()->user()->sc_school_id)
+                    ->join('users', 'sc_teachers.user_id', '=', 'users.id')
+                    ->orderBy($order, $type)
+                    ->select(
+                        'sc_teachers.id', 'sc_teachers.title', 'sc_teachers.graduate', 'sc_teachers.created_at', 'sc_teachers.updated_at',
+                        'sc_schools.name as sc_school_name',
+                        'users.name as user_name', 'users.id as user_id', 'users.nisn')
+                    ->paginate($columns), 200);
+            }
+        } else {
+            return response()->json(['message' => 'Not allowed'], 401);
+        }
     }
 
     /**
@@ -234,17 +252,40 @@ class TeacherController extends Controller
      */
     public function searching($order, $type, $search, $paginate)
     {
-        return response()->json(ScTeacher::join('sc_schools', 'sc_teachers.sc_school_id', '=', 'sc_schools.id')
-            ->join('users', 'sc_teachers.user_id', '=', 'users.id')
-            ->orderBy($order, $type)
-            ->where('sc_teachers.id', 'like', '%' . $search . '%')
-            ->orWhere('sc_teachers.title', 'like', '%' . $search . '%')
-            ->orWhere('sc_teachers.graduate', 'like', '%' . $search . '%')
-            ->select(
-                'sc_teachers.id', 'sc_teachers.title', 'sc_teachers.graduate', 'sc_teachers.created_at', 'sc_teachers.updated_at',
-                'sc_schools.id as sc_school_id', 'sc_schools.name as sc_school_name',
-                'users.name as user_name', 'users.id as user_id', 'users.nisn')
-            ->paginate($columns), 200);
+        $role = request()->user()->role;
+        if($role == 'administrator' || $role == 'admin' || $role == 'teacher') {
+            if($role == 'administrator') {
+                return response()->json(ScTeacher::join('sc_schools', 'sc_teachers.sc_school_id', '=', 'sc_schools.id')
+                    ->join('users', 'sc_teachers.user_id', '=', 'users.id')
+                    ->orderBy($order, $type)
+                    ->where('sc_teachers.id', 'like', '%' . $search . '%')
+                    ->orWhere('sc_teachers.title', 'like', '%' . $search . '%')
+                    ->orWhere('sc_teachers.graduate', 'like', '%' . $search . '%')
+                    ->orWhere('users.name', 'like', '%' . $search . '%')
+                    ->select(
+                        'sc_teachers.id', 'sc_teachers.title', 'sc_teachers.graduate', 'sc_teachers.created_at', 'sc_teachers.updated_at',
+                        'sc_schools.id as sc_school_id', 'sc_schools.name as sc_school_name',
+                        'users.name as user_name', 'users.id as user_id', 'users.nisn')
+                    ->paginate($paginate), 200);
+            }
+            if($role == 'admin' || $role == 'teacher') {
+                return response()->json(ScTeacher::join('sc_schools', 'sc_teachers.sc_school_id', '=', 'sc_schools.id')
+                    ->join('users', 'sc_teachers.user_id', '=', 'users.id')
+                    ->orderBy($order, $type)
+                    ->where('sc_teachers.sc_school_id', request()->user()->sc_school_id)
+                    ->where('sc_teachers.title', 'like', '%' . $search . '%')
+                    ->orWhere('sc_teachers.id', 'like', '%' . $search . '%')
+                    ->orWhere('sc_teachers.graduate', 'like', '%' . $search . '%')
+                    ->orWhere('users.name', 'like', '%' . $search . '%')
+                    ->select(
+                        'sc_teachers.id', 'sc_teachers.title', 'sc_teachers.graduate', 'sc_teachers.created_at', 'sc_teachers.updated_at',
+                        'sc_schools.id as sc_school_id', 'sc_schools.name as sc_school_name',
+                        'users.name as user_name', 'users.id as user_id', 'users.nisn')
+                    ->paginate($paginate), 200);
+            }
+        } else {
+            return response()->json(['message' => 'Not allowed'], 401);
+        }
     }
 
     /**

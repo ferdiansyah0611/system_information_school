@@ -158,13 +158,30 @@ class SchoolController extends Controller
      */
     public function searchDefault($order, $type, $columns)
     {
-        return response()->json(ScSchool::join('users', 'sc_schools.user_id', '=', 'users.id')
-            ->orderBy($order, $type)
-            ->select(
-                'sc_schools.id', 'sc_schools.name', 'sc_schools.description',
-                'sc_schools.created_at','sc_schools.updated_at',
-                'users.name as user_name', 'users.id as user_id')
-            ->paginate($columns), 200);
+        $role = request()->user()->role;
+        if($role == 'administrator' || $role == 'admin' || $role == 'teacher') {
+            if($role == 'administrator') {
+                return response()->json(ScSchool::join('users', 'sc_schools.user_id', '=', 'users.id')
+                    ->orderBy($order, $type)
+                    ->select(
+                        'sc_schools.id', 'sc_schools.name', 'sc_schools.description',
+                        'sc_schools.created_at','sc_schools.updated_at',
+                        'users.name as user_name', 'users.id as user_id')
+                    ->paginate($columns), 200);
+            }
+            if($role == 'admin' || $role == 'teacher') {
+                return response()->json(ScSchool::where('sc_schools.id', request()->user()->sc_school_id)
+                    ->join('users', 'sc_schools.user_id', '=', 'users.id')
+                    ->orderBy($order, $type)
+                    ->select(
+                        'sc_schools.id', 'sc_schools.name', 'sc_schools.description',
+                        'sc_schools.created_at','sc_schools.updated_at',
+                        'users.name as user_name', 'users.id as user_id')
+                    ->paginate($columns), 200);
+            }
+        } else {
+            return response()->json(['message' => 'Not allowed'], 401);
+        }
     }
 
     /**
@@ -175,18 +192,36 @@ class SchoolController extends Controller
      */
     public function searching($order, $type, $search, $paginate)
     {
-        return response()->json(ScSchool::join('users', 'sc_schools.user_id', '=', 'users.id')
-            ->orderBy($order, $type)
-            ->where('sc_schools.id', 'like', '%' . $search . '%')
-            ->orWhere('sc_schools.name', 'like', '%' . $search . '%')
-            ->orWhere('sc_schools.description', 'like', '%' . $search . '%')
-            ->orWhere('users.name', 'like', '%' . $search . '%')
-            ->orWhere('users.id', 'like', '%' . $search . '%')
-            ->select(
-                'sc_schools.id', 'sc_schools.name', 'sc_schools.description',
-                'sc_schools.created_at','sc_schools.updated_at',
-                'users.name as user_name', 'users.id as user_id')
-            ->paginate($paginate), 200);
+        $role = request()->user()->role;
+        if($role == 'administrator' || $role == 'admin' || $role == 'teacher') {
+            if($role == 'administrator') {
+                return response()->json(ScSchool::join('users', 'sc_schools.user_id', '=', 'users.id')
+                    ->orderBy($order, $type)
+                    ->where('sc_schools.id', 'like', '%' . $search . '%')
+                    ->orWhere('sc_schools.name', 'like', '%' . $search . '%')
+                    ->orWhere('sc_schools.description', 'like', '%' . $search . '%')
+                    ->orWhere('users.name', 'like', '%' . $search . '%')
+                    ->orWhere('users.id', 'like', '%' . $search . '%')
+                    ->select(
+                        'sc_schools.id', 'sc_schools.name', 'sc_schools.description',
+                        'sc_schools.created_at','sc_schools.updated_at',
+                        'users.name as user_name', 'users.id as user_id')
+                    ->paginate($paginate), 200);
+            }
+            if($role == 'admin' || $role == 'teacher') {
+                return response()->json(ScSchool::where('sc_schools.id', request()->user()->sc_school_id)
+                    ->join('users', 'sc_schools.user_id', '=', 'users.id')
+                    ->orderBy($order, $type)
+                    ->where('sc_schools.id', 'like', '%' . $search . '%')
+                    ->select(
+                        'sc_schools.id', 'sc_schools.name', 'sc_schools.description',
+                        'sc_schools.created_at','sc_schools.updated_at',
+                        'users.name as user_name', 'users.id as user_id')
+                    ->paginate($paginate), 200);
+            }
+        } else {
+            return response()->json(['message' => 'Not allowed'], 401);
+        }
     }
 
     /**

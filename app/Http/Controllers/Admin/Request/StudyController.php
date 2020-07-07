@@ -176,17 +176,38 @@ class StudyController extends Controller
         /*school = name*/
         /*class = name*/
         /*teacher = id title join users = name nisn*/
-        return response()->json(ScStudy::join('sc_teachers', 'sc_studies.sc_teacher_id', '=', 'sc_teachers.id')
-            ->join('sc_schools', 'sc_studies.sc_school_id', '=', 'sc_schools.id')
-            ->join('sc_classes', 'sc_studies.sc_class_id', '=', 'sc_classes.id')
-            ->join('users', 'sc_teachers.user_id', '=', 'users.id')
-            ->orderBy($order, $type)
-            ->select(
-                'sc_studies.id', 'sc_studies.name', 'sc_studies.day', 'sc_studies.time', 'sc_studies.created_at', 'sc_studies.updated_at',
-                'sc_schools.name as sc_school_name',
-                'sc_classes.name as sc_class_name',
-                'users.name as user_name', 'users.id as user_id', 'users.nisn')
-            ->paginate($columns), 200);
+        $role = request()->user()->role;
+        if($role == 'administrator' || $role == 'admin' || $role == 'teacher') {
+            if($role == 'administrator') {
+                return response()->json(ScStudy::join('sc_teachers', 'sc_studies.sc_teacher_id', '=', 'sc_teachers.id')
+                    ->join('sc_schools', 'sc_studies.sc_school_id', '=', 'sc_schools.id')
+                    ->join('sc_classes', 'sc_studies.sc_class_id', '=', 'sc_classes.id')
+                    ->join('users', 'sc_teachers.user_id', '=', 'users.id')
+                    ->orderBy($order, $type)
+                    ->select(
+                        'sc_studies.id', 'sc_studies.name', 'sc_studies.day', 'sc_studies.time', 'sc_studies.created_at', 'sc_studies.updated_at',
+                        'sc_schools.name as sc_school_name',
+                        'sc_classes.name as sc_class_name',
+                        'users.name as user_name', 'users.id as user_id', 'users.nisn')
+                    ->paginate($columns), 200);
+            }
+            if($role == 'admin' || $role == 'teacher') {
+                return response()->json(ScStudy::join('sc_teachers', 'sc_studies.sc_teacher_id', '=', 'sc_teachers.id')
+                    ->join('sc_schools', 'sc_studies.sc_school_id', '=', 'sc_schools.id')
+                    ->where('sc_schools.id', request()->user()->sc_school_id)
+                    ->join('sc_classes', 'sc_studies.sc_class_id', '=', 'sc_classes.id')
+                    ->join('users', 'sc_teachers.user_id', '=', 'users.id')
+                    ->orderBy($order, $type)
+                    ->select(
+                        'sc_studies.id', 'sc_studies.name', 'sc_studies.day', 'sc_studies.time', 'sc_studies.created_at', 'sc_studies.updated_at',
+                        'sc_schools.name as sc_school_name',
+                        'sc_classes.name as sc_class_name',
+                        'users.name as user_name', 'users.id as user_id', 'users.nisn')
+                    ->paginate($columns), 200);
+            }
+        } else {
+            return response()->json(['message' => 'Not allowed'], 401);
+        }
     }
 
     /**
@@ -197,25 +218,54 @@ class StudyController extends Controller
      */
     public function searching($order, $type, $search, $paginate)
     {
-        return response()->json(ScStudy::join('sc_teachers', 'sc_studies.sc_teacher_id', '=', 'sc_teachers.id')
-            ->join('sc_schools', 'sc_studies.sc_school_id', '=', 'sc_schools.id')
-            ->join('sc_classes', 'sc_studies.sc_class_id', '=', 'sc_classes.id')
-            ->join('users', 'sc_teachers.user_id', '=', 'users.id')
-            ->orderBy($order, $type)
-            ->where('sc_studies.id', 'like', '%' . $search . '%')
-            ->orWhere('sc_studies.name', 'like', '%' . $search . '%')
-            ->orWhere('sc_studies.day', 'like', '%' . $search . '%')
-            ->orWhere('sc_studies.time', 'like', '%' . $search . '%')
-            ->orWhere('sc_schools.name', 'like', '%' . $search . '%')
-            ->orWhere('sc_classes.name', 'like', '%' . $search . '%')
-            ->orWhere('users.name', 'like', '%' . $search . '%')
-            ->orWhere('users.id', 'like', '%' . $search . '%')
-            ->select(
-                'sc_studies.id', 'sc_studies.name', 'sc_studies.day', 'sc_studies.time', 'sc_studies.created_at','sc_studies.updated_at',
-                'sc_schools.name as sc_school_name',
-                'sc_classes.name as sc_class_name',
-                'users.name as user_name', 'users.id as user_id', 'users.nisn')
-            ->paginate($paginate), 200);
+        $role = request()->user()->role;
+        if($role == 'administrator' || $role == 'admin' || $role == 'teacher') {
+            if($role == 'administrator') {
+                return response()->json(ScStudy::join('sc_teachers', 'sc_studies.sc_teacher_id', '=', 'sc_teachers.id')
+                    ->join('sc_schools', 'sc_studies.sc_school_id', '=', 'sc_schools.id')
+                    ->join('sc_classes', 'sc_studies.sc_class_id', '=', 'sc_classes.id')
+                    ->join('users', 'sc_teachers.user_id', '=', 'users.id')
+                    ->orderBy($order, $type)
+                    ->where('sc_studies.id', 'like', '%' . $search . '%')
+                    ->orWhere('sc_studies.name', 'like', '%' . $search . '%')
+                    ->orWhere('sc_studies.day', 'like', '%' . $search . '%')
+                    ->orWhere('sc_studies.time', 'like', '%' . $search . '%')
+                    ->orWhere('sc_schools.name', 'like', '%' . $search . '%')
+                    ->orWhere('sc_classes.name', 'like', '%' . $search . '%')
+                    ->orWhere('users.name', 'like', '%' . $search . '%')
+                    ->orWhere('users.id', 'like', '%' . $search . '%')
+                    ->select(
+                        'sc_studies.id', 'sc_studies.name', 'sc_studies.day', 'sc_studies.time', 'sc_studies.created_at','sc_studies.updated_at',
+                        'sc_schools.name as sc_school_name',
+                        'sc_classes.name as sc_class_name',
+                        'users.name as user_name', 'users.id as user_id', 'users.nisn')
+                    ->paginate($paginate), 200);
+            }
+            if($role == 'admin' || $role == 'teacher') {
+                return response()->json(ScStudy::join('sc_teachers', 'sc_studies.sc_teacher_id', '=', 'sc_teachers.id')
+                    ->join('sc_schools', 'sc_studies.sc_school_id', '=', 'sc_schools.id')
+                    ->where('sc_schools.id', request()->user()->sc_school_id)
+                    ->join('sc_classes', 'sc_studies.sc_class_id', '=', 'sc_classes.id')
+                    ->join('users', 'sc_teachers.user_id', '=', 'users.id')
+                    ->orderBy($order, $type)
+                    ->where('sc_studies.id', 'like', '%' . $search . '%')
+                    ->orWhere('sc_studies.name', 'like', '%' . $search . '%')
+                    ->orWhere('sc_studies.day', 'like', '%' . $search . '%')
+                    ->orWhere('sc_studies.time', 'like', '%' . $search . '%')
+                    ->orWhere('sc_schools.name', 'like', '%' . $search . '%')
+                    ->orWhere('sc_classes.name', 'like', '%' . $search . '%')
+                    ->orWhere('users.name', 'like', '%' . $search . '%')
+                    ->orWhere('users.id', 'like', '%' . $search . '%')
+                    ->select(
+                        'sc_studies.id', 'sc_studies.name', 'sc_studies.day', 'sc_studies.time', 'sc_studies.created_at','sc_studies.updated_at',
+                        'sc_schools.name as sc_school_name',
+                        'sc_classes.name as sc_class_name',
+                        'users.name as user_name', 'users.id as user_id', 'users.nisn')
+                    ->paginate($paginate), 200);
+            }
+        } else {
+            return response()->json(['message' => 'Not allowed'], 401);
+        }
     }
 
     /**

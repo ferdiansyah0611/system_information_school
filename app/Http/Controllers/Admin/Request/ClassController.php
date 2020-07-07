@@ -146,18 +146,21 @@ class ClassController extends Controller
      */
     public function searchDefault($order, $type, $columns)
     {
-        if(request()->user()->role == 'admin'){
-            return response()->json(ScClass::join('sc_schools', 'sc_classes.sc_school_id', '=', 'sc_schools.id')
-                ->orderBy($order, $type)
-                ->where('sc_classes.sc_school_id', request()->user()->sc_school_id)
-                ->select('sc_classes.id', 'sc_classes.sc_school_id', 'sc_classes.name', 'sc_schools.name as sc_school_name', 'sc_schools.description', 'sc_classes.created_at', 'sc_classes.updated_at')
-                ->paginate($columns), 200);
-        }
-        if(request()->user()->role == 'administrator'){
-            return response()->json(ScClass::join('sc_schools', 'sc_classes.sc_school_id', '=', 'sc_schools.id')
-                ->orderBy($order, $type)
-                ->select('sc_classes.id', 'sc_classes.sc_school_id', 'sc_classes.name', 'sc_schools.name as sc_school_name', 'sc_schools.description', 'sc_classes.created_at', 'sc_classes.updated_at')
-                ->paginate($columns), 200);
+        $role = request()->user()->role;
+        if($role == 'administrator' || $role == 'admin' || $role == 'teacher') {
+            if($role == 'administrator') {
+                return response()->json(ScClass::join('sc_schools', 'sc_classes.sc_school_id', '=', 'sc_schools.id')
+                    ->orderBy($order, $type)
+                    ->select('sc_classes.id', 'sc_classes.sc_school_id', 'sc_classes.name', 'sc_schools.name as sc_school_name', 'sc_schools.description', 'sc_classes.created_at', 'sc_classes.updated_at')
+                    ->paginate($columns), 200);
+            }
+            if($role == 'admin' || $role == 'teacher') {
+                return response()->json(ScClass::where('sc_classes.sc_school_id', request()->user()->sc_school_id)
+                    ->join('sc_schools', 'sc_classes.sc_school_id', '=', 'sc_schools.id')
+                    ->orderBy($order, $type)
+                    ->select('sc_classes.id', 'sc_classes.sc_school_id', 'sc_classes.name', 'sc_schools.name as sc_school_name', 'sc_schools.description', 'sc_classes.created_at', 'sc_classes.updated_at')
+                    ->paginate($columns), 200);
+            }
         }
     }
 
@@ -169,25 +172,31 @@ class ClassController extends Controller
      */
     public function searching($order, $type, $search, $paginate)
     {
-        if(request()->user()->role == 'admin'){
-            return response()->json(ScClass::join('sc_schools', 'sc_classes.sc_school_id', '=', 'sc_schools.id')
-                ->orderBy($order, $type)
-                ->where('sc_classes.name', request()->user()->sc_school_id)
-                ->orWhere('sc_classes.id', 'like', '%' . $search . '%')
-                ->orWhere('sc_schools.name', 'like', '%' . $search . '%')
-                ->orWhere('sc_schools.description', 'like', '%' . $search . '%')
-                ->select('sc_classes.id', 'sc_classes.sc_school_id', 'sc_classes.name', 'sc_schools.name as sc_school_name', 'sc_schools.description', 'sc_classes.created_at', 'sc_classes.updated_at')
-                ->paginate($paginate), 200);
-        }
-        if(request()->user()->role == 'administrator'){
-            return response()->json(ScClass::join('sc_schools', 'sc_classes.sc_school_id', '=', 'sc_schools.id')
-                ->orderBy($order, $type)
-                ->where('sc_classes.name', 'like', '%' . $search . '%')
-                ->orWhere('sc_classes.id', 'like', '%' . $search . '%')
-                ->orWhere('sc_schools.name', 'like', '%' . $search . '%')
-                ->orWhere('sc_schools.description', 'like', '%' . $search . '%')
-                ->select('sc_classes.id', 'sc_classes.sc_school_id', 'sc_classes.name', 'sc_schools.name as sc_school_name', 'sc_schools.description', 'sc_classes.created_at', 'sc_classes.updated_at')
-                ->paginate($paginate), 200);
+        $role = request()->user()->role;
+        if($role == 'administrator' || $role == 'admin' || $role == 'teacher') {
+            if($role == 'administrator') {
+                return response()->json(ScClass::join('sc_schools', 'sc_classes.sc_school_id', '=', 'sc_schools.id')
+                    ->orderBy($order, $type)
+                    ->where('sc_classes.name', 'like', '%' . $search . '%')
+                    ->orWhere('sc_classes.id', 'like', '%' . $search . '%')
+                    ->orWhere('sc_schools.name', 'like', '%' . $search . '%')
+                    ->orWhere('sc_schools.description', 'like', '%' . $search . '%')
+                    ->select('sc_classes.id', 'sc_classes.sc_school_id', 'sc_classes.name', 'sc_schools.name as sc_school_name', 'sc_schools.description', 'sc_classes.created_at', 'sc_classes.updated_at')
+                    ->paginate($paginate), 200);
+            }
+            if($role == 'admin' || $role == 'teacher') {
+                return response()->json(ScClass::where('sc_classes.sc_school_id', request()->user()->sc_school_id)
+                    ->join('sc_schools', 'sc_classes.sc_school_id', '=', 'sc_schools.id')
+                    ->orderBy($order, $type)
+                    ->where('sc_classes.name', 'like', '%' . $search . '%')
+                    ->orWhere('sc_classes.id', 'like', '%' . $search . '%')
+                    ->orWhere('sc_schools.name', 'like', '%' . $search . '%')
+                    ->orWhere('sc_schools.description', 'like', '%' . $search . '%')
+                    ->select('sc_classes.id', 'sc_classes.sc_school_id', 'sc_classes.name', 'sc_schools.name as sc_school_name', 'sc_schools.description', 'sc_classes.created_at', 'sc_classes.updated_at')
+                    ->paginate($paginate), 200);
+            }
+        } else {
+            return response()->json(['message' => 'Not allowed'], 401);
         }
     }
 

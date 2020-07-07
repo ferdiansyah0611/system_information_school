@@ -99,19 +99,42 @@ class AssessmentTaskController extends Controller
      */
     public function show($ScassessmentTask)
     {
-        return response()->json(ScAssessmentTask::join('sc_students', 'sc_assessment_tasks.sc_student_id', '=', 'sc_students.id')
-            ->join('users', 'sc_students.user_id', '=', 'users.id')
-            ->join('sc_schools', 'sc_students.sc_school_id', '=', 'sc_schools.id')
-            ->join('sc_classes', 'sc_students.sc_class_id', '=', 'sc_classes.id')
-            ->orderBy('id', 'asc')
-            ->where('sc_assessment_tasks.id', $ScassessmentTask)
-            ->select(
-                'sc_assessment_tasks.id', 'sc_assessment_tasks.title', 'sc_assessment_tasks.description', 'sc_assessment_tasks.score', 'sc_assessment_tasks.created_at', 'sc_assessment_tasks.updated_at',
-                'sc_students.id as sc_student_id', 'sc_students.user_id',
-                'sc_schools.id as sc_school_id', 'sc_schools.name as sc_school_name',
-                'sc_classes.id as sc_class_id', 'sc_classes.name as sc_class_name',
-                'users.name as user_name', 'users.nisn')
-            ->get(), 200);
+        $role = request()->user()->role;
+        if($role == 'administrator' || $role == 'admin' || $role == 'teacher') {
+            if($role == 'administrator') {
+                return response()->json(ScAssessmentTask::join('sc_students', 'sc_assessment_tasks.sc_student_id', '=', 'sc_students.id')
+                    ->join('users', 'sc_students.user_id', '=', 'users.id')
+                    ->join('sc_schools', 'sc_students.sc_school_id', '=', 'sc_schools.id')
+                    ->join('sc_classes', 'sc_students.sc_class_id', '=', 'sc_classes.id')
+                    ->orderBy('id', 'asc')
+                    ->where('sc_assessment_tasks.id', $ScassessmentTask)
+                    ->select(
+                        'sc_assessment_tasks.id', 'sc_assessment_tasks.title', 'sc_assessment_tasks.description', 'sc_assessment_tasks.score', 'sc_assessment_tasks.created_at', 'sc_assessment_tasks.updated_at',
+                        'sc_students.id as sc_student_id', 'sc_students.user_id',
+                        'sc_schools.id as sc_school_id', 'sc_schools.name as sc_school_name',
+                        'sc_classes.id as sc_class_id', 'sc_classes.name as sc_class_name',
+                        'users.name as user_name', 'users.nisn')
+                    ->get(), 200);
+            }
+            if($role == 'admin' || $role == 'teacher') {
+                return response()->json(ScAssessmentTask::join('sc_students', 'sc_assessment_tasks.sc_student_id', '=', 'sc_students.id')
+                    ->where('sc_students.sc_school_id', '=', request()->user()->sc_school_id)
+                    ->join('users', 'sc_students.user_id', '=', 'users.id')
+                    ->join('sc_schools', 'sc_students.sc_school_id', '=', 'sc_schools.id')
+                    ->join('sc_classes', 'sc_students.sc_class_id', '=', 'sc_classes.id')
+                    ->orderBy('id', 'asc')
+                    ->where('sc_assessment_tasks.id', $ScassessmentTask)
+                    ->select(
+                        'sc_assessment_tasks.id', 'sc_assessment_tasks.title', 'sc_assessment_tasks.description', 'sc_assessment_tasks.score', 'sc_assessment_tasks.created_at', 'sc_assessment_tasks.updated_at',
+                        'sc_students.id as sc_student_id', 'sc_students.user_id',
+                        'sc_schools.id as sc_school_id', 'sc_schools.name as sc_school_name',
+                        'sc_classes.id as sc_class_id', 'sc_classes.name as sc_class_name',
+                        'users.name as user_name', 'users.nisn')
+                    ->get(), 200);
+            }
+        } else {
+            return response()->json(['message' => 'Not allowed'], 401);
+        }
     }
 
     /**
@@ -164,18 +187,40 @@ class AssessmentTaskController extends Controller
      */
     public function searchDefault($order, $type, $columns)
     {
-        return response()->json(ScAssessmentTask::join('sc_students', 'sc_assessment_tasks.sc_student_id', '=', 'sc_students.id')
-            ->join('users', 'sc_students.user_id', '=', 'users.id')
-            ->join('sc_schools', 'sc_students.sc_school_id', '=', 'sc_schools.id')
-            ->join('sc_classes', 'sc_students.sc_class_id', '=', 'sc_classes.id')
-            ->orderBy($order, $type)
-            ->select(
-                'sc_assessment_tasks.id', 'sc_assessment_tasks.title', 'sc_assessment_tasks.description', 'sc_assessment_tasks.score', 'sc_assessment_tasks.created_at', 'sc_assessment_tasks.updated_at',
-                'sc_students.user_id',
-                'sc_schools.id as sc_school_id', 'sc_schools.name as sc_school_name',
-                'sc_classes.id as sc_class_id', 'sc_classes.name as sc_class_name',
-                'users.name as user_name', 'users.nisn')
-            ->paginate($columns), 200);
+        $role = request()->user()->role;
+        if($role == 'administrator' || $role == 'admin' || $role == 'teacher') {
+            if($role == 'administrator') {
+                return response()->json(ScAssessmentTask::join('sc_students', 'sc_assessment_tasks.sc_student_id', '=', 'sc_students.id')
+                    ->join('users', 'sc_students.user_id', '=', 'users.id')
+                    ->join('sc_schools', 'sc_students.sc_school_id', '=', 'sc_schools.id')
+                    ->join('sc_classes', 'sc_students.sc_class_id', '=', 'sc_classes.id')
+                    ->orderBy($order, $type)
+                    ->select(
+                        'sc_assessment_tasks.id', 'sc_assessment_tasks.title', 'sc_assessment_tasks.description', 'sc_assessment_tasks.score', 'sc_assessment_tasks.created_at', 'sc_assessment_tasks.updated_at',
+                        'sc_students.user_id',
+                        'sc_schools.id as sc_school_id', 'sc_schools.name as sc_school_name',
+                        'sc_classes.id as sc_class_id', 'sc_classes.name as sc_class_name',
+                        'users.name as user_name', 'users.nisn')
+                    ->paginate($columns), 200);
+            }
+            if($role == 'admin' || $role == 'teacher') {
+                return response()->json(ScAssessmentTask::join('sc_students', 'sc_assessment_tasks.sc_student_id', '=', 'sc_students.id')
+                    ->where('sc_students.sc_school_id', '=', request()->user()->sc_school_id)
+                    ->join('users', 'sc_students.user_id', '=', 'users.id')
+                    ->join('sc_schools', 'sc_students.sc_school_id', '=', 'sc_schools.id')
+                    ->join('sc_classes', 'sc_students.sc_class_id', '=', 'sc_classes.id')
+                    ->orderBy($order, $type)
+                    ->select(
+                        'sc_assessment_tasks.id', 'sc_assessment_tasks.title', 'sc_assessment_tasks.description', 'sc_assessment_tasks.score', 'sc_assessment_tasks.created_at', 'sc_assessment_tasks.updated_at',
+                        'sc_students.user_id',
+                        'sc_schools.id as sc_school_id', 'sc_schools.name as sc_school_name',
+                        'sc_classes.id as sc_class_id', 'sc_classes.name as sc_class_name',
+                        'users.name as user_name', 'users.nisn')
+                    ->paginate($columns), 200);
+            }
+        } else {
+            return response()->json(['message' => 'Not allowed'], 401);
+        }
     }
 
     /**
@@ -187,23 +232,50 @@ class AssessmentTaskController extends Controller
     public function searching($order, $type, $search, $paginate)
     {
         /*id schoolname, classname, tit;e, score, nisn*/
-        return response()->json(ScAssessmentTask::join('sc_students', 'sc_assessment_tasks.sc_student_id', '=', 'sc_students.id')
-            ->join('users', 'sc_students.user_id', '=', 'users.id')
-            ->join('sc_schools', 'sc_students.sc_school_id', '=', 'sc_schools.id')
-            ->join('sc_classes', 'sc_students.sc_class_id', '=', 'sc_classes.id')
-            ->orderBy($order, $type)
-            ->where('sc_assessment_tasks.id', 'like', '%' . $search . '%')
-            ->orWhere('sc_schools.name', 'like', '%' . $search . '%')
-            ->orWhere('sc_classes.name', 'like', '%' . $search . '%')
-            ->orWhere('sc_assessment_tasks.title', 'like', '%' . $search . '%')
-            ->orWhere('sc_assessment_tasks.score', 'like', '%' . $search . '%')
-            ->select(
-                'sc_assessment_tasks.id', 'sc_assessment_tasks.title', 'sc_assessment_tasks.description', 'sc_assessment_tasks.score', 'sc_assessment_tasks.created_at', 'sc_assessment_tasks.updated_at',
-                'sc_students.user_id',
-                'sc_schools.id as sc_school_id', 'sc_schools.name as sc_school_name',
-                'sc_classes.id as sc_class_id', 'sc_classes.name as sc_class_name',
-                'users.name as user_name', 'users.nisn')
-            ->paginate($columns), 200);
+        $role = request()->user()->role;
+        if($role == 'administrator' || $role == 'admin' || $role == 'teacher') {
+            if($role == 'administrator') {
+                return response()->json(ScAssessmentTask::join('sc_students', 'sc_assessment_tasks.sc_student_id', '=', 'sc_students.id')
+                    ->join('users', 'sc_students.user_id', '=', 'users.id')
+                    ->join('sc_schools', 'sc_students.sc_school_id', '=', 'sc_schools.id')
+                    ->join('sc_classes', 'sc_students.sc_class_id', '=', 'sc_classes.id')
+                    ->orderBy($order, $type)
+                    ->where('sc_assessment_tasks.id', 'like', '%' . $search . '%')
+                    ->orWhere('sc_schools.name', 'like', '%' . $search . '%')
+                    ->orWhere('sc_classes.name', 'like', '%' . $search . '%')
+                    ->orWhere('sc_assessment_tasks.title', 'like', '%' . $search . '%')
+                    ->orWhere('sc_assessment_tasks.score', 'like', '%' . $search . '%')
+                    ->select(
+                        'sc_assessment_tasks.id', 'sc_assessment_tasks.title', 'sc_assessment_tasks.description', 'sc_assessment_tasks.score', 'sc_assessment_tasks.created_at', 'sc_assessment_tasks.updated_at',
+                        'sc_students.user_id',
+                        'sc_schools.id as sc_school_id', 'sc_schools.name as sc_school_name',
+                        'sc_classes.id as sc_class_id', 'sc_classes.name as sc_class_name',
+                        'users.name as user_name', 'users.nisn')
+                    ->paginate($paginate), 200);
+            }
+            if($role == 'admin' || $role == 'teacher') {
+                return response()->json(ScAssessmentTask::join('sc_students', 'sc_assessment_tasks.sc_student_id', '=', 'sc_students.id')
+                    ->where('sc_students.sc_school_id', '=', request()->user()->sc_school_id)
+                    ->join('users', 'sc_students.user_id', '=', 'users.id')
+                    ->join('sc_schools', 'sc_students.sc_school_id', '=', 'sc_schools.id')
+                    ->join('sc_classes', 'sc_students.sc_class_id', '=', 'sc_classes.id')
+                    ->orderBy($order, $type)
+                    ->where('sc_assessment_tasks.id', 'like', '%' . $search . '%')
+                    ->orWhere('sc_schools.name', 'like', '%' . $search . '%')
+                    ->orWhere('sc_classes.name', 'like', '%' . $search . '%')
+                    ->orWhere('sc_assessment_tasks.title', 'like', '%' . $search . '%')
+                    ->orWhere('sc_assessment_tasks.score', 'like', '%' . $search . '%')
+                    ->select(
+                        'sc_assessment_tasks.id', 'sc_assessment_tasks.title', 'sc_assessment_tasks.description', 'sc_assessment_tasks.score', 'sc_assessment_tasks.created_at', 'sc_assessment_tasks.updated_at',
+                        'sc_students.user_id',
+                        'sc_schools.id as sc_school_id', 'sc_schools.name as sc_school_name',
+                        'sc_classes.id as sc_class_id', 'sc_classes.name as sc_class_name',
+                        'users.name as user_name', 'users.nisn')
+                    ->paginate($paginate), 200);
+            }
+        } else {
+            return response()->json(['message' => 'Not allowed'], 401);
+        }
     }
 
     /**

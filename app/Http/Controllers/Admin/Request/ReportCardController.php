@@ -100,7 +100,6 @@ class ReportCardController extends Controller
         if($validator->fails()){
             return response()->json(['message' => $validator->errors()], 401);
         }else{
-            $ScHomeRoomTeacher = ScHomeRoomTeacher::where('id', $request->sc_home_room_teacher_id)->get('sc_class_id');
             // type
             ScTypeReportCard::create([
                 'id' => $this->random,
@@ -116,68 +115,101 @@ class ReportCardController extends Controller
                 'personality_diligence' => $request->personality_diligence,
                 'personality_neatness' => $request->personality_neatness,
             ]);
-            foreach($ScHomeRoomTeacher as $data) {
-                $ScClass = ScClass::where('id', $data->sc_class_id)->get('sc_school_id');
-                foreach($ScClass as $class) {
-                    $ScSchool = ScSchool::where('id', $class->sc_school_id)->get('type');
-                    foreach($ScSchool as $school) {
-                        if($school->type == 'senior_high_school'){
-                            $validator_senior = Validator::make($request->all(), [
-                                'sc_study_id' => $numeric,
-                                'score' => $numeric,
-                                'kkm_k3' => $numeric,
-                                'kkm_k4' => $numeric,
-                                'k3_ph' => $numeric,
-                                'k3_pts' => $numeric,
-                                'k4_pr' => $numeric,
-                                'status' => 'required|string|min:1|max:191',
-                                'predicate' => 'required|string|min:1|max:191',
-                            ]);
-                            if($validator_senior->fails()){
-                                return response()->json(['message' => $validator_senior->errors()], 401);
-                            }else{
-                                // senior
-                                ScReportCardSenior::create([
-                                    'id' => $this->random,
-                                    'sc_study_id' => $request->sc_study_id,
-                                    'score' => $request->score,
-                                    'kkm_k3' => $request->kkm_k3,
-                                    'kkm_k4' => $request->kkm_k4,
-                                    'k3_ph' => $request->k3_ph,
-                                    'k3_pts' => $request->k3_pts,
-                                    'k4_pr' => $request->k4_pr,
-                                    'status' => $request->status,
-                                    'predicate' => $request->predicate,/*a b*/
-                                ]);
-                                return response()->json(['message' => 'Successfuly create data'], 200);
-                            }
-                        }
-                        if($school->type == 'junior_high_school') {
+            $sc_class_id = ScHomeRoomTeacher::where('id', $request->sc_home_room_teacher_id)->pluck('sc_class_id');
+            $sc_school_id = ScClass::where('id', $sc_class_id[0])->pluck('sc_school_id');
+            $ScSchool = ScSchool::where('id', $sc_school_id[0])->pluck('type');
 
-                        }
-                        if($school->type == 'elementary_school') {
-                            $validator_elementary = Validator::make($request->all(), [
-                                'sc_study_id' => $numeric,
-                                'score' => $numeric,
-                                'kkm' => $numeric,
-                                'status' => 'required|string|min:1|max:191',
-                                'predicate' => 'required|string|min:1|max:191',
-                            ]);
-                            if($validator_elementary->fails()){
-                                return response()->json(['message' => $validator_elementary->errors()], 401);
-                            }else{
-                                ScReportCardElementary::create([
-                                    'id' => $this->random,
-                                    'sc_study_id' => $request->sc_study_id,
-                                    'score' => $request->score,
-                                    'kkm' => $request->kkm,
-                                    'status' => $request->status,
-                                    'predicate' => $request->predicate,
-                                ]);
-                                return response()->json(['message' => 'Successfuly create data'], 200);
-                            }
-                        }
-                    }
+            if($ScSchool[0] == 'senior_high_school'){
+                $validator_senior = Validator::make($request->all(), [
+                    'sc_study_id' => $numeric,
+                    'score' => $numeric,
+                    'kkm_k3' => $numeric,
+                    'kkm_k4' => $numeric,
+                    'k3_ph' => $numeric,
+                    'k3_pts' => $numeric,
+                    'k4_pr' => $numeric,
+                    'status' => 'required|string|min:1|max:191',
+                    'predicate' => 'required|string|min:1|max:191',
+                ]);
+                if($validator_senior->fails()){
+                    return response()->json(['message' => $validator_senior->errors()], 401);
+                }else{
+                    // senior
+                    ScReportCardSenior::create([
+                        'id' => $this->random,
+                        'sc_study_id' => $request->sc_study_id,
+                        'score' => $request->score,
+                        'kkm_k3' => $request->kkm_k3,
+                        'kkm_k4' => $request->kkm_k4,
+                        'k3_ph' => $request->k3_ph,
+                        'k3_pts' => $request->k3_pts,
+                        'k4_pr' => $request->k4_pr,
+                        'status' => $request->status,
+                        'predicate' => $request->predicate,/*a b*/
+                    ]);
+                    return response()->json(['message' => 'Successfuly create data'], 200);
+                }
+            }
+            if($ScSchool[0] == 'junior_high_school') {
+                $validator_senior = Validator::make($request->all(), [
+                    'sc_study_id' => $numeric,
+                    'score' => $numeric,
+                    'kkm_k3' => $numeric,
+                    'kkm_k4' => $numeric,
+                    'k3_ph' => $numeric,
+                    'k3_pts' => $numeric,
+                    'k4_pr' => $numeric,
+                    'status' => 'required|string|min:1|max:191',
+                    'predicate' => 'required|string|min:1|max:191',
+                ]);
+                if($validator_senior->fails()){
+                    return response()->json(['message' => $validator_senior->errors()], 401);
+                }else{
+                    // senior
+                    ScReportCardJunior::create([
+                        'id' => $this->random,
+                        'sc_study_id' => $request->sc_study_id,
+                        'score' => $request->score,
+                        'kkm_k3' => $request->kkm_k3,
+                        'kkm_k4' => $request->kkm_k4,
+                        'k3_ph' => $request->k3_ph,
+                        'k3_pts' => $request->k3_pts,
+                        'k4_pr' => $request->k4_pr,
+                        'status' => $request->status,
+                        'predicate' => $request->predicate,
+                    ]);
+                    return response()->json(['message' => 'Successfuly create data'], 200);
+                }
+            }
+            if($ScSchool[0] == 'elementary_school') {
+                $validator_senior = Validator::make($request->all(), [
+                    'sc_study_id' => $numeric,
+                    'score' => $numeric,
+                    'kkm_k3' => $numeric,
+                    'kkm_k4' => $numeric,
+                    'k3_ph' => $numeric,
+                    'k3_pts' => $numeric,
+                    'k4_pr' => $numeric,
+                    'status' => 'required|string|min:1|max:191',
+                    'predicate' => 'required|string|min:1|max:191',
+                ]);
+                if($validator_senior->fails()){
+                    return response()->json(['message' => $validator_senior->errors()], 401);
+                }else{
+                    // elementary
+                    ScReportCardElementary::create([
+                        'id' => $this->random,
+                        'sc_study_id' => $request->sc_study_id,
+                        'score' => $request->score,
+                        'kkm_k3' => $request->kkm_k3,
+                        'kkm_k4' => $request->kkm_k4,
+                        'k3_ph' => $request->k3_ph,
+                        'k3_pts' => $request->k3_pts,
+                        'k4_pr' => $request->k4_pr,
+                        'status' => $request->status,
+                        'predicate' => $request->predicate
+                    ]);
+                    return response()->json(['message' => 'Successfuly create data'], 200);
                 }
             }
         }
@@ -191,36 +223,72 @@ class ReportCardController extends Controller
      */
     public function show($scTypeReportCard)
     {
-        $ScSchool = ScSchool::where('id', request()->user()->sc_school_id)->get('type');
-        foreach($ScSchool as $school) {
-            if($school->type == 'senior_high_school') {
-                return response()->json(ScTypeReportCard::join('sc_students', 'sc_type_report_cards.sc_student_id', '=', 'sc_students.id')
-                ->join('users', 'sc_students.user_id', '=', 'users.id')
-                ->join('sc_report_card_seniors', 'sc_type_report_cards.id', '=', 'sc_report_card_seniors.id')
-                ->join('sc_studies', 'sc_report_card_seniors.sc_study_id', '=', 'sc_studies.id')
-                ->where('sc_type_report_cards.id', $scTypeReportCard)
-                ->orderBy('id', 'asc')
-                ->select(
-                    'sc_type_report_cards.id', 'sc_type_report_cards.sc_home_room_teacher_id', 'sc_type_report_cards.sc_student_id',
-                    'sc_type_report_cards.type', 'sc_type_report_cards.period', 'sc_type_report_cards.description',
-                    'sc_type_report_cards.absent_broken', 'sc_type_report_cards.absent_permission', 'sc_type_report_cards.absent_without_explanation',
-                    'sc_type_report_cards.personality_behavior', 'sc_type_report_cards.personality_diligence', 'sc_type_report_cards.personality_neatness',
-                    'sc_type_report_cards.created_at', 'sc_type_report_cards.updated_at',
-                    'users.name as student_name', 'users.id as user_id', 'sc_type_report_cards.sc_home_room_teacher_id',
-                    'sc_studies.name as study_name',
-                    'sc_report_card_seniors.id as sc_report_card_senior_id', 'sc_report_card_seniors.score',
-                    'sc_report_card_seniors.kkm_k3', 'sc_report_card_seniors.kkm_k4', 'sc_report_card_seniors.k3_ph',
-                    'sc_report_card_seniors.k3_pts', 'sc_report_card_seniors.k4_pr', 'sc_report_card_seniors.status',
-                    'sc_report_card_seniors.predicate'
-                )
-                ->get(), 200);
-            }
-            if($school->type == 'junior_high_school') {
-
-            }
-            if($school->type == 'elementary_school') {
-                /*ScReportCardElementary = */
-            }
+        $ScSchool = ScSchool::where('id', request()->user()->sc_school_id)->pluck('type');
+        if($ScSchool[0] == 'senior_high_school') {
+            return response()->json(ScTypeReportCard::join('sc_students', 'sc_type_report_cards.sc_student_id', '=', 'sc_students.id')
+            ->join('users', 'sc_students.user_id', '=', 'users.id')
+            ->join('sc_report_card_seniors', 'sc_type_report_cards.id', '=', 'sc_report_card_seniors.id')
+            ->join('sc_studies', 'sc_report_card_seniors.sc_study_id', '=', 'sc_studies.id')
+            ->where('sc_type_report_cards.id', $scTypeReportCard)
+            ->orderBy('id', 'asc')
+            ->select(
+                'sc_type_report_cards.id', 'sc_type_report_cards.sc_home_room_teacher_id', 'sc_type_report_cards.sc_student_id',
+                'sc_type_report_cards.type', 'sc_type_report_cards.period', 'sc_type_report_cards.description',
+                'sc_type_report_cards.absent_broken', 'sc_type_report_cards.absent_permission', 'sc_type_report_cards.absent_without_explanation',
+                'sc_type_report_cards.personality_behavior', 'sc_type_report_cards.personality_diligence', 'sc_type_report_cards.personality_neatness',
+                'sc_type_report_cards.created_at', 'sc_type_report_cards.updated_at',
+                'users.name as student_name', 'users.id as user_id', 'sc_type_report_cards.sc_home_room_teacher_id',
+                'sc_studies.name as study_name',
+                'sc_report_card_seniors.id as sc_report_card_senior_id', 'sc_report_card_seniors.score',
+                'sc_report_card_seniors.kkm_k3', 'sc_report_card_seniors.kkm_k4', 'sc_report_card_seniors.k3_ph',
+                'sc_report_card_seniors.k3_pts', 'sc_report_card_seniors.k4_pr', 'sc_report_card_seniors.status',
+                'sc_report_card_seniors.predicate'
+            )
+            ->get(), 200);
+        }
+        if($ScSchool[0] == 'junior_high_school') {
+            return response()->json(ScTypeReportCard::join('sc_students', 'sc_type_report_cards.sc_student_id', '=', 'sc_students.id')
+            ->join('users', 'sc_students.user_id', '=', 'users.id')
+            ->join('sc_report_card_juniors', 'sc_type_report_cards.id', '=', 'sc_report_card_juniors.id')
+            ->join('sc_studies', 'sc_report_card_juniors.sc_study_id', '=', 'sc_studies.id')
+            ->where('sc_type_report_cards.id', $scTypeReportCard)
+            ->orderBy('id', 'asc')
+            ->select(
+                'sc_type_report_cards.id', 'sc_type_report_cards.sc_home_room_teacher_id', 'sc_type_report_cards.sc_student_id',
+                'sc_type_report_cards.type', 'sc_type_report_cards.period', 'sc_type_report_cards.description',
+                'sc_type_report_cards.absent_broken', 'sc_type_report_cards.absent_permission', 'sc_type_report_cards.absent_without_explanation',
+                'sc_type_report_cards.personality_behavior', 'sc_type_report_cards.personality_diligence', 'sc_type_report_cards.personality_neatness',
+                'sc_type_report_cards.created_at', 'sc_type_report_cards.updated_at',
+                'users.name as student_name', 'users.id as user_id', 'sc_type_report_cards.sc_home_room_teacher_id',
+                'sc_studies.name as study_name',
+                'sc_report_card_juniors.id as sc_report_card_senior_id', 'sc_report_card_juniors.score',
+                'sc_report_card_juniors.kkm_k3', 'sc_report_card_juniors.kkm_k4', 'sc_report_card_juniors.k3_ph',
+                'sc_report_card_juniors.k3_pts', 'sc_report_card_juniors.k4_pr', 'sc_report_card_juniors.status',
+                'sc_report_card_juniors.predicate'
+            )
+            ->get(), 200);
+        }
+        if($ScSchool[0] == 'elementary_school') {
+            return response()->json(ScTypeReportCard::join('sc_students', 'sc_type_report_cards.sc_student_id', '=', 'sc_students.id')
+            ->join('users', 'sc_students.user_id', '=', 'users.id')
+            ->join('sc_report_card_elementaries', 'sc_type_report_cards.id', '=', 'sc_report_card_elementaries.id')
+            ->join('sc_studies', 'sc_report_card_elementaries.sc_study_id', '=', 'sc_studies.id')
+            ->where('sc_type_report_cards.id', $scTypeReportCard)
+            ->orderBy('id', 'asc')
+            ->select(
+                'sc_type_report_cards.id', 'sc_type_report_cards.sc_home_room_teacher_id', 'sc_type_report_cards.sc_student_id',
+                'sc_type_report_cards.type', 'sc_type_report_cards.period', 'sc_type_report_cards.description',
+                'sc_type_report_cards.absent_broken', 'sc_type_report_cards.absent_permission', 'sc_type_report_cards.absent_without_explanation',
+                'sc_type_report_cards.personality_behavior', 'sc_type_report_cards.personality_diligence', 'sc_type_report_cards.personality_neatness',
+                'sc_type_report_cards.created_at', 'sc_type_report_cards.updated_at',
+                'users.name as student_name', 'users.id as user_id', 'sc_type_report_cards.sc_home_room_teacher_id',
+                'sc_studies.name as study_name',
+                'sc_report_card_elementaries.id as sc_report_card_senior_id', 'sc_report_card_elementaries.score',
+                'sc_report_card_elementaries.kkm_k3', 'sc_report_card_elementaries.kkm_k4', 'sc_report_card_elementaries.k3_ph',
+                'sc_report_card_elementaries.k3_pts', 'sc_report_card_elementaries.k4_pr', 'sc_report_card_elementaries.status',
+                'sc_report_card_elementaries.predicate'
+            )
+            ->get(), 200);
         }
     }
 
@@ -233,7 +301,141 @@ class ReportCardController extends Controller
      */
     public function update($scTypeReportCard)
     {
-        //
+        // validation variable
+        $numeric = 'required|numeric';
+        $string_type = 'required|string|min:10|max:20';
+        $string_description = 'required|string|min:10|max:2000';
+
+        $validator = Validator::make($request->all(), [
+            'sc_home_room_teacher_id' => $numeric,
+            'sc_student_id' => $numeric,
+            'type' => $string_type,
+            'description' => $string_description,
+            'period' => 'required|date',
+            'absent_broken' => $numeric,
+            'absent_permission' => $numeric,
+            'absent_without_explanation' => $numeric,
+            'personality_behavior' => $numeric,
+            'personality_diligence' => $numeric,
+            'personality_neatness' => $numeric,
+        ]);
+        if($validator->fails()){
+            return response()->json(['message' => $validator->errors()], 401);
+        }else{
+            // type
+            ScTypeReportCard::where('id', $$scTypeReportCard)->update([
+                'sc_home_room_teacher_id' => $request->sc_home_room_teacher_id,
+                'sc_student_id' => $request->sc_student_id,
+                'type' => $request->type,
+                'period' => $request->period,
+                'description' => $request->description,
+                'absent_broken' => $request->absent_broken,
+                'absent_permission' => $request->absent_permission,
+                'absent_without_explanation' => $request->absent_without_explanation,
+                'personality_behavior' => $request->personality_behavior,
+                'personality_diligence' => $request->personality_diligence,
+                'personality_neatness' => $request->personality_neatness,
+                'updated_at' => $this->timestamp
+            ]);
+            $sc_class_id = ScHomeRoomTeacher::where('id', $request->sc_home_room_teacher_id)->pluck('sc_class_id');
+            $sc_school_id = ScClass::where('id', $sc_class_id[0])->pluck('sc_school_id');
+            $ScSchool = ScSchool::where('id', $sc_school_id[0])->pluck('type');
+
+            if($ScSchool[0] == 'senior_high_school'){
+                $validator_senior = Validator::make($request->all(), [
+                    'sc_study_id' => $numeric,
+                    'score' => $numeric,
+                    'kkm_k3' => $numeric,
+                    'kkm_k4' => $numeric,
+                    'k3_ph' => $numeric,
+                    'k3_pts' => $numeric,
+                    'k4_pr' => $numeric,
+                    'status' => 'required|string|min:1|max:191',
+                    'predicate' => 'required|string|min:1|max:191',
+                ]);
+                if($validator_senior->fails()){
+                    return response()->json(['message' => $validator_senior->errors()], 401);
+                }else{
+                    // senior
+                    ScReportCardSenior::where('id', $$scTypeReportCard)->update([
+                        'sc_study_id' => $request->sc_study_id,
+                        'score' => $request->score,
+                        'kkm_k3' => $request->kkm_k3,
+                        'kkm_k4' => $request->kkm_k4,
+                        'k3_ph' => $request->k3_ph,
+                        'k3_pts' => $request->k3_pts,
+                        'k4_pr' => $request->k4_pr,
+                        'status' => $request->status,
+                        'predicate' => $request->predicate,/*a b*/
+                        'updated_at' => $this->timestamp
+                    ]);
+                    return response()->json(['message' => 'Successfuly create data'], 200);
+                }
+            }
+            if($ScSchool[0] == 'junior_high_school') {
+                $validator_senior = Validator::make($request->all(), [
+                    'sc_study_id' => $numeric,
+                    'score' => $numeric,
+                    'kkm_k3' => $numeric,
+                    'kkm_k4' => $numeric,
+                    'k3_ph' => $numeric,
+                    'k3_pts' => $numeric,
+                    'k4_pr' => $numeric,
+                    'status' => 'required|string|min:1|max:191',
+                    'predicate' => 'required|string|min:1|max:191',
+                ]);
+                if($validator_senior->fails()){
+                    return response()->json(['message' => $validator_senior->errors()], 401);
+                }else{
+                    // senior
+                    ScReportCardJunior::where('id', $$scTypeReportCard)->update([
+                        'id' => $this->random,
+                        'sc_study_id' => $request->sc_study_id,
+                        'score' => $request->score,
+                        'kkm_k3' => $request->kkm_k3,
+                        'kkm_k4' => $request->kkm_k4,
+                        'k3_ph' => $request->k3_ph,
+                        'k3_pts' => $request->k3_pts,
+                        'k4_pr' => $request->k4_pr,
+                        'status' => $request->status,
+                        'predicate' => $request->predicate,
+                        'updated_at' => $this->timestamp
+                    ]);
+                    return response()->json(['message' => 'Successfuly create data'], 200);
+                }
+            }
+            if($ScSchool[0] == 'elementary_school') {
+                $validator_senior = Validator::make($request->all(), [
+                    'sc_study_id' => $numeric,
+                    'score' => $numeric,
+                    'kkm_k3' => $numeric,
+                    'kkm_k4' => $numeric,
+                    'k3_ph' => $numeric,
+                    'k3_pts' => $numeric,
+                    'k4_pr' => $numeric,
+                    'status' => 'required|string|min:1|max:191',
+                    'predicate' => 'required|string|min:1|max:191',
+                ]);
+                if($validator_senior->fails()){
+                    return response()->json(['message' => $validator_senior->errors()], 401);
+                }else{
+                    // elementary
+                    ScReportCardElementary::where('id', $$scTypeReportCard)->update([
+                        'sc_study_id' => $request->sc_study_id,
+                        'score' => $request->score,
+                        'kkm_k3' => $request->kkm_k3,
+                        'kkm_k4' => $request->kkm_k4,
+                        'k3_ph' => $request->k3_ph,
+                        'k3_pts' => $request->k3_pts,
+                        'k4_pr' => $request->k4_pr,
+                        'status' => $request->status,
+                        'predicate' => $request->predicate,
+                        'updated_at' => $this->timestamp
+                    ]);
+                    return response()->json(['message' => 'Successfuly create data'], 200);
+                }
+            }
+        }
     }
 
     /**
@@ -245,19 +447,17 @@ class ReportCardController extends Controller
     public function destroy($scTypeReportCard)
     {
         ScTypeReportCard::where('id', $scTypeReportCard)->delete();
-        $ScSchool = ScSchool::where('id', request()->user()->sc_school_id)->get('type');
-        foreach($ScSchool as $school) {
-            if($school->type == 'senior_high_school') {
-                ScReportCardSenior::where('id', $scTypeReportCard)->delete();
-            }
-            if($school->type == 'junior_high_school') {
-                ScReportCardJunior::where('id', $scTypeReportCard)->delete();
-            }
-            if($school->type == 'elementary_school') {
-                ScReportCardElementary::where('id', $scTypeReportCard)->delete();
-            }
-            ScReportCardExtraCurricular::where('sc_type_report_card_id', $scTypeReportCard)->delete();
+        $ScSchool = ScSchool::where('id', request()->user()->sc_school_id)->pluck('type');
+        if($ScSchool[0] == 'senior_high_school') {
+            ScReportCardSenior::where('id', $scTypeReportCard)->delete();
         }
+        if($ScSchool[0] == 'junior_high_school') {
+            ScReportCardJunior::where('id', $scTypeReportCard)->delete();
+        }
+        if($ScSchool[0] == 'elementary_school') {
+            ScReportCardElementary::where('id', $scTypeReportCard)->delete();
+        }
+        ScReportCardExtraCurricular::where('sc_type_report_card_id', $scTypeReportCard)->delete();
         return response()->json(['message' => 'Successfuly delete data'], 200);
     }
     ////////////////////////////////end resources////////////////////////////////
@@ -271,30 +471,52 @@ class ReportCardController extends Controller
     public function searchDefault($order, $type, $columns)
     {
         /*ScTypeReportCard = id, sc_student_id, student_name, sc_home_room_teacher_id*/
-        $ScSchool = ScSchool::where('id', request()->user()->sc_school_id)->get('type');
-        foreach($ScSchool as $school) {
-            if($school->type == 'senior_high_school') {
-                /*ScReportCardSenior = study_name, score, status, predicate*/
-                return response()->json(ScTypeReportCard::join('sc_students', 'sc_type_report_cards.sc_student_id', '=', 'sc_students.id')
-                ->join('users', 'sc_students.user_id', '=', 'users.id')
-                ->join('sc_report_card_seniors', 'sc_type_report_cards.id', '=', 'sc_report_card_seniors.id')
-                ->join('sc_studies', 'sc_report_card_seniors.sc_study_id', '=', 'sc_studies.id')
-                ->orderBy($order, $type)
-                ->select(
-                    'sc_type_report_cards.id', 'sc_type_report_cards.sc_home_room_teacher_id', 'sc_type_report_cards.sc_student_id',
-                    'sc_type_report_cards.created_at', 'sc_type_report_cards.updated_at',
-                    'users.name as student_name', 'users.id as user_id', 'sc_type_report_cards.sc_home_room_teacher_id as home_room_teacher_id',
-                    'sc_report_card_seniors.id as sc_report_card_senior_id', 'sc_report_card_seniors.score', 'sc_report_card_seniors.status', 'sc_report_card_seniors.predicate',
-                    'sc_studies.name as study_name'
-                )
-                ->paginate($columns), 200);
-            }
-            if($school->type == 'junior_high_school') {
-
-            }
-            if($school->type == 'elementary_school') {
-                /*ScReportCardElementary = */
-            }
+        $ScSchool = ScSchool::where('id', request()->user()->sc_school_id)->pluck('type');
+        if($ScSchool[0] == 'senior_high_school') {
+            /*ScReportCardSenior = study_name, score, status, predicate*/
+            return response()->json(ScTypeReportCard::join('sc_students', 'sc_type_report_cards.sc_student_id', '=', 'sc_students.id')
+            ->join('users', 'sc_students.user_id', '=', 'users.id')
+            ->join('sc_report_card_seniors', 'sc_type_report_cards.id', '=', 'sc_report_card_seniors.id')
+            ->join('sc_studies', 'sc_report_card_seniors.sc_study_id', '=', 'sc_studies.id')
+            ->orderBy($order, $type)
+            ->select(
+                'sc_type_report_cards.id', 'sc_type_report_cards.sc_home_room_teacher_id', 'sc_type_report_cards.sc_student_id',
+                'sc_type_report_cards.created_at', 'sc_type_report_cards.updated_at',
+                'users.name as student_name', 'users.id as user_id', 'sc_type_report_cards.sc_home_room_teacher_id as home_room_teacher_id',
+                'sc_report_card_seniors.id as sc_report_card_senior_id', 'sc_report_card_seniors.score', 'sc_report_card_seniors.status', 'sc_report_card_seniors.predicate',
+                'sc_studies.name as study_name'
+            )
+            ->paginate($columns), 200);
+        }
+        if($ScSchool[0] == 'junior_high_school') {
+            return response()->json(ScTypeReportCard::join('sc_students', 'sc_type_report_cards.sc_student_id', '=', 'sc_students.id')
+            ->join('users', 'sc_students.user_id', '=', 'users.id')
+            ->join('sc_report_card_juniors', 'sc_type_report_cards.id', '=', 'sc_report_card_juniors.id')
+            ->join('sc_studies', 'sc_report_card_juniors.sc_study_id', '=', 'sc_studies.id')
+            ->orderBy($order, $type)
+            ->select(
+                'sc_type_report_cards.id', 'sc_type_report_cards.sc_home_room_teacher_id', 'sc_type_report_cards.sc_student_id',
+                'sc_type_report_cards.created_at', 'sc_type_report_cards.updated_at',
+                'users.name as student_name', 'users.id as user_id', 'sc_type_report_cards.sc_home_room_teacher_id as home_room_teacher_id',
+                'sc_report_card_juniors.id as sc_report_card_senior_id', 'sc_report_card_juniors.score', 'sc_report_card_juniors.status', 'sc_report_card_juniors.predicate',
+                'sc_studies.name as study_name'
+            )
+            ->paginate($columns), 200);
+        }
+        if($ScSchool[0] == 'elementary_school') {
+            return response()->json(ScTypeReportCard::join('sc_students', 'sc_type_report_cards.sc_student_id', '=', 'sc_students.id')
+            ->join('users', 'sc_students.user_id', '=', 'users.id')
+            ->join('sc_report_card_elementaries', 'sc_type_report_cards.id', '=', 'sc_report_card_elementaries.id')
+            ->join('sc_studies', 'sc_report_card_elementaries.sc_study_id', '=', 'sc_studies.id')
+            ->orderBy($order, $type)
+            ->select(
+                'sc_type_report_cards.id', 'sc_type_report_cards.sc_home_room_teacher_id', 'sc_type_report_cards.sc_student_id',
+                'sc_type_report_cards.created_at', 'sc_type_report_cards.updated_at',
+                'users.name as student_name', 'users.id as user_id', 'sc_type_report_cards.sc_home_room_teacher_id as home_room_teacher_id',
+                'sc_report_card_elementaries.id as sc_report_card_senior_id', 'sc_report_card_elementaries.score', 'sc_report_card_elementaries.status', 'sc_report_card_elementaries.predicate',
+                'sc_studies.name as study_name'
+            )
+            ->paginate($columns), 200);
         }
     }
 
@@ -307,7 +529,7 @@ class ReportCardController extends Controller
     public function searching($order, $type, $search, $paginate)
     {
         /*ScTypeReportCard = id, student_name*/
-        $ScSchool = ScSchool::where('id', request(t)->user()->sc_school_id)->get('type');
+        $ScSchool = ScSchool::where('id', request()->user()->sc_school_id)->get('type');
         foreach($ScSchool as $school) {
             if($school->type == 'senior_high_school') {
                 /*ScReportCardSenior = study_name, score, status, predicate*/
@@ -332,10 +554,46 @@ class ReportCardController extends Controller
                 ->paginate($paginate), 200);
             }
             if($school->type == 'junior_high_school') {
-
+                return response()->json(ScTypeReportCard::join('sc_students', 'sc_type_report_cards.sc_student_id', '=', 'sc_students.id')
+                ->join('users', 'sc_students.user_id', '=', 'users.id')
+                ->join('sc_report_card_juniors', 'sc_type_report_cards.id', '=', 'sc_report_card_juniors.id')
+                ->join('sc_studies', 'sc_report_card_juniors.sc_study_id', '=', 'sc_studies.id')
+                ->where('sc_type_report_cards.id', 'like', '%' . $search . '%')
+                ->orWhere('users.name', 'like', '%' . $search . '%')
+                ->orWhere('sc_studies.name', 'like', '%' . $search . '%')
+                ->orWhere('sc_report_card_juniors.score', 'like', '%' . $search . '%')
+                ->orWhere('sc_report_card_juniors.status', 'like', '%' . $search . '%')
+                ->orWhere('sc_report_card_juniors.predicate', 'like', '%' . $search . '%')
+                ->orderBy($order, $type)
+                ->select(
+                    'sc_type_report_cards.id', 'sc_type_report_cards.sc_home_room_teacher_id', 'sc_type_report_cards.sc_student_id',
+                    'sc_type_report_cards.created_at', 'sc_type_report_cards.updated_at',
+                    'users.name as student_name', 'users.id as user_id', 'sc_type_report_cards.sc_home_room_teacher_id',
+                    'sc_report_card_juniors.id as sc_report_card_senior_id', 'sc_report_card_juniors.score', 'sc_report_card_juniors.status', 'sc_report_card_juniors.predicate',
+                    'sc_studies.name as study_name'
+                )
+                ->paginate($paginate), 200);
             }
             if($school->type == 'elementary_school') {
-                /*ScReportCardElementary = */
+                return response()->json(ScTypeReportCard::join('sc_students', 'sc_type_report_cards.sc_student_id', '=', 'sc_students.id')
+                ->join('users', 'sc_students.user_id', '=', 'users.id')
+                ->join('sc_report_card_elementaries', 'sc_type_report_cards.id', '=', 'sc_report_card_elementaries.id')
+                ->join('sc_studies', 'sc_report_card_elementaries.sc_study_id', '=', 'sc_studies.id')
+                ->where('sc_type_report_cards.id', 'like', '%' . $search . '%')
+                ->orWhere('users.name', 'like', '%' . $search . '%')
+                ->orWhere('sc_studies.name', 'like', '%' . $search . '%')
+                ->orWhere('sc_report_card_elementaries.score', 'like', '%' . $search . '%')
+                ->orWhere('sc_report_card_elementaries.status', 'like', '%' . $search . '%')
+                ->orWhere('sc_report_card_elementaries.predicate', 'like', '%' . $search . '%')
+                ->orderBy($order, $type)
+                ->select(
+                    'sc_type_report_cards.id', 'sc_type_report_cards.sc_home_room_teacher_id', 'sc_type_report_cards.sc_student_id',
+                    'sc_type_report_cards.created_at', 'sc_type_report_cards.updated_at',
+                    'users.name as student_name', 'users.id as user_id', 'sc_type_report_cards.sc_home_room_teacher_id',
+                    'sc_report_card_elementaries.id as sc_report_card_senior_id', 'sc_report_card_elementaries.score', 'sc_report_card_elementaries.status', 'sc_report_card_elementaries.predicate',
+                    'sc_studies.name as study_name'
+                )
+                ->paginate($paginate), 200);
             }
         }
     }

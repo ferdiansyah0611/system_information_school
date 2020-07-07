@@ -164,18 +164,38 @@ class HomeRoomTeacherController extends Controller
     public function searchDefault($order, $type, $columns)
     {
         /*school name, classname, username, start_period end_period*/
-        return response()->json(ScHomeRoomTeacher::join('sc_teachers', 'sc_home_room_teachers.sc_teacher_id', '=', 'sc_teachers.id')
-            ->join('sc_schools', 'sc_teachers.sc_school_id', '=', 'sc_schools.id')
-            ->join('sc_classes', 'sc_home_room_teachers.sc_class_id', '=', 'sc_classes.id')
-            ->join('users', 'sc_teachers.user_id', '=', 'users.id')
-            ->orderBy($order, $type)
-            ->select(
-                'sc_home_room_teachers.id', 'sc_home_room_teachers.sc_teacher_id', 'sc_home_room_teachers.sc_class_id', 'sc_home_room_teachers.start_period',
-                'sc_home_room_teachers.end_period', 'sc_home_room_teachers.created_at', 'sc_home_room_teachers.updated_at',
-                'sc_schools.name as sc_school_name',
-                'sc_classes.name as sc_class_name',
-                'users.name as user_name', 'users.id as user_id', 'users.nisn')
-            ->paginate($columns), 200);
+        $role = request()->user()->role;
+        if($role == 'administrator' || $role == 'admin' || $role == 'teacher') {
+            if($role == 'administrator') {
+                return response()->json(ScHomeRoomTeacher::join('sc_teachers', 'sc_home_room_teachers.sc_teacher_id', '=', 'sc_teachers.id')
+                    ->join('sc_schools', 'sc_teachers.sc_school_id', '=', 'sc_schools.id')
+                    ->join('sc_classes', 'sc_home_room_teachers.sc_class_id', '=', 'sc_classes.id')
+                    ->join('users', 'sc_teachers.user_id', '=', 'users.id')
+                    ->orderBy($order, $type)
+                    ->select(
+                        'sc_home_room_teachers.id', 'sc_home_room_teachers.sc_teacher_id', 'sc_home_room_teachers.sc_class_id', 'sc_home_room_teachers.start_period',
+                        'sc_home_room_teachers.end_period', 'sc_home_room_teachers.created_at', 'sc_home_room_teachers.updated_at',
+                        'sc_schools.name as sc_school_name',
+                        'sc_classes.name as sc_class_name',
+                        'users.name as user_name', 'users.id as user_id', 'users.nisn')
+                    ->paginate($columns), 200);
+            }
+            if($role == 'admin' || $role == 'teacher') {
+                return response()->json(ScHomeRoomTeacher::join('sc_teachers', 'sc_home_room_teachers.sc_teacher_id', '=', 'sc_teachers.id')
+                    ->where('sc_teachers.sc_school_id', request()->user()->sc_school_id)
+                    ->join('sc_schools', 'sc_teachers.sc_school_id', '=', 'sc_schools.id')
+                    ->join('sc_classes', 'sc_home_room_teachers.sc_class_id', '=', 'sc_classes.id')
+                    ->join('users', 'sc_teachers.user_id', '=', 'users.id')
+                    ->orderBy($order, $type)
+                    ->select(
+                        'sc_home_room_teachers.id', 'sc_home_room_teachers.sc_teacher_id', 'sc_home_room_teachers.sc_class_id', 'sc_home_room_teachers.start_period',
+                        'sc_home_room_teachers.end_period', 'sc_home_room_teachers.created_at', 'sc_home_room_teachers.updated_at',
+                        'sc_schools.name as sc_school_name',
+                        'sc_classes.name as sc_class_name',
+                        'users.name as user_name', 'users.id as user_id', 'users.nisn')
+                    ->paginate($columns), 200);
+            }
+        }
     }
 
     /**
@@ -186,24 +206,50 @@ class HomeRoomTeacherController extends Controller
      */
     public function searching($order, $type, $search, $paginate)
     {
-        return response()->json(ScHomeRoomTeacher::join('sc_teachers', 'sc_home_room_teachers.sc_teacher_id', '=', 'sc_teachers.id')
-            ->join('sc_schools', 'sc_teachers.sc_school_id', '=', 'sc_schools.id')
-            ->join('sc_classes', 'sc_home_room_teachers.sc_class_id', '=', 'sc_classes.id')
-            ->join('users', 'sc_teachers.user_id', '=', 'users.id')
-            ->where('sc_home_room_teachers.id', 'like', '%' . $search . '%')
-            ->orWhere('sc_home_room_teachers.start_period', 'like', '%' . $search . '%')
-            ->orWhere('sc_home_room_teachers.end_period', 'like', '%' . $search . '%')
-            ->orWhere('sc_schools.name', 'like', '%' . $search . '%')
-            ->orWhere('sc_classes.name', 'like', '%' . $search . '%')
-            ->orWhere('users.name', 'like', '%' . $search . '%')
-            ->orderBy($order, $type)
-            ->select(
-                'sc_home_room_teachers.id', 'sc_home_room_teachers.sc_teacher_id', 'sc_home_room_teachers.sc_class_id', 'sc_home_room_teachers.start_period',
-                'sc_home_room_teachers.end_period', 'sc_home_room_teachers.created_at', 'sc_home_room_teachers.updated_at',
-                'sc_schools.name as sc_school_name',
-                'sc_classes.name as sc_class_name',
-                'users.name as user_name', 'users.id as user_id', 'users.nisn')
-            ->paginate($columns), 200);
+        $role = request()->user()->role;
+        if($role == 'administrator' || $role == 'admin' || $role == 'teacher') {
+            if($role == 'administrator') {
+                return response()->json(ScHomeRoomTeacher::join('sc_teachers', 'sc_home_room_teachers.sc_teacher_id', '=', 'sc_teachers.id')
+                    ->join('sc_schools', 'sc_teachers.sc_school_id', '=', 'sc_schools.id')
+                    ->join('sc_classes', 'sc_home_room_teachers.sc_class_id', '=', 'sc_classes.id')
+                    ->join('users', 'sc_teachers.user_id', '=', 'users.id')
+                    ->where('sc_home_room_teachers.id', 'like', '%' . $search . '%')
+                    ->orWhere('sc_home_room_teachers.start_period', 'like', '%' . $search . '%')
+                    ->orWhere('sc_home_room_teachers.end_period', 'like', '%' . $search . '%')
+                    ->orWhere('sc_schools.name', 'like', '%' . $search . '%')
+                    ->orWhere('sc_classes.name', 'like', '%' . $search . '%')
+                    ->orWhere('users.name', 'like', '%' . $search . '%')
+                    ->orderBy($order, $type)
+                    ->select(
+                        'sc_home_room_teachers.id', 'sc_home_room_teachers.sc_teacher_id', 'sc_home_room_teachers.sc_class_id', 'sc_home_room_teachers.start_period',
+                        'sc_home_room_teachers.end_period', 'sc_home_room_teachers.created_at', 'sc_home_room_teachers.updated_at',
+                        'sc_schools.name as sc_school_name',
+                        'sc_classes.name as sc_class_name',
+                        'users.name as user_name', 'users.id as user_id', 'users.nisn')
+                    ->paginate($paginate), 200);
+            }
+            if($role == 'admin' || $role == 'teacher') {
+                return response()->json(ScHomeRoomTeacher::join('sc_teachers', 'sc_home_room_teachers.sc_teacher_id', '=', 'sc_teachers.id')
+                    ->where('sc_teachers.sc_school_id', request()->user()->sc_school_id)
+                    ->join('sc_schools', 'sc_teachers.sc_school_id', '=', 'sc_schools.id')
+                    ->join('sc_classes', 'sc_home_room_teachers.sc_class_id', '=', 'sc_classes.id')
+                    ->join('users', 'sc_teachers.user_id', '=', 'users.id')
+                    ->where('sc_home_room_teachers.id', 'like', '%' . $search . '%')
+                    ->orWhere('sc_home_room_teachers.start_period', 'like', '%' . $search . '%')
+                    ->orWhere('sc_home_room_teachers.end_period', 'like', '%' . $search . '%')
+                    ->orWhere('sc_schools.name', 'like', '%' . $search . '%')
+                    ->orWhere('sc_classes.name', 'like', '%' . $search . '%')
+                    ->orWhere('users.name', 'like', '%' . $search . '%')
+                    ->orderBy($order, $type)
+                    ->select(
+                        'sc_home_room_teachers.id', 'sc_home_room_teachers.sc_teacher_id', 'sc_home_room_teachers.sc_class_id', 'sc_home_room_teachers.start_period',
+                        'sc_home_room_teachers.end_period', 'sc_home_room_teachers.created_at', 'sc_home_room_teachers.updated_at',
+                        'sc_schools.name as sc_school_name',
+                        'sc_classes.name as sc_class_name',
+                        'users.name as user_name', 'users.id as user_id', 'users.nisn')
+                    ->paginate($paginate), 200);
+            }
+        }
     }
 
     /**
