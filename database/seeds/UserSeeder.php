@@ -15,7 +15,7 @@ class UserSeeder extends Seeder
         	'id' => '2',
         	'sc_school_id' => '1',
         	'name' => 'Ferdiansyah',
-        	'email' => 'ferdif99967@gmail.com',
+        	'email' => 'anonymous@gmail.com',
         	'nisn' => '3478375929',
         	'password' => bcrypt('password'),
         	'role' => 'admin',
