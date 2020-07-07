@@ -36,6 +36,7 @@ import SideLeftTemplate from '../../template/one/SideLeft';
 /*export*/
 export default {
     beforeMount() {
+        document.title = 'Welcome';
         var _parse = JSON.parse(window.localStorage.getItem('users'));
         this.$store.commit('UsersData', _parse);
         axios({

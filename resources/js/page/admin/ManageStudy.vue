@@ -283,26 +283,43 @@ export default {
     },
     methods: {
         /*Error page with refresh*/
-    	async serverErrorPage(error, message){
-    		console.error(error);
-    		Swal.fire('Error!', message + '. Please wait for the page to resfresh automatically', 'error');
-    		setTimeout(function(){
-    			window.location.reload();
-    		}, 5000);
-    	},
+        async serverErrorPage(error, message){
+            console.error(error);
+            Swal.fire({
+                title: 'Error!',
+                text: message + '. Please wait for the page to resfresh automatically',
+                icon: 'error',
+                timer: 1500
+            });
+            setTimeout(function(){
+                document.body.style.paddingRight = '0';
+            }, 1550);
+        },
         /*display error*/
-    	async Error(error, message){
-    		console.error(error);
-    		Swal.fire('Error!', message, 'error');
-    	},
+        async Error(error, message){
+            console.error(error);
+            Swal.fire({
+                title: 'Error!',
+                text: message,
+                icon: 'error',
+                timer: 1500
+            });
+            setTimeout(function(){
+                document.body.style.paddingRight = '0';
+            }, 1550);
+        },
         /*display success*/
-    	async RequestSuccess(message){
-    		Swal.fire('Success!', message, 'success');
-    		setTimeout(function(){
-            document.body.style.paddingRight = '0';
-
-    		}, 5000);
-    	},
+        async RequestSuccess(message){
+            Swal.fire({
+                title: 'Success!',
+                text: message,
+                icon: 'success',
+                timer: 1500
+            });
+            setTimeout(function(){
+                document.body.style.paddingRight = '0';
+            }, 1550);
+        },
         /*default for table*/
         async appSchool(paginate = 1) {
             var data = this.table.searching;
@@ -552,7 +569,15 @@ export default {
                         this.Error(error, error.message);
                     });
                 } else if (result.dismiss === Swal.DismissReason.cancel) {
-                    Swal.fire('Cancelled', 'Your data is safe', 'error')
+                    Swal.fire({
+                        title: 'Cancelled!',
+                        text: 'Your data is safe',
+                        icon: 'error',
+                        timer: 1500
+                    });
+                    setTimeout(function(){
+                        document.body.style.paddingRight = '0';
+                    }, 1550);
                 }
             });
         },

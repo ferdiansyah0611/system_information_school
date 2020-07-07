@@ -118,58 +118,58 @@
                     </div>
                     <div class="modal-body">
                         <div class="form-group col-sm-12 col-md-6 float-left">
-                            <label for="user_id_add">User ID</label>
-                            <input type="text" class="form-control" id="user_id_add" required v-model="addStudent.user_id">
+                            <label for="user00-add">User ID</label>
+                            <input type="number" class="form-control" id="user00-add" required v-model="addStudent.user_id" required>
                         </div>
                         <div class="form-group col-sm-12 col-md-6 float-left">
-                            <label for="sc_school_id_add">School</label>
-                            <select class="custom-select" id="sc_school_id_add" required v-model="addStudent.sc_school_id">
+                            <label for="school00-add">School</label>
+                            <select class="custom-select" id="school00-add" required v-model="addStudent.sc_school_id" required>
                                 <option v-for="data in school" :key="data.id" :value="data.id">{{data.name}}</option>
                             </select>
                         </div>
                         <div class="form-group col-sm-12 col-md-6 float-left">
-                            <label for="sc_class_id_add">Class</label>
-                            <input type="text" class="form-control" id="sc_class_id_add" required v-model="addStudent.sc_class_id">
+                            <label for="class00-add">Class</label>
+                            <input type="number" class="form-control" id="class00-add" required v-model="addStudent.sc_class_id" required>
                         </div>
                         <div class="form-group col-sm-12 col-md-6 float-left">
-                            <label for="nisn_add">NISN</label>
-                            <input type="text" class="form-control" id="nisn_add" required v-model="addStudent.nisn">
+                            <label for="nisn-add">NISN</label>
+                            <input type="number" class="form-control" id="nisn-add" required v-model="addStudent.nisn" required>
                         </div>
                         <div class="form-group col-sm-12 col-md-6 float-left">
-                            <label for="phone_add">Phone</label>
-                            <input type="text" class="form-control" id="phone_add" required v-model="addStudent.phone">
+                            <label for="phone-add">Phone</label>
+                            <input type="number" class="form-control" id="phone-add" required v-model="addStudent.phone" required>
                         </div>
                         <div class="form-group col-sm-12 col-md-6 float-left">
-                            <label for="father_add">Father</label>
-                            <input type="text" class="form-control" id="father_add" required v-model="addStudent.father">
+                            <label for="father-add">Father</label>
+                            <input type="text" class="form-control" id="father-add" required v-model="addStudent.father" required>
                         </div>
                         <div class="form-group col-sm-12 col-md-6 float-left">
-                            <label for="mother_add">Mother</label>
-                            <input type="text" class="form-control" id="mother_add" required v-model="addStudent.mother">
+                            <label for="mother-add">Mother</label>
+                            <input type="text" class="form-control" id="mother-add" required v-model="addStudent.mother" required>
                         </div>
                         <div class="form-group col-sm-12 col-md-6 float-left">
-                            <label for="add_work_father">Work Father</label>
-                            <input type="text" class="form-control" id="add_work_father" required v-model="addStudent.work_father">
+                            <label for="work-father-add">Work Father</label>
+                            <input type="text" class="form-control" id="work-father-add" required v-model="addStudent.work_father" required>
                         </div>
                         <div class="form-group col-sm-12 col-md-6 float-left">
-                            <label for="add_work_mother">Work Mother</label>
-                            <input type="text" class="form-control" id="add_work_mother" required v-model="addStudent.work_mother">
+                            <label for="work-mother-add">Work Mother</label>
+                            <input type="text" class="form-control" id="work-mother-add" required v-model="addStudent.work_mother" required>
                         </div>
                         <div class="form-group col-sm-12 col-md-6 float-left">
-                            <label for="phone_father_add">Phone Father</label>
-                            <input type="text" class="form-control" id="phone_father_add" required v-model="addStudent.phone_father">
+                            <label for="phone-father-add">Phone Father</label>
+                            <input type="number" class="form-control" id="phone-father-add" required v-model="addStudent.phone_father" required>
                         </div>
                         <div class="form-group col-sm-12 col-md-6 float-left">
-                            <label for="phone_mother_add">Phone Mother</label>
-                            <input type="text" class="form-control" id="phone_mother_add" required v-model="addStudent.phone_mother">
+                            <label for="phone-mother-add">Phone Mother</label>
+                            <input type="number" class="form-control" id="phone-mother-add" required v-model="addStudent.phone_mother" required>
                         </div>
                         <div class="form-group col-sm-12 col-md-6 float-left">
-                            <label for="generation_add">Generation</label>
-                            <input type="text" class="form-control" id="generation_add" required v-model="addStudent.generation">
+                            <label for="generation-add">Generation</label>
+                            <input type="text" class="form-control" id="generation-add" required v-model="addStudent.generation" required>
                         </div>
                         <div class="form-group col-sm-12 col-md-6 float-left">
-                            <label for="avatars">Avatars</label>
-                            <input type="file" class="form-control" id="avatars" ref="file" v-on:change="changeFile()">
+                            <label for="avatars-add">Avatars</label>
+                            <input type="file" class="form-control" id="avatars-add" ref="file" v-on:change="changeFile()" accept=".png,.jpg,.jpeg">
                         </div>
                     </div>
                     <div class="modal-footer">
@@ -194,26 +194,26 @@
                             <img :src="'/storage/image/' + editStudent.avatar" height="200px" class="img-thumbnail">
                         </div>
                         <div class="form-group col-sm-12 col-md-6 float-left">
-                            <label for="user_id">User ID</label>
-                            <input type="text" class="form-control" id="user_id" required v-model="editStudent.user_id">
+                            <label for="user00">User ID</label>
+                            <input type="number" class="form-control" id="user00" required v-model="editStudent.user_id">
                         </div>
                         <div class="form-group col-sm-12 col-md-6 float-left">
-                            <label for="sc_school_id">School</label>
-                            <select class="custom-select" id="sc_school_id" required v-model="editStudent.sc_school_id">
+                            <label for="school00">School</label>
+                            <select class="custom-select" id="school00" required v-model="editStudent.sc_school_id">
                                 <option v-for="data in school" :key="data.id" :value="data.id">{{data.name}}</option>
                             </select>
                         </div>
                         <div class="form-group col-sm-12 col-md-6 float-left">
-                            <label for="sc_class_id">Class</label>
-                            <input type="text" class="form-control" id="sc_class_id" required v-model="editStudent.sc_class_id">
+                            <label for="class00">Class</label>
+                            <input type="number" class="form-control" id="class00" required v-model="editStudent.sc_class_id">
                         </div>
                         <div class="form-group col-sm-12 col-md-6 float-left">
                             <label for="nisn">NISN</label>
-                            <input type="text" class="form-control" id="nisn" required v-model="editStudent.nisn">
+                            <input type="number" class="form-control" id="nisn" required v-model="editStudent.nisn">
                         </div>
                         <div class="form-group col-sm-12 col-md-6 float-left">
                             <label for="phone">Phone</label>
-                            <input type="text" class="form-control" id="phone" required v-model="editStudent.phone">
+                            <input type="number" class="form-control" id="phone" required v-model="editStudent.phone">
                         </div>
                         <div class="form-group col-sm-12 col-md-6 float-left">
                             <label for="father">Father</label>
@@ -224,20 +224,20 @@
                             <input type="text" class="form-control" id="mother" required v-model="editStudent.mother">
                         </div>
                         <div class="form-group col-sm-12 col-md-6 float-left">
-                            <label for="work_father">Work Father</label>
-                            <input type="text" class="form-control" id="work_father" required v-model="editStudent.work_father">
+                            <label for="work-father">Work Father</label>
+                            <input type="text" class="form-control" id="work-father" required v-model="editStudent.work_father">
                         </div>
                         <div class="form-group col-sm-12 col-md-6 float-left">
-                            <label for="work_mother">Work Mother</label>
-                            <input type="text" class="form-control" id="work_mother" required v-model="editStudent.work_mother">
+                            <label for="work-mother">Work Mother</label>
+                            <input type="text" class="form-control" id="work-mother" required v-model="editStudent.work_mother">
                         </div>
                         <div class="form-group col-sm-12 col-md-6 float-left">
-                            <label for="phone_father">Phone Father</label>
-                            <input type="text" class="form-control" id="phone_father" required v-model="editStudent.phone_father">
+                            <label for="phone-father">Phone Father</label>
+                            <input type="number" class="form-control" id="phone-father" required v-model="editStudent.phone_father">
                         </div>
                         <div class="form-group col-sm-12 col-md-6 float-left">
-                            <label for="phone_mother">Phone Mother</label>
-                            <input type="text" class="form-control" id="phone_mother" required v-model="editStudent.phone_mother">
+                            <label for="phone-mother">Phone Mother</label>
+                            <input type="number" class="form-control" id="phone-mother" required v-model="editStudent.phone_mother">
                         </div>
                         <div class="form-group col-sm-12 col-md-6 float-left">
                             <label for="generation">Generation</label>
@@ -245,7 +245,7 @@
                         </div>
                         <div class="form-group col-sm-12 col-md-6 float-left">
                             <label for="avatars">Avatars</label>
-                            <input type="file" class="form-control" id="avatars" ref="fileEdit" v-on:change="changeFileUpdate()">
+                            <input type="file" class="form-control" id="avatars" ref="fileEdit" v-on:change="changeFileUpdate()" accept=".png,.jpg,.jpeg">
                         </div>
                     </div>
                     <div class="modal-footer">
@@ -267,7 +267,7 @@
                     </div>
                     <div class="modal-body">
                         <label for="imports">File format .xls / .xlsx</label>
-                        <input type="file" ref="fileImport" v-on:change="changeFileImport()" class="form-control" id="imports">
+                        <input type="file" ref="fileImport" v-on:change="changeFileImport()" class="form-control" id="imports" accept=".xls,.xlsx">
                         <button class="btn btn-primary mt-2" @click="importData">Import</button>
                     </div>
                 </div>
@@ -344,25 +344,42 @@ export default {
     },
     methods: {
         /*Error page with refresh*/
-        async serverErrorPage(error, message) {
+        async serverErrorPage(error, message){
             console.error(error);
-            Swal.fire('Error!', message + '. Please wait for the page to resfresh automatically', 'error');
-            setTimeout(function() {
-                window.location.reload();
-            }, 5000);
+            Swal.fire({
+                title: 'Error!',
+                text: message + '. Please wait for the page to resfresh automatically',
+                icon: 'error',
+                timer: 1500
+            });
+            setTimeout(function(){
+                document.body.style.paddingRight = '0';
+            }, 1550);
         },
         /*display error*/
-        async Error(error, message) {
+        async Error(error, message){
             console.error(error);
-            Swal.fire('Error!', message, 'error');
+            Swal.fire({
+                title: 'Error!',
+                text: message,
+                icon: 'error',
+                timer: 1500
+            });
+            setTimeout(function(){
+                document.body.style.paddingRight = '0';
+            }, 1550);
         },
         /*display success*/
-        async RequestSuccess(message) {
-            Swal.fire('Success!', message, 'success');
-            setTimeout(function() {
+        async RequestSuccess(message){
+            Swal.fire({
+                title: 'Success!',
+                text: message,
+                icon: 'success',
+                timer: 1500
+            });
+            setTimeout(function(){
                 document.body.style.paddingRight = '0';
-
-            }, 5000);
+            }, 1550);
         },
         /*default for table*/
         async appSchool(paginate = 1) {
@@ -647,7 +664,15 @@ export default {
                         this.Error(error, error.message);
                     });
                 } else if (result.dismiss === Swal.DismissReason.cancel) {
-                    Swal.fire('Cancelled', 'Your data is safe', 'error')
+                    Swal.fire({
+                        title: 'Cancelled!',
+                        text: 'Your data is safe',
+                        icon: 'error',
+                        timer: 1500
+                    });
+                    setTimeout(function(){
+                        document.body.style.paddingRight = '0';
+                    }, 1550);
                 }
             });
         },

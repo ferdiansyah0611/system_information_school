@@ -116,30 +116,30 @@
                     </div>
                     <div class="modal-body">
                         <div class="form-group col-sm-12 col-md-6 float-left">
-                            <label for="add_user_id">User ID</label>
-                            <input type="number" class="form-control" id="add_user_id" v-model="addTeacher.user_id">
+                            <label for="user00-add">User ID</label>
+                            <input type="number" class="form-control" id="user00-add" v-model="addTeacher.user_id">
                         </div>
                         <div class="form-group col-sm-12 col-md-6 float-left">
-                            <label for="add_school">School</label>
-                            <select class="custom-select" id="add_school" v-model="addTeacher.sc_school_id">
+                            <label for="add-school">School</label>
+                            <select class="custom-select" id="add-school" v-model="addTeacher.sc_school_id">
                                 <option v-for="data in school" :key="data.id" :value="data.id">{{data.name}}</option>
                             </select>
                         </div>
                         <div class="form-group col-sm-12 col-md-6 float-left">
-                            <label for="add_title">Title</label>
-                            <input type="text" class="form-control" id="add_title" v-model="addTeacher.title">
+                            <label for="add-title">Title</label>
+                            <input type="text" class="form-control" id="add-title" v-model="addTeacher.title">
                         </div>
                         <div class="form-group col-sm-12 col-md-6 float-left">
-                            <label for="add_graduate">Graduate</label>
-                            <input type="text" class="form-control" id="add_graduate" v-model="addTeacher.graduate">
+                            <label for="add-graduate">Graduate</label>
+                            <input type="text" class="form-control" id="add-graduate" v-model="addTeacher.graduate">
                         </div>
                         <div class="form-group col-12 float-left">
-                            <label for="add_nisn">NISN</label>
-                            <input type="text" class="form-control" id="add_nisn" required v-model="addTeacher.nisn">
+                            <label for="add-nisn">NISN</label>
+                            <input type="number" class="form-control" id="add-nisn" required v-model="addTeacher.nisn">
                         </div>
                         <div class="form-group col-12 float-left">
-                            <label for="avatars">Avatars</label>
-                            <input type="file" class="form-control" id="avatars" ref="file" v-on:change="changeFile()">
+                            <label for="add-avatars">Avatars</label>
+                            <input type="file" class="form-control" id="add-avatars" ref="file" v-on:change="changeFile()" accept=".png,.jpg,.jpeg">
                         </div>
                     </div>
                     <div class="modal-footer">
@@ -164,8 +164,8 @@
                             <img :src="'/storage/image/' + editTeacher.avatar" height="200px" class="img-fluid">
                         </div>
                         <div class="form-group col-sm-12 col-md-6 float-left">
-                            <label for="user_id">User ID</label>
-                            <input type="number" class="form-control" id="user_id" v-model="editTeacher.user_id">
+                            <label for="user00-edit">User ID</label>
+                            <input type="number" class="form-control" id="user00-edit" v-model="editTeacher.user_id">
                         </div>
                         <div class="form-group col-sm-12 col-md-6 float-left">
                             <label for="school">School</label>
@@ -175,8 +175,8 @@
                             </select>
                         </div>
                         <div class="form-group col-sm-12 col-md-6 float-left">
-                            <label for="title">Title</label>
-                            <input type="text" class="form-control" id="title" v-model="editTeacher.title">
+                            <label for="title-edit">Title</label>
+                            <input type="text" class="form-control" id="title-edit" v-model="editTeacher.title">
                         </div>
                         <div class="form-group col-sm-12 col-md-6 float-left">
                             <label for="graduate">Graduate</label>
@@ -184,11 +184,11 @@
                         </div>
                         <div class="form-group col-12 float-left">
                             <label for="nisn">NISN</label>
-                            <input type="text" class="form-control" id="nisn" required v-model="editTeacher.nisn">
+                            <input type="number" class="form-control" id="nisn" required v-model="editTeacher.nisn">
                         </div>
                         <div class="form-group col-12 float-left">
                             <label for="avatars">Avatars</label>
-                            <input type="file" class="form-control" id="avatars" ref="fileEdit" v-on:change="changeFileUpdate()">
+                            <input type="file" class="form-control" id="avatars" ref="fileEdit" v-on:change="changeFileUpdate()" accept=".png,.jpg,.jpeg">
                         </div>
                     </div>
                     <div class="modal-footer">
@@ -210,7 +210,7 @@
                     </div>
                     <div class="modal-body">
                         <label for="imports">File format .xls / .xlsx</label>
-                        <input type="file" ref="fileImport" v-on:change="changeFileImport()" class="form-control" id="imports">
+                        <input type="file" ref="fileImport" v-on:change="changeFileImport()" class="form-control" id="imports" accept=".xls,.xlsx">
                         <button class="btn btn-primary mt-2" @click="importData">Import</button>
                     </div>
                 </div>
@@ -266,24 +266,44 @@ export default {
         this.schoolData();
     },
     methods: {
-    	async serverErrorPage(error, message){
-    		console.error(error);
-    		Swal.fire('Error!', message + '. Please wait for the page to resfresh automatically', 'error');
-    		setTimeout(function(){
-    			window.location.reload();
-    		}, 5000);
-    	},
-    	async Error(error, message){
-    		console.error(error);
-    		Swal.fire('Error!', message, 'error');
-    	},
-    	async RequestSuccess(message){
-    		Swal.fire('Success!', message, 'success');
-    		setTimeout(function(){
-            document.body.style.paddingRight = '0';
-
-    		}, 5000);
-    	},
+    	/*Error page with refresh*/
+        async serverErrorPage(error, message){
+            console.error(error);
+            Swal.fire({
+                title: 'Error!',
+                text: message + '. Please wait for the page to resfresh automatically',
+                icon: 'error',
+                timer: 1500
+            });
+            setTimeout(function(){
+                document.body.style.paddingRight = '0';
+            }, 1550);
+        },
+        /*display error*/
+        async Error(error, message){
+            console.error(error);
+            Swal.fire({
+                title: 'Error!',
+                text: message,
+                icon: 'error',
+                timer: 1500
+            });
+            setTimeout(function(){
+                document.body.style.paddingRight = '0';
+            }, 1550);
+        },
+        /*display success*/
+        async RequestSuccess(message){
+            Swal.fire({
+                title: 'Success!',
+                text: message,
+                icon: 'success',
+                timer: 1500
+            });
+            setTimeout(function(){
+                document.body.style.paddingRight = '0';
+            }, 1550);
+        },
         /*default for table*/
         async appClass(paginate = 1) {
             var data = this.table.searching;
@@ -435,15 +455,14 @@ export default {
             }
         },
         /*api school*/
-        async schoolData() {
+        async schoolData(paginate = 1) {
             await axios({
-                url: '/api/school?type=default',
+                url: '/api/school?page=' + paginate + '&orderby=id' + '&type=asc' + '&columns=50' + '&search=default',
                 method: 'get',
                 headers : {
                     'Authorization' : 'Bearer ' + this.$store.state.Users.success.token
                 }
             }).then(result => {
-                console.log(result);
                 this.school = result.data.data;
             }).catch(error => {
                 this.Error(error, error.message);
@@ -548,7 +567,15 @@ export default {
                         this.Error(error, error.message);
                     });
                 } else if (result.dismiss === Swal.DismissReason.cancel) {
-                    Swal.fire('Cancelled', 'Your data is safe', 'error')
+                    Swal.fire({
+                        title: 'Cancelled!',
+                        text: 'Your data is safe',
+                        icon: 'error',
+                        timer: 1500
+                    });
+                    setTimeout(function(){
+                        document.body.style.paddingRight = '0';
+                    }, 1550);
                 }
             });
         },

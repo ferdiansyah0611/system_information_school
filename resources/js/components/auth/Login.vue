@@ -12,23 +12,18 @@
                                         <div class="row">
                                             <div class="col-md-12">
                                                 <div class="form-group form-group-custom mb-4">
-                                                    <input type="text" class="form-control" id="nisn" v-model="login.nisn" required>
+                                                    <input type="number" class="form-control" id="nisn" v-model="login.nisn" required>
                                                     <label for="nisn">NSIN</label>
                                                 </div>
                                                 <div class="form-group form-group-custom mb-4">
-                                                    <input type="password" class="form-control" id="userpassword" v-model="login.password" required autocomplete="off">
-                                                    <label for="userpassword">Password</label>
+                                                    <input type="password" class="form-control" id="password" v-model="login.password" required autocomplete="off">
+                                                    <label for="password">Password</label>
                                                 </div>
                                                 <div class="row">
                                                     <div class="col-md-6">
                                                         <div class="custom-control custom-checkbox">
-                                                            <input type="checkbox" class="custom-control-input" id="customControlInline">
-                                                            <label class="custom-control-label" for="customControlInline">Remember me</label>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-md-6">
-                                                        <div class="text-md-right mt-3 mt-md-0">
-                                                            <a href="#" class="text-muted"><i class="mdi mdi-lock"></i> Forgot your password?</a>
+                                                            <input type="checkbox" class="custom-control-input" id="remember">
+                                                            <label class="custom-control-label" for="remember">Remember me</label>
                                                         </div>
                                                     </div>
                                                 </div>

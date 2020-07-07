@@ -188,6 +188,10 @@
             this.prepareComponent();
         },
 
+        beforeMount() {
+            document.title = 'Personal Access Token API';
+        },
+
         methods: {
             /**
              * Prepare the component.

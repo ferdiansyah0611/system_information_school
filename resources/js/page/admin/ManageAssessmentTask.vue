@@ -124,20 +124,20 @@
                     </div>
                     <div class="modal-body">
                     	<div class="form-group col-sm-12 col-md-6 float-left">
-                            <label for="student_id_add">Student ID</label>
-                            <input type="text" class="form-control" id="student_id_add" v-model="addAssessmentTask.sc_student_id">
+                            <label for="student00-add">Student ID</label>
+                            <input type="number" class="form-control" id="student00-add" v-model="addAssessmentTask.sc_student_id" required>
                         </div>
                         <div class="form-group col-sm-12 col-md-6 float-left">
-                            <label for="title_add">Title</label>
-                            <input type="text" class="form-control" id="title_add" v-model="addAssessmentTask.title">
+                            <label for="title-add">Title</label>
+                            <input type="text" class="form-control" id="title-add" v-model="addAssessmentTask.title" required>
                         </div>
                         <div class="form-group col-12 float-left">
-                            <label for="score_add">Score</label>
-                            <input type="text" class="form-control" id="score_add" v-model="addAssessmentTask.score">
+                            <label for="score-add">Score</label>
+                            <input type="number" class="form-control" id="score-add" v-model="addAssessmentTask.score" required>
                         </div>
                         <div class="form-group col-12 float-left">
-                            <label for="description_add">Description</label>
-                            <textarea class="form-control" id="description_add" placeholder="Description..." v-model="addAssessmentTask.description"></textarea>
+                            <label for="description-add">Description</label>
+                            <textarea class="form-control" id="description-add" placeholder="Description..." v-model="addAssessmentTask.description" required></textarea>
                         </div>
                     </div>
                     <div class="modal-footer">
@@ -159,20 +159,20 @@
                     </div>
                     <div class="modal-body">
                         <div class="form-group col-sm-12 col-md-6 float-left">
-                            <label for="student_id">Student ID</label>
-                            <input type="text" class="form-control" id="student_id" v-model="editAssessmentTask.sc_student_id">
+                            <label for="student00">Student ID</label>
+                            <input type="number" class="form-control" id="student00" v-model="editAssessmentTask.sc_student_id" required>
                         </div>
                         <div class="form-group col-sm-12 col-md-6 float-left">
-                            <label for="title">Title</label>
-                            <input type="text" class="form-control" id="title" v-model="editAssessmentTask.title">
+                            <label for="title-edit">Title</label>
+                            <input type="text" class="form-control" id="title-edit" v-model="editAssessmentTask.title" required>
                         </div>
                         <div class="form-group col-12 float-left">
                             <label for="score">Score</label>
-                            <input type="text" class="form-control" id="score" v-model="editAssessmentTask.score">
+                            <input type="number" class="form-control" id="score" v-model="editAssessmentTask.score" required>
                         </div>
                         <div class="form-group col-12 float-left">
                             <label for="description">Description</label>
-                            <textarea class="form-control" id="description" placeholder="Description..." v-model="editAssessmentTask.description"></textarea>
+                            <textarea class="form-control" id="description" placeholder="Description..." v-model="editAssessmentTask.description" required></textarea>
                         </div>
                     </div>
                     <div class="modal-footer">
@@ -194,7 +194,7 @@
                     </div>
                     <div class="modal-body">
                         <label for="imports">File format .xls / .xlsx</label>
-                        <input type="file" ref="fileImport" v-on:change="changeFileImport()" class="form-control" id="imports">
+                        <input type="file" ref="fileImport" v-on:change="changeFileImport()" class="form-control" id="imports" accept=".xls,.xlsx">
                         <button class="btn btn-primary mt-2" @click="importData">Import</button>
                     </div>
                 </div>
@@ -245,26 +245,43 @@ export default {
     },
     methods: {
         /*Error page with refresh*/
-    	async serverErrorPage(error, message){
-    		console.error(error);
-    		Swal.fire('Error!', message + '. Please wait for the page to resfresh automatically', 'error');
-    		setTimeout(function(){
-    			/*window.location.reload();*/
-    		}, 5000);
-    	},
+        async serverErrorPage(error, message){
+            console.error(error);
+            Swal.fire({
+                title: 'Error!',
+                text: message + '. Please wait for the page to resfresh automatically',
+                icon: 'error',
+                timer: 1500
+            });
+            setTimeout(function(){
+                document.body.style.paddingRight = '0';
+            }, 1550);
+        },
         /*display error*/
-    	async Error(error, message){
-    		console.error(error);
-    		Swal.fire('Error!', message, 'error');
-    	},
+        async Error(error, message){
+            console.error(error);
+            Swal.fire({
+                title: 'Error!',
+                text: message,
+                icon: 'error',
+                timer: 1500
+            });
+            setTimeout(function(){
+                document.body.style.paddingRight = '0';
+            }, 1550);
+        },
         /*display success*/
-    	async RequestSuccess(message){
-    		Swal.fire('Success!', message, 'success');
-    		setTimeout(function(){
-            document.body.style.paddingRight = '0';
-
-    		}, 5000);
-    	},
+        async RequestSuccess(message){
+            Swal.fire({
+                title: 'Success!',
+                text: message,
+                icon: 'success',
+                timer: 1500
+            });
+            setTimeout(function(){
+                document.body.style.paddingRight = '0';
+            }, 1550);
+        },
         /*default for table*/
         async appSchool(paginate = 1) {
             var data = this.table.searching;
@@ -507,7 +524,15 @@ export default {
                         this.Error(error, error.message);
                     });
                 } else if (result.dismiss === Swal.DismissReason.cancel) {
-                    Swal.fire('Cancelled', 'Your data is safe', 'error')
+                    Swal.fire({
+                        title: 'Cancelled!',
+                        text: 'Your data is safe',
+                        icon: 'error',
+                        timer: 1500
+                    });
+                    setTimeout(function(){
+                        document.body.style.paddingRight = '0';
+                    }, 1550);
                 }
             });
         },

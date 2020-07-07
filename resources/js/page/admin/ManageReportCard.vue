@@ -40,10 +40,16 @@
                                 <select v-model="table.orderable" @change="orderby($event.target.value)" class="custom-select">
                                     <option selected="" value="id asc">ID ASC</option>
                                     <option value="id desc">ID DESC</option>
-                                    <option value="user_id asc">User ID ASC</option>
-                                    <option value="user_id desc">User ID DESC</option>
-                                    <option value="name asc">Name ASC</option>
-                                    <option value="name desc">Name DESC</option>
+                                    <option value="home_room_teacher_id asc">User ID ASC</option>
+                                    <option value="home_room_teacher_id desc">User ID DESC</option>
+                                    <option value="student_name asc">Student Name ASC</option>
+                                    <option value="student_name desc">Student Name DESC</option>
+                                    <option value="study_name asc">Study Name ASC</option>
+                                    <option value="study_name desc">Study Name DESC</option>
+                                    <option value="score asc">Score ASC</option>
+                                    <option value="score desc">Score DESC</option>
+                                    <option value="status asc">Status ASC</option>
+                                    <option value="status desc">Status DESC</option>
                                 </select>
                             </div>
                             <div class="col-sm-12 col-md-4 float-left">
@@ -118,20 +124,18 @@
                     </div>
                     <div class="modal-body">
                         <div class="float-left">
-                            <h5 class="card-title">Information</h5>
-                            <div class="dropdown-divider"></div>
                             <!-- type -->
                         	<div class="form-group col-sm-12 col-md-6 float-left">
-                                <label for="home_room_teacher_id">Homeroom Teacher ID</label>
-                                <input type="text" class="form-control" id="home_room_teacher_id" v-model="addReportCard.sc_home_room_teacher_id">
+                                <label for="homeroom-teacher00-add">Homeroom Teacher ID</label>
+                                <input type="number" class="form-control" id="homeroom-teacher00-add" v-model="addReportCard.sc_home_room_teacher_id" required>
                             </div>
                             <div class="form-group col-sm-12 col-md-6 float-left">
-                                <label for="students_add">Student ID</label>
-                                <input type="text" class="form-control" id="students_add" v-model="addReportCard.sc_student_id">
+                                <label for="students00-add">Student ID</label>
+                                <input type="number" class="form-control" id="students00-add" v-model="addReportCard.sc_student_id" required>
                             </div>
                             <div class="form-group col-12 float-left">
-                                <label for="type_add">Type School</label>
-                                <select class="custom-select" id="type_add" v-model="addReportCard.type">
+                                <label for="type-add">Type School</label>
+                                <select class="custom-select" id="type-add" v-model="addReportCard.type" required>
                                     <option value="odd_semester_1">Semester 1 Ganjil</option>
                                     <option value="even_semester_1">Semester 1 Genap</option>
                                     <option value="odd_semester_2">Semester 2 Ganjil</option>
@@ -139,84 +143,88 @@
                                 </select>
                             </div>
                             <div class="form-group col-12 float-left">
-                                <label for="description_add">Description</label>
-                                <textarea class="form-control" id="description_add" placeholder="Description..." v-model="addReportCard.description"></textarea>
+                                <label for="description-add">Description</label>
+                                <textarea class="form-control" id="description-add" placeholder="Description..." v-model="addReportCard.description" required></textarea>
                             </div>
                             <div class="form-group col-sm-12 col-md-6 float-left">
-                                <label for="absent_add">Absent</label>
-                                <input type="number" class="form-control" id="absent_add" v-model="addReportCard.absent_broken">
+                                <label for="absent-add">Absent</label>
+                                <input type="number" class="form-control" id="absent-add" v-model="addReportCard.absent_broken" required>
                             </div>
                             <div class="form-group col-sm-12 col-md-6 float-left">
-                                <label for="absent_permision_add">Absent Permission</label>
-                                <input type="number" class="form-control" id="absent_permision_add" v-model="addReportCard.absent_permission">
+                                <label for="absent-permision-add">Absent Permission</label>
+                                <input type="number" class="form-control" id="absent-permision-add" v-model="addReportCard.absent_permission" required>
                             </div>
                             <div class="form-group col-sm-12 col-md-6 float-left">
-                                <label for="absen_without_explanation_add">Absent Without Explanation</label>
-                                <input type="number" class="form-control" id="absen_without_explanation_add" v-model="addReportCard.absent_without_explanation">
+                                <label for="absen-without-explanation-add">Absent Without Explanation</label>
+                                <input type="number" class="form-control" id="absen-without-explanation-add" v-model="addReportCard.absent_without_explanation" required>
                             </div>
                             <div class="form-group col-sm-12 col-md-6 float-left">
-                                <label for="personality_behavior_add">Personality Behavior</label>
-                                <input type="number" class="form-control" id="personality_behavior_add" v-model="addReportCard.personality_behavior">
+                                <label for="personality-behavior-add">Personality Behavior</label>
+                                <input type="number" class="form-control" id="personality-behavior-add" v-model="addReportCard.personality_behavior" required>
                             </div>
                             <div class="form-group col-sm-12 col-md-6 float-left">
-                                <label for="personality_diligence_add">Personality Diligence</label>
-                                <input type="number" class="form-control" id="personality_diligence_add" v-model="addReportCard.personality_diligence">
+                                <label for="personality-diligence-add">Personality Diligence</label>
+                                <input type="number" class="form-control" id="personality-diligence-add" v-model="addReportCard.personality_diligence" required>
                             </div>
                             <div class="form-group col-sm-12 col-md-6 float-left">
-                                <label for="personlity_neatness_add">Personality Neatness</label>
-                                <input type="number" class="form-control" id="personlity_neatness_add" v-model="addReportCard.personality_neatness">
+                                <label for="personlity-neatness-add">Personality Neatness</label>
+                                <input type="number" class="form-control" id="personlity-neatness-add" v-model="addReportCard.personality_neatness" required>
                             </div>
 
                             <div class="form-group col-sm-12 col-md-6 float-left">
-                                <label for="personality_neatness_add">Personality Neatness</label>
-                                <input type="date" class="form-control" id="personality_neatness_add" v-model="addReportCard.period">
+                                <label for="personality-neatness-add">Period</label>
+                                <input type="date" class="form-control" id="personality-neatness-add" v-model="addReportCard.period" required>
                             </div>
                             
                         </div>
                         <div class="float-left">
-                            <h5 class="card-title">Senior High School</h5>
                             <div class="dropdown-divider"></div>
                             <!-- senior -->
                             <div id="add_senior_high_school">
                                 <div class="form-group col-sm-12 col-md-6 float-left">
-                                    <label for="student_id_add">Student ID</label>
-                                    <input type="number" class="form-control" id="student_id_add" v-model="addReportCard.sc_student_id">
+                                    <label for="student00-add">Student ID</label>
+                                    <input type="number" class="form-control" id="student00-add" v-model="addReportCard.sc_student_id" required>
                                 </div>
                                 <div class="form-group col-sm-12 col-md-6 float-left">
-                                    <label for="study_id_add">Study ID</label>
-                                    <input type="number" class="form-control" id="study_id_add" v-model="addReportCard.sc_study_id">
+                                    <label for="study00-add">Study ID</label>
+                                    <input type="number" class="form-control" id="study00-add" v-model="addReportCard.sc_study_id" required>
                                 </div>
                                 <div class="form-group col-sm-12 col-md-6 float-left">
-                                    <label for="score_add">Score</label>
-                                    <input type="number" class="form-control" id="score_add" v-model="addReportCard.score">
+                                    <label for="score-add">Score</label>
+                                    <input type="number" class="form-control" id="score-add" v-model="addReportCard.score" required>
                                 </div>
                                 <div class="form-group col-sm-12 col-md-6 float-left">
-                                    <label for="kkm_k3_add">KKM K3</label>
-                                    <input type="number" class="form-control" id="kkm_k3_add" v-model="addReportCard.kkm_k3">
+                                    <label for="kkm-k3-add">KKM K3</label>
+                                    <input type="number" class="form-control" id="kkm-k3-add" v-model="addReportCard.kkm_k3" required>
                                 </div>
                                 <div class="form-group col-sm-12 col-md-6 float-left">
-                                    <label for="kkm_k4_add">KKM k4</label>
-                                    <input type="number" class="form-control" id="kkm_k4_add" v-model="addReportCard.kkm_k4">
+                                    <label for="kkm-k4-add">KKM k4</label>
+                                    <input type="number" class="form-control" id="kkm-k4-add" v-model="addReportCard.kkm_k4" required>
                                 </div>
                                 <div class="form-group col-sm-12 col-md-6 float-left">
-                                    <label for="k3_ph_add">K3 PH</label>
-                                    <input type="number" class="form-control" id="k3_ph_add" v-model="addReportCard.k3_ph">
+                                    <label for="k3-ph-add">K3 PH</label>
+                                    <input type="number" class="form-control" id="k3-ph-add" v-model="addReportCard.k3_ph" required>
                                 </div>
                                 <div class="form-group col-sm-12 col-md-6 float-left">
-                                    <label for="k3_pts_add">K3 PTS</label>
-                                    <input type="number" class="form-control" id="k3_pts_add" v-model="addReportCard.k3_pts">
+                                    <label for="k3-pts-add">K3 PTS</label>
+                                    <input type="number" class="form-control" id="k3-pts-add" v-model="addReportCard.k3_pts" required>
                                 </div>
                                 <div class="form-group col-sm-12 col-md-6 float-left">
-                                    <label for="k4_praktek_add">K4 Praktek</label>
-                                    <input type="number" class="form-control" id="k4_praktek_add" v-model="addReportCard.k4_pr">
+                                    <label for="k4-praktek-add">K4 Praktek</label>
+                                    <input type="number" class="form-control" id="k4-praktek-add" v-model="addReportCard.k4_pr" required>
                                 </div>
                                 <div class="form-group col-sm-12 col-md-6 float-left">
-                                    <label for="status_add">Status</label>
-                                    <input type="text" class="form-control" id="status_add" v-model="addReportCard.status">
+                                    <label for="status-add">Status</label>
+                                    <select class="custom-select" id="status-add" v-model="addReportCard.status" required>
+                                        <option value="success">Success</option>
+                                        <option value="failed">Failed</option>
+                                        <option value="graduated">Graduated</option>
+                                        <option value="not pass">Not Pass</option>
+                                    </select>
                                 </div>
                                 <div class="form-group col-sm-12 col-md-6 float-left">
-                                    <label for="predicate_add">Predicate</label>
-                                    <select class="custom-select" id="predicate_add" v-model="addReportCard.predicate">
+                                    <label for="predicate-add">Predicate</label>
+                                    <select class="custom-select" id="predicate-add" v-model="addReportCard.predicate" required>
                                         <option value="A">A</option>
                                         <option value="B">B</option>
                                         <option value="C">C</option>
@@ -245,20 +253,19 @@
                     </div>
                     <div class="modal-body">
                         <div class="float-left">
-                            <h5 class="card-title">Information</h5>
                             <div class="dropdown-divider"></div>
                             <!-- type -->
                             <div class="form-group col-sm-12 col-md-6 float-left">
-                                <label for="user_id">Homeroom Teacher ID</label>
-                                <input type="text" class="form-control" id="user_id" v-model="editReportCard.sc_home_room_teacher_id">
+                                <label for="homeroom00">Homeroom Teacher ID</label>
+                                <input type="number" class="form-control" id="homeroom00" v-model="editReportCard.sc_home_room_teacher_id" required>
                             </div>
                             <div class="form-group col-sm-12 col-md-6 float-left">
-                                <label for="student_id">Student ID</label>
-                                <input type="text" class="form-control" id="student_id" v-model="editReportCard.sc_student_id">
+                                <label for="student00">Student ID</label>
+                                <input type="number" class="form-control" id="student00" v-model="editReportCard.sc_student_id" required>
                             </div>
                             <div class="form-group col-12 float-left">
-                                <label for="type">Type School</label>
-                                <select class="custom-select" id="type" v-model="editReportCard.type">
+                                <label for="type-edit">Type School</label>
+                                <select class="custom-select" id="type-edit" v-model="editReportCard.type" required>
                                     <option value="odd_semester_1">Semester 1 Ganjil</option>
                                     <option value="even_semester_1">Semester 1 Genap</option>
                                     <option value="odd_semester_2">Semester 2 Ganjil</option>
@@ -267,83 +274,87 @@
                             </div>
                             <div class="form-group col-12 float-left">
                                 <label for="description">Description</label>
-                                <textarea class="form-control" id="description" placeholder="Description..." v-model="editReportCard.description"></textarea>
+                                <textarea class="form-control" id="description" placeholder="Description..." v-model="editReportCard.description" required></textarea>
                             </div>
                             <div class="form-group col-sm-12 col-md-6 float-left">
-                                <label for="abosent">Absent</label>
-                                <input type="number" class="form-control" id="abosent" v-model="editReportCard.absent_broken">
+                                <label for="absent">Absent</label>
+                                <input type="number" class="form-control" id="absent" v-model="editReportCard.absent_broken" required>
                             </div>
                             <div class="form-group col-sm-12 col-md-6 float-left">
-                                <label for="absent_permission">Absent Permission</label>
-                                <input type="number" class="form-control" id="absent_permission" v-model="editReportCard.absent_permission">
+                                <label for="absent-permission">Absent Permission</label>
+                                <input type="number" class="form-control" id="absent-permission" v-model="editReportCard.absent_permission" required>
                             </div>
                             <div class="form-group col-sm-12 col-md-6 float-left">
-                                <label for="absent_without_explanation">Absent Without Explanation</label>
-                                <input type="number" class="form-control" id="absent_without_explanation" v-model="editReportCard.absent_without_explanation">
+                                <label for="absent-without-explanation">Absent Without Explanation</label>
+                                <input type="number" class="form-control" id="absent-without-explanation" v-model="editReportCard.absent_without_explanation" required>
                             </div>
                             <div class="form-group col-sm-12 col-md-6 float-left">
-                                <label for="personality_behavior">Personality Behavior</label>
-                                <input type="number" class="form-control" id="personality_behavior" v-model="editReportCard.personality_behavior">
+                                <label for="personality-behavior">Personality Behavior</label>
+                                <input type="number" class="form-control" id="personality-behavior" v-model="editReportCard.personality_behavior" required>
                             </div>
                             <div class="form-group col-sm-12 col-md-6 float-left">
-                                <label for="personality_diligence">Personality Diligence</label>
-                                <input type="number" class="form-control" id="personality_diligence" v-model="editReportCard.personality_diligence">
+                                <label for="personality-diligence">Personality Diligence</label>
+                                <input type="number" class="form-control" id="personality-diligence" v-model="editReportCard.personality_diligence" required>
                             </div>
                             <div class="form-group col-sm-12 col-md-6 float-left">
-                                <label for="personality_neatness">Personality Neatness</label>
-                                <input type="number" class="form-control" id="personality_neatness" v-model="editReportCard.personality_neatness">
+                                <label for="personality-neatness">Personality Neatness</label>
+                                <input type="number" class="form-control" id="personality-neatness" v-model="editReportCard.personality_neatness" required>
                             </div>
 
                             <div class="form-group col-sm-12 col-md-6 float-left">
                                 <label for="period">Period</label>
-                                <input type="date" class="form-control" id="period" v-model="editReportCard.period">
+                                <input type="date" class="form-control" id="period" v-model="editReportCard.period" required>
                             </div>
                             
                         </div>
                         <div class="float-left">
-                            <h5 class="card-title">Senior High School</h5>
                             <div class="dropdown-divider"></div>
                             <!-- senior -->
                             <div id="add_senior_high_school">
                                 <div class="form-group col-sm-12 col-md-6 float-left">
-                                    <label for="student_id">Student ID</label>
-                                    <input type="number" class="form-control" id="student_id" v-model="editReportCard.sc_student_id">
+                                    <label for="student00">Student ID</label>
+                                    <input type="number" class="form-control" id="student00" v-model="editReportCard.sc_student_id" required>
                                 </div>
                                 <div class="form-group col-sm-12 col-md-6 float-left">
-                                    <label for="study_id">Study ID</label>
-                                    <input type="number" class="form-control" id="study_id" v-model="editReportCard.sc_study_id">
+                                    <label for="study00">Study ID</label>
+                                    <input type="number" class="form-control" id="study00" v-model="editReportCard.sc_study_id" required>
                                 </div>
                                 <div class="form-group col-sm-12 col-md-6 float-left">
                                     <label for="score">Score</label>
-                                    <input type="number" class="form-control" id="score" v-model="editReportCard.score">
+                                    <input type="number" class="form-control" id="score" v-model="editReportCard.score" required>
                                 </div>
                                 <div class="form-group col-sm-12 col-md-6 float-left">
-                                    <label for="kkm_k3">KKM K3</label>
-                                    <input type="number" class="form-control" id="kkm_k3" v-model="editReportCard.kkm_k3">
+                                    <label for="kkm-k3">KKM K3</label>
+                                    <input type="number" class="form-control" id="kkm-k3" v-model="editReportCard.kkm_k3" required>
                                 </div>
                                 <div class="form-group col-sm-12 col-md-6 float-left">
-                                    <label for="kkm_k4">KKM k4</label>
-                                    <input type="number" class="form-control" id="kkm_k4" v-model="editReportCard.kkm_k4">
+                                    <label for="kkm-k4">KKM k4</label>
+                                    <input type="number" class="form-control" id="kkm-k4" v-model="editReportCard.kkm_k4" required>
                                 </div>
                                 <div class="form-group col-sm-12 col-md-6 float-left">
-                                    <label for="k3_ph">K3 PH</label>
-                                    <input type="number" class="form-control" id="k3_ph" v-model="editReportCard.k3_ph">
+                                    <label for="k3-ph">K3 PH</label>
+                                    <input type="number" class="form-control" id="k3-ph" v-model="editReportCard.k3_ph" required>
                                 </div>
                                 <div class="form-group col-sm-12 col-md-6 float-left">
-                                    <label for="k3_pts">K3 PTS</label>
-                                    <input type="number" class="form-control" id="k3_pts" v-model="editReportCard.k3_pts">
+                                    <label for="k3-pts">K3 PTS</label>
+                                    <input type="number" class="form-control" id="k3-pts" v-model="editReportCard.k3_pts" required>
                                 </div>
                                 <div class="form-group col-sm-12 col-md-6 float-left">
-                                    <label for="k4_praktek">K4 Praktek</label>
-                                    <input type="number" class="form-control" id="k4_praktek" v-model="editReportCard.k4_pr">
+                                    <label for="k4-praktek">K4 Praktek</label>
+                                    <input type="number" class="form-control" id="k4-praktek" v-model="editReportCard.k4_pr" required>
                                 </div>
                                 <div class="form-group col-sm-12 col-md-6 float-left">
-                                    <label for="status">Status</label>
-                                    <input type="text" class="form-control" id="status" v-model="editReportCard.status">
+                                    <label for="status-edit">Status</label>
+                                    <select class="custom-select" id="status-edit" v-model="editReportCard.status" required>
+                                        <option value="success">Success</option>
+                                        <option value="failed">Failed</option>
+                                        <option value="graduated">Graduated</option>
+                                        <option value="not pass">Not Pass</option>
+                                    </select>
                                 </div>
                                 <div class="form-group col-sm-12 col-md-6 float-left">
                                     <label for="predicate">Predicate</label>
-                                    <select class="custom-select" id="predicate" v-model="editReportCard.predicate">
+                                    <select class="custom-select" id="predicate" v-model="editReportCard.predicate" required>
                                         <option value="A">A</option>
                                         <option value="B">B</option>
                                         <option value="C">C</option>
@@ -372,7 +383,7 @@
                     </div>
                     <div class="modal-body">
                         <label for="imports">File format .xls / .xlsx</label>
-                        <input type="file" ref="fileImport" v-on:change="changeFileImport()" class="form-control" id="imports">
+                        <input type="file" ref="fileImport" v-on:change="changeFileImport()" class="form-control" id="imports" accept=".xls,.xlsx">
                         <button class="btn btn-primary mt-2" @click="importData">Import</button>
                     </div>
                 </div>
@@ -463,26 +474,43 @@ export default {
     },
     methods: {
         /*Error page with refresh*/
-    	async serverErrorPage(error, message){
-    		console.error(error);
-    		Swal.fire('Error!', message + '. Please wait for the page to resfresh automatically', 'error');
-    		setTimeout(function(){
-    			/*window.location.reload();*/
-    		}, 5000);
-    	},
+        async serverErrorPage(error, message){
+            console.error(error);
+            Swal.fire({
+                title: 'Error!',
+                text: message + '. Please wait for the page to resfresh automatically',
+                icon: 'error',
+                timer: 1500
+            });
+            setTimeout(function(){
+                document.body.style.paddingRight = '0';
+            }, 1550);
+        },
         /*display error*/
-    	async Error(error, message){
-    		console.error(error);
-    		Swal.fire('Error!', message, 'error');
-    	},
+        async Error(error, message){
+            console.error(error);
+            Swal.fire({
+                title: 'Error!',
+                text: message,
+                icon: 'error',
+                timer: 1500
+            });
+            setTimeout(function(){
+                document.body.style.paddingRight = '0';
+            }, 1550);
+        },
         /*display success*/
-    	async RequestSuccess(message){
-    		Swal.fire('Success!', message, 'success');
-    		setTimeout(function(){
-            document.body.style.paddingRight = '0';
-
-    		}, 5000);
-    	},
+        async RequestSuccess(message){
+            Swal.fire({
+                title: 'Success!',
+                text: message,
+                icon: 'success',
+                timer: 1500
+            });
+            setTimeout(function(){
+                document.body.style.paddingRight = '0';
+            }, 1550);
+        },
         /*default for table*/
         async appSchool(paginate = 1) {
             var data = this.table.searching;
@@ -791,7 +819,15 @@ export default {
                         this.Error(error, error.message);
                     });
                 } else if (result.dismiss === Swal.DismissReason.cancel) {
-                    Swal.fire('Cancelled', 'Your data is safe', 'error')
+                    Swal.fire({
+                        title: 'Cancelled!',
+                        text: 'Your data is safe',
+                        icon: 'error',
+                        timer: 1500
+                    });
+                    setTimeout(function(){
+                        document.body.style.paddingRight = '0';
+                    }, 1550);
                 }
             });
         },

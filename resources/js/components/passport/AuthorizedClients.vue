@@ -75,6 +75,10 @@
             this.prepareComponent();
         },
 
+        beforeMount() {
+            document.title = 'Authorized Client';
+        },
+
         methods: {
             /**
              * Prepare the component (Vue 2.x).

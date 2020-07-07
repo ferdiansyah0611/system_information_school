@@ -295,6 +295,10 @@
         mounted() {
             this.prepareComponent();
         },
+        
+        beforeMount() {
+            document.title = 'Client API';
+        },
 
         methods: {
             /**

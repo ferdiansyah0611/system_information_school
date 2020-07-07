@@ -112,12 +112,12 @@
                     </div>
                     <div class="modal-body">
                         <div class="form-group">
-                            <label for="class_name_add">Name Class</label>
-                            <input type="text" class="form-control" id="class_name_add" v-model="addClass.name">
+                            <label for="class-name-add">Name Class</label>
+                            <input type="text" class="form-control" id="class-name-add" v-model="addClass.name" required>
                         </div>
                         <div class="form-group">
-                            <label for="school_add">School</label>
-                            <select class="custom-select" id="school_add" v-model="addClass.sc_school_id">
+                            <label for="school-add">School</label>
+                            <select class="custom-select" id="school-add" v-model="addClass.sc_school_id" required>
                                 <option selected="" disabled="">Choose school</option>
                                 <option v-for="data in school" :key="data.id" :value="data.id">{{data.name}}</option>
                             </select>
@@ -142,12 +142,12 @@
                     </div>
                     <div class="modal-body">
                         <div class="form-group">
-                            <label for="class_name">Name Class</label>
-                            <input type="text" class="form-control" id="class_name" v-model="editClass.name">
+                            <label for="class-name">Name Class</label>
+                            <input type="text" class="form-control" id="class-name" v-model="editClass.name" required>
                         </div>
                         <div class="form-group">
                             <label for="school">School</label>
-                            <select class="custom-select" id="school" v-model="editClass.sc_school_id">
+                            <select class="custom-select" id="school" v-model="editClass.sc_school_id" required>
                                 <option v-for="data in school" :key="data.id" :value="data.id">{{data.name}}</option>
                             </select>
                         </div>
@@ -171,7 +171,7 @@
                     </div>
                     <div class="modal-body">
                         <label for="imports">File format .xls / .xlsx</label>
-                        <input type="file" ref="fileImport" v-on:change="changeFileImport()" class="form-control" id="imports">
+                        <input type="file" ref="fileImport" v-on:change="changeFileImport()" class="form-control" id="imports" accept=".xls,.xlsx">
                         <button class="btn btn-primary mt-2" @click="importData">Import</button>
                     </div>
                 </div>
@@ -225,23 +225,41 @@ export default {
     methods: {
         /*Error page with refresh*/
     	async serverErrorPage(error, message){
-    		console.error(error);
-    		Swal.fire('Error!', message + '. Please wait for the page to resfresh automatically', 'error');
-    		setTimeout(function(){
-    			/*window.location.reload();*/
-    		}, 5000);
+            console.error(error);
+            Swal.fire({
+                title: 'Error!',
+                text: message + '. Please wait for the page to resfresh automatically',
+                icon: 'error',
+                timer: 1500
+            });
+            setTimeout(function(){
+                document.body.style.paddingRight = '0';
+            }, 1550);
     	},
         /*display error*/
     	async Error(error, message){
     		console.error(error);
-    		Swal.fire('Error!', message, 'error');
+            Swal.fire({
+                title: 'Error!',
+                text: message,
+                icon: 'error',
+                timer: 1500
+            });
+            setTimeout(function(){
+                document.body.style.paddingRight = '0';
+            }, 1550);
     	},
         /*display success*/
     	async RequestSuccess(message){
-    		Swal.fire('Success!', message, 'success');
+    		Swal.fire({
+                title: 'Success!',
+                text: message,
+                icon: 'success',
+                timer: 1500
+            });
     		setTimeout(function(){
                 document.body.style.paddingRight = '0';
-    		}, 5000);
+    		}, 1550);
     	},
         /*default for table*/
         async appClass(paginate = 1) {
@@ -503,7 +521,15 @@ export default {
                         this.Error(error, error.message);
                     });
                 } else if (result.dismiss === Swal.DismissReason.cancel) {
-                    Swal.fire('Cancelled', 'Your data is safe', 'error')
+                    Swal.fire({
+                        title: 'Cancelled!',
+                        text: 'Your data is safe',
+                        icon: 'error',
+                        timer: 1500
+                    });
+                    setTimeout(function(){
+                        document.body.style.paddingRight = '0';
+                    }, 1550);
                 }
             });
         },

@@ -124,20 +124,20 @@
                     </div>
                     <div class="modal-body">
                     	<div class="form-group col-sm-12 col-md-6 float-left">
-                            <label for="add_teacher_id">Teacher ID</label>
-                            <input type="text" class="form-control" id="add_teacher_id" v-model="addHomeRoomTeacher.sc_teacher_id">
+                            <label for="add-teacher00">Teacher ID</label>
+                            <input type="text" class="form-control" id="add-teacher00" v-model="addHomeRoomTeacher.sc_teacher_id" required>
                         </div>
                         <div class="form-group col-sm-12 col-md-6 float-left">
-                            <label for="add_class_id">Class ID</label>
-                            <input type="text" class="form-control" id="add_class_id" v-model="addHomeRoomTeacher.sc_class_id">
+                            <label for="add-class00">Class ID</label>
+                            <input type="text" class="form-control" id="add-class00" v-model="addHomeRoomTeacher.sc_class_id" required>
                         </div>
                         <div class="form-group col-sm-12 col-md-6 float-left">
-                            <label for="add_start_periode">Start Periode</label>
-                            <input type="date" class="form-control" id="add_start_periode" v-model="addHomeRoomTeacher.start_period">
+                            <label for="add-start-periode">Start Periode</label>
+                            <input type="date" class="form-control" id="add-start-periode" v-model="addHomeRoomTeacher.start_period" required>
                         </div>
                         <div class="form-group col-sm-12 col-md-6 float-left">
-                            <label for="add_end_periode">End Periode</label>
-                            <input type="date" class="form-control" id="add_end_periode" v-model="addHomeRoomTeacher.end_period">
+                            <label for="add-end-periode">End Periode</label>
+                            <input type="date" class="form-control" id="add-end-periode" v-model="addHomeRoomTeacher.end_period" required>
                         </div>
                     </div>
                     <div class="modal-footer">
@@ -159,20 +159,20 @@
                     </div>
                     <div class="modal-body">
                         <div class="form-group col-sm-12 col-md-6 float-left">
-                            <label for="teacher_id">Teacher ID</label>
-                            <input type="text" class="form-control" id="teacher_id" v-model="editHomeRoomTeacher.sc_teacher_id">
+                            <label for="teacher00">Teacher ID</label>
+                            <input type="text" class="form-control" id="teacher00" v-model="editHomeRoomTeacher.sc_teacher_id" required>
                         </div>
                         <div class="form-group col-sm-12 col-md-6 float-left">
-                            <label for="class_id">Class ID</label>
-                            <input type="text" class="form-control" id="class_id" v-model="editHomeRoomTeacher.sc_class_id">
+                            <label for="class00">Class ID</label>
+                            <input type="text" class="form-control" id="class00" v-model="editHomeRoomTeacher.sc_class_id" required>
                         </div>
                         <div class="form-group col-sm-12 col-md-6 float-left">
-                            <label for="start_periode">Start Periode</label>
-                            <input type="date" class="form-control" id="start_periode" v-model="editHomeRoomTeacher.start_period">
+                            <label for="start-periode">Start Periode</label>
+                            <input type="date" class="form-control" id="start-periode" v-model="editHomeRoomTeacher.start_period" required>
                         </div>
                         <div class="form-group col-sm-12 col-md-6 float-left">
-                            <label for="end_periode">End Periode</label>
-                            <input type="date" class="form-control" id="end_periode" v-model="editHomeRoomTeacher.end_period">
+                            <label for="end-periode">End Periode</label>
+                            <input type="date" class="form-control" id="end-periode" v-model="editHomeRoomTeacher.end_period" required>
                         </div>
                     </div>
                     <div class="modal-footer">
@@ -194,7 +194,7 @@
                     </div>
                     <div class="modal-body">
                         <label for="imports">File format .xls / .xlsx</label>
-                        <input type="file" ref="fileImport" v-on:change="changeFileImport()" class="form-control" id="imports">
+                        <input type="file" ref="fileImport" v-on:change="changeFileImport()" class="form-control" id="imports" accept=".xls,.xlsx">
                         <button class="btn btn-primary mt-2" @click="importData">Import</button>
                     </div>
                 </div>
@@ -246,27 +246,44 @@ export default {
         this.appSchool();
     },
     methods: {
-        /*Error page with refresh table*/
-    	async serverErrorPage(error, message){
-    		console.error(error);
-    		Swal.fire('Error!', message + '. Please wait for the page to resfresh automatically', 'error');
-    		setTimeout(function(){
-    			this.appSchool();
-    		}, 8000);
-    	},
+        /*Error page with refresh*/
+        async serverErrorPage(error, message){
+            console.error(error);
+            Swal.fire({
+                title: 'Error!',
+                text: message + '. Please wait for the page to resfresh automatically',
+                icon: 'error',
+                timer: 1500
+            });
+            setTimeout(function(){
+                document.body.style.paddingRight = '0';
+            }, 1550);
+        },
         /*display error*/
-    	async Error(error, message){
-    		console.error(error);
-    		Swal.fire('Error!', message, 'error');
-    	},
+        async Error(error, message){
+            console.error(error);
+            Swal.fire({
+                title: 'Error!',
+                text: message,
+                icon: 'error',
+                timer: 1500
+            });
+            setTimeout(function(){
+                document.body.style.paddingRight = '0';
+            }, 1550);
+        },
         /*display success*/
-    	async RequestSuccess(message){
-    		Swal.fire('Success!', message, 'success');
-    		setTimeout(function(){
-            document.body.style.paddingRight = '0';
-
-    		}, 5000);
-    	},
+        async RequestSuccess(message){
+            Swal.fire({
+                title: 'Success!',
+                text: message,
+                icon: 'success',
+                timer: 1500
+            });
+            setTimeout(function(){
+                document.body.style.paddingRight = '0';
+            }, 1550);
+        },
         /*default for table*/
         async appSchool(paginate = 1) {
             var data = this.table.searching;
@@ -510,7 +527,15 @@ export default {
                         this.Error(error, error.message);
                     });
                 } else if (result.dismiss === Swal.DismissReason.cancel) {
-                    Swal.fire('Cancelled', 'Your data is safe', 'error')
+                    Swal.fire({
+                        title: 'Cancelled!',
+                        text: 'Your data is safe',
+                        icon: 'error',
+                        timer: 1500
+                    });
+                    setTimeout(function(){
+                        document.body.style.paddingRight = '0';
+                    }, 1550);
                 }
             });
         },
