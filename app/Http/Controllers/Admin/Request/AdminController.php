@@ -7,7 +7,10 @@ use Illuminate\Http\Request;
 use Carbon\Carbon;
 use App\Models\ScSchool;
 use App\Models\ScStudent;
+use App\User;
 use Mail;
+use PDF;
+
 class AdminController extends Controller
 {
     public function dashboard()
@@ -47,5 +50,27 @@ class AdminController extends Controller
 			$message->subject('Test Mail');
 			$message->from('fer@lavosted','Test Mail');
 		});
+    }
+    public function printPDF() {
+        /*$data = [
+          'title' => 'The result of ',
+          'heading' => 'Hello from 99Points.info',
+          'content' => 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry',
+          'user' => User::where('id', 1)->get(),  
+        ];
+        
+        $pdf = PDF::loadView('pdf.template', $data);  
+        return $pdf->download('report.pdf');*/
+        $wordTest = new \PhpOffice\PhpWord\PhpWord();
+        $newSection = $wordTest->addSection();
+        $newSection->addText('Hasil Penilaian Ujian Semester 1', array('name' => 'Times New Roman', 'size' => 15));
+        $desc1 = "The Portfolio details is a very useful feature of the web page. You can establish your archived details and the works to the entire web community. It was outlined to bring in extra clients, get you selected based on this details.";
+        $newSection->addText($desc1, array('name' => 'Tahoma', 'size' => 15, 'color' => 'red'));
+        $objectWriter = \PhpOffice\PhpWord\IOFactory::createWriter($wordTest, 'Word2007');
+        try {
+        $objectWriter->save(storage_path('TestWordFile.docx'));
+        } catch (Exception $e) {
+        }
+        return response()->download(storage_path('TestWordFile.docx'));
     }
 }
