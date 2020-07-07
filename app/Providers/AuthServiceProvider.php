@@ -14,7 +14,7 @@ class AuthServiceProvider extends ServiceProvider
      * @var array
      */
     protected $policies = [
-        // 'App\Model' => 'App\Policies\ModelPolicy',
+        'App\Model' => 'App\Policies\ModelPolicy',
     ];
 
     /**
@@ -25,7 +25,8 @@ class AuthServiceProvider extends ServiceProvider
     public function boot()
     {
         $this->registerPolicies();
-        Passport::routes();
+        Passport::routes(null, ['prefix' => 'api/oauth', 'middleware' => array('auth:api', 'web', 'auth')]);
+        Passport::ignoreCsrfToken(true);
         /*if production*/
         /*Passport::loadKeysFrom('/secret-keys/oauth');*/
     }
