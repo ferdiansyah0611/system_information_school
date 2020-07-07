@@ -6,9 +6,14 @@ use Illuminate\Database\Eloquent\Model;
 
 class ScReportCardJunior extends Model
 {
-    /**
+    protected $table = 'sc_report_card_juniors';
+	/**
      * The attributes that are mass assignable.
      *
      * @var array
      */
+    protected $fillable = [
+    	'id', 'sc_study_id', 'score', 'kkm_k3', 'kkm_k4', 'k3_ph', 'k3_pts', 'k4_pr',
+    	'status', 'predicate'
+    ];
 }

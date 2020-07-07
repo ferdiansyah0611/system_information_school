@@ -13,6 +13,8 @@ class ScReportCardElementary extends Model
      * @var array
      */
     protected $fillable = [
-    	'sc_study_id', 'kkm', 'score', 'status', 'predicate'
+    	'id', 'sc_study_id', 'score', 'kkm_k3', 'kkm_k4', 'k3_ph', 'k3_pts', 'k4_pr',
+    	'status', 'predicate'
     ];
+
 }
