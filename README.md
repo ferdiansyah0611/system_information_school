@@ -2,16 +2,21 @@
 School information system is a useful website to facilitate school data collection. Built with laravel v.7.0, vue.js v.2.5.17, vue router v.3.3.4 and vuex v.3.4.0
 ### Before installation
 - Please configuration database for this projects. Change in .env.example to .env
+- Move file image in folder public/image to folder storage/app/public/image
 - php v.7 or later
 ### Installation
 
 ```
-npm install
 composer install
-php artisan key:generate
-php artisan config:clear
-php artisan view:clear
 php artisan application:install
+```
+If you want development you can keyword in cli
+```
+npm install
+```
+### Start Serve
+```
+php artisan serve
 ```
 ### Middleware
 - Administrator

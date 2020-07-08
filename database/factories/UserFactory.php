@@ -26,6 +26,7 @@ $factory->define(User::class, function (Faker $faker) {
     	'location' => 'indonesia',
     	'avatar' => 'image',
     	'languange' => 'en',
+        'gender' => 'male',
         'name' => $faker->name,
         'email' => $faker->unique()->safeEmail,
         'email_verified_at' => now(),
