@@ -32,14 +32,14 @@ php artisan application:install
 - Export excel in all tables
 - Import excel in all tables
 - Notes
-### Package npm yang digunakan
+### The npm package used
 - axios
 - jquery
 - chart.js
 - laravel-vue-pagination
 - metismenu
 - sweetalert2
-### Package composer yang digunakan
+### Package composer used
 - laravel/passport
 - maatwebsite/excel
 ### Contributing
