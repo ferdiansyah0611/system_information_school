@@ -11,7 +11,7 @@ class ScHomeRoomTeacherSeeder extends Seeder
      */
     public function run()
     {
-        for ($i=0; $i < 10; $i++) {
+        for ($i=1; $i < 11; $i++) {
             ScHomeRoomTeacher::create([
             	'sc_teacher_id' => $i,
             	'sc_class_id' => $i,

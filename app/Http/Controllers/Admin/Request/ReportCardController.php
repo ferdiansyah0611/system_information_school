@@ -96,11 +96,20 @@ class ReportCardController extends Controller
             'personality_behavior' => $numeric,
             'personality_diligence' => $numeric,
             'personality_neatness' => $numeric,
+
+            'sc_study_id' => $numeric,
+            'score' => $numeric,
+            'kkm_k3' => $numeric,
+            'kkm_k4' => $numeric,
+            'k3_ph' => $numeric,
+            'k3_pts' => $numeric,
+            'k4_pr' => $numeric,
+            'status' => 'required|string|min:1|max:191',
+            'predicate' => 'required|string|min:1|max:191',
         ]);
         if($validator->fails()){
             return response()->json(['message' => $validator->errors()], 401);
         }else{
-            // type
             ScTypeReportCard::create([
                 'id' => $this->random,
                 'sc_home_room_teacher_id' => $request->sc_home_room_teacher_id,
@@ -118,100 +127,50 @@ class ReportCardController extends Controller
             $sc_class_id = ScHomeRoomTeacher::where('id', $request->sc_home_room_teacher_id)->pluck('sc_class_id');
             $sc_school_id = ScClass::where('id', $sc_class_id[0])->pluck('sc_school_id');
             $ScSchool = ScSchool::where('id', $sc_school_id[0])->pluck('type');
-
+            echo $ScSchool[0];
             if($ScSchool[0] == 'senior_high_school'){
-                $validator_senior = Validator::make($request->all(), [
-                    'sc_study_id' => $numeric,
-                    'score' => $numeric,
-                    'kkm_k3' => $numeric,
-                    'kkm_k4' => $numeric,
-                    'k3_ph' => $numeric,
-                    'k3_pts' => $numeric,
-                    'k4_pr' => $numeric,
-                    'status' => 'required|string|min:1|max:191',
-                    'predicate' => 'required|string|min:1|max:191',
-                ]);
-                if($validator_senior->fails()){
-                    return response()->json(['message' => $validator_senior->errors()], 401);
-                }else{
-                    // senior
-                    ScReportCardSenior::create([
-                        'id' => $this->random,
-                        'sc_study_id' => $request->sc_study_id,
-                        'score' => $request->score,
-                        'kkm_k3' => $request->kkm_k3,
-                        'kkm_k4' => $request->kkm_k4,
-                        'k3_ph' => $request->k3_ph,
-                        'k3_pts' => $request->k3_pts,
-                        'k4_pr' => $request->k4_pr,
-                        'status' => $request->status,
-                        'predicate' => $request->predicate,/*a b*/
-                    ]);
-                    return response()->json(['message' => 'Successfuly create data'], 200);
-                }
+            ScReportCardSenior::create([
+                'id' => $this->random,
+                'sc_study_id' => $request->sc_study_id,
+                'score' => $request->score,
+                'kkm_k3' => $request->kkm_k3,
+                'kkm_k4' => $request->kkm_k4,
+                'k3_ph' => $request->k3_ph,
+                'k3_pts' => $request->k3_pts,
+                'k4_pr' => $request->k4_pr,
+                'status' => $request->status,
+                'predicate' => $request->predicate,
+            ]);
             }
             if($ScSchool[0] == 'junior_high_school') {
-                $validator_senior = Validator::make($request->all(), [
-                    'sc_study_id' => $numeric,
-                    'score' => $numeric,
-                    'kkm_k3' => $numeric,
-                    'kkm_k4' => $numeric,
-                    'k3_ph' => $numeric,
-                    'k3_pts' => $numeric,
-                    'k4_pr' => $numeric,
-                    'status' => 'required|string|min:1|max:191',
-                    'predicate' => 'required|string|min:1|max:191',
-                ]);
-                if($validator_senior->fails()){
-                    return response()->json(['message' => $validator_senior->errors()], 401);
-                }else{
-                    // senior
-                    ScReportCardJunior::create([
-                        'id' => $this->random,
-                        'sc_study_id' => $request->sc_study_id,
-                        'score' => $request->score,
-                        'kkm_k3' => $request->kkm_k3,
-                        'kkm_k4' => $request->kkm_k4,
-                        'k3_ph' => $request->k3_ph,
-                        'k3_pts' => $request->k3_pts,
-                        'k4_pr' => $request->k4_pr,
-                        'status' => $request->status,
-                        'predicate' => $request->predicate,
-                    ]);
-                    return response()->json(['message' => 'Successfuly create data'], 200);
-                }
+            ScReportCardJunior::create([
+                'id' => $this->random,
+                'sc_study_id' => $request->sc_study_id,
+                'score' => $request->score,
+                'kkm_k3' => $request->kkm_k3,
+                'kkm_k4' => $request->kkm_k4,
+                'k3_ph' => $request->k3_ph,
+                'k3_pts' => $request->k3_pts,
+                'k4_pr' => $request->k4_pr,
+                'status' => $request->status,
+                'predicate' => $request->predicate,
+            ]);
             }
             if($ScSchool[0] == 'elementary_school') {
-                $validator_senior = Validator::make($request->all(), [
-                    'sc_study_id' => $numeric,
-                    'score' => $numeric,
-                    'kkm_k3' => $numeric,
-                    'kkm_k4' => $numeric,
-                    'k3_ph' => $numeric,
-                    'k3_pts' => $numeric,
-                    'k4_pr' => $numeric,
-                    'status' => 'required|string|min:1|max:191',
-                    'predicate' => 'required|string|min:1|max:191',
-                ]);
-                if($validator_senior->fails()){
-                    return response()->json(['message' => $validator_senior->errors()], 401);
-                }else{
-                    // elementary
-                    ScReportCardElementary::create([
-                        'id' => $this->random,
-                        'sc_study_id' => $request->sc_study_id,
-                        'score' => $request->score,
-                        'kkm_k3' => $request->kkm_k3,
-                        'kkm_k4' => $request->kkm_k4,
-                        'k3_ph' => $request->k3_ph,
-                        'k3_pts' => $request->k3_pts,
-                        'k4_pr' => $request->k4_pr,
-                        'status' => $request->status,
-                        'predicate' => $request->predicate
-                    ]);
-                    return response()->json(['message' => 'Successfuly create data'], 200);
-                }
+            ScReportCardElementary::create([
+                'id' => $this->random,
+                'sc_study_id' => $request->sc_study_id,
+                'score' => $request->score,
+                'kkm_k3' => $request->kkm_k3,
+                'kkm_k4' => $request->kkm_k4,
+                'k3_ph' => $request->k3_ph,
+                'k3_pts' => $request->k3_pts,
+                'k4_pr' => $request->k4_pr,
+                'status' => $request->status,
+                'predicate' => $request->predicate
+            ]);
             }
+            return response()->json(['message' => 'Successfuly create data'], 200);
         }
     }
 

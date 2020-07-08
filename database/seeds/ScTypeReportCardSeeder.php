@@ -11,7 +11,7 @@ class ScTypeReportCardSeeder extends Seeder
      */
     public function run()
     {
-        for ($i=0; $i < 10; $i++) { 
+        for ($i=1; $i < 11; $i++) { 
             ScTypeReportCard::create([
             	'sc_home_room_teacher_id' => '1',
             	'sc_student_id' =>  $i,

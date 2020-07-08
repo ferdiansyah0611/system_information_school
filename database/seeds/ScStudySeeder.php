@@ -11,7 +11,7 @@ class ScStudySeeder extends Seeder
      */
     public function run()
     {
-        for ($i=0; $i < 10; $i++) {
+        for ($i=1; $i < 11; $i++) {
             ScStudy::create([
             	'sc_school_id' => '1',
             	'sc_class_id' => '1',

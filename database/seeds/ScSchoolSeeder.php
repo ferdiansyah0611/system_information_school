@@ -11,7 +11,7 @@ class ScSchoolSeeder extends Seeder
      */
     public function run()
     {
-        for ($i=0; $i < 10; $i++) {
+        for ($i=1; $i < 11; $i++) {
             ScSchool::create([
             	'user_id' => '2',
             	'name' => 'SMK ' . $i,

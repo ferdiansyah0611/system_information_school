@@ -11,7 +11,7 @@ class ScStudentSeeder extends Seeder
      */
     public function run()
     {
-        for ($i=0; $i < 10; $i++) {
+        for ($i=1; $i < 11; $i++) {
             ScStudent::create([
                 'user_id' => $i,
                 'sc_school_id' => '1',

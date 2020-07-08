@@ -11,7 +11,7 @@ class ScReportCardElementarySeeder extends Seeder
      */
     public function run()
     {
-        for ($i=0; $i < 10; $i++) {
+        for ($i=1; $i < 11; $i++) {
             ScReportCardElementary::create([
                 'sc_study_id' => $i,
                 'score' => '89',
