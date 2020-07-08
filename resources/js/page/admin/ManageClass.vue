@@ -550,6 +550,9 @@ export default {
                 this.Error(error, error.message);
             })
         },
+        async changeFileImport() {
+            this.imports = this.$refs.fileImport.files[0];
+        }
     }
 }
 

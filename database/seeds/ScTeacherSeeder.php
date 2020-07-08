@@ -11,11 +11,13 @@ class ScTeacherSeeder extends Seeder
      */
     public function run()
     {
-        ScTeacher::create([
-        	'user_id' => '3',
-        	'sc_school_id' => '1',
-        	'title' => 'S.kom',
-        	'graduate' => 'University Oxford',
-        ]);
+        for ($i=0; $i < 10; $i++) {
+            ScTeacher::create([
+            	'user_id' => $i,
+            	'sc_school_id' => '1',
+            	'title' => 'S.kom',
+            	'graduate' => 'University Oxford',
+            ]);
+        }
     }
 }

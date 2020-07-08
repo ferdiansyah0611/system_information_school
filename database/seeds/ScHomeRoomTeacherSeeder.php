@@ -11,11 +11,13 @@ class ScHomeRoomTeacherSeeder extends Seeder
      */
     public function run()
     {
-        ScHomeRoomTeacher::create([
-        	'sc_teacher_id' => '1',
-        	'sc_class_id' => '1',
-        	'start_period' => '2020-08-01',
-        	'end_period' => '2021-08-01',
-        ]);
+        for ($i=0; $i < 10; $i++) {
+            ScHomeRoomTeacher::create([
+            	'sc_teacher_id' => $i,
+            	'sc_class_id' => $i,
+            	'start_period' => '2020-08-01',
+            	'end_period' => '2021-08-01',
+            ]);
+        }
     }
 }

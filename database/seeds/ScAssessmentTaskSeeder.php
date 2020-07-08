@@ -11,11 +11,13 @@ class ScAssessmentTaskSeeder extends Seeder
      */
     public function run()
     {
-        ScAssessmentTask::create([
-        	'sc_student_id' => '1',
-        	'title' => 'New Task',
-        	'description' => 'Task is configuration to install linux',
-        	'score' => '100'
-        ]);
+        for ($i=0; $i < 10; $i++) {
+            ScAssessmentTask::create([
+            	'sc_student_id' => $i,
+            	'title' => 'New Task ' . $i,
+            	'description' => 'Task is configuration to install linux',
+            	'score' => '100'
+            ]);
+        }
     }
 }

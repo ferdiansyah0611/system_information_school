@@ -32,6 +32,9 @@ Route::group(['namespace' => 'Admin\Request', 'middleware' => 'auth:api'], funct
     Route::post('assessment-task/excel/import/{any}', 'AssessmentTaskController@import')->name('assessment-task.import');
     Route::post('homeroom-teacher/excel/import/{any}', 'HomeRoomTeacherController@import')->name('homeroom-teacher.import');
     Route::post('report-card/excel/import/{any}', 'ReportCardController@import')->name('report-card.import');
+    Route::post('user/excel/import/{any}', 'AdminController@import')->name('user.import');
+    /*more*/
+    Route::get('users', 'AdminController@userLatest')->name('user.index');
 });
 Route::group(['namespace' => 'Admin\Request'], function(){
     Route::get('test', 'AdminController@sending');

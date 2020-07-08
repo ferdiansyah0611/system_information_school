@@ -16,7 +16,7 @@ mix.js('resources/js/app.js', 'public/js')
 mix.webpackConfig({
 	devServer : {
 		proxy : {
-			'*' : 'http://localhost:8000'
+			'*' : 'http://192.168.43.33:8000'
 		}
 	}
 })

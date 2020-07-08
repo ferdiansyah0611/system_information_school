@@ -40,4 +40,34 @@ class AdminController extends Controller
     	];
     	return response()->json($app);
     }
+    /**
+     * Import a file excel of the export.
+     *
+     * @param $user
+     * @return \Illuminate\Http\Response
+     */
+    public function import(Request $request, $user)
+    {
+        $validator = Validator::make($request->all(), [
+            'import' => 'file|mimes:xls,xlsx|max:5000',
+        ]);
+        if($validator->fails()) {
+            return response()->json(['message' => $validator->errors()], 401);
+        } else {
+            $check = User::where('id', $user)->pluck('id');
+            if($check[0] !== null || $check[0] !== undefined) {
+
+                $file = $request->file('import');
+                $file->move(storage_path('app/public/office'), $file->getClientOriginalName());
+                Excel::import(new AssessmentTaskImport, storage_path('app/public/office/' . $file->getClientOriginalName() ));
+                return response()->json(['message' => 'Successfuly import data'], 200);
+            } else {
+                return response()->json(['message' => 'Not allowed'], 401);
+            }
+        }
+    }
+    public function userLatest() 
+    {
+        return response()->json(User::latest()->paginate(8), 200);
+    }
 }

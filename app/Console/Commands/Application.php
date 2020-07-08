@@ -62,7 +62,7 @@ class Application extends Command
                         'role' => 'administrator',
                         'born' => Carbon::now(),
                         'location' => 'indonesia',
-                        'avatar' => 'avatar.png',
+                        'avatar' => 'avatar-teacher-male.png',
                         'languange' => 'en',
                         'gender' => 'male',
                         'created_at' => Carbon::now(),
@@ -80,7 +80,7 @@ class Application extends Command
                         'role' => 'administrator',
                         'born' => Carbon::now(),
                         'location' => 'indonesia',
-                        'avatar' => 'avatar.png',
+                        'avatar' => 'avatar-teacher-male.png',
                         'languange' => 'en',
                         'gender' => 'female',
                         'created_at' => Carbon::now(),
@@ -95,7 +95,6 @@ class Application extends Command
                 $this->call('passport:install', ['--force' => true]);
                 $this->info('Create token api successfuly');
                 $this->info('Thanks your for using this application');
-                $this->info('Copyright 2020 @Ferdiansyah');
                 if($this->confirm('Do you want start application ?')){
                     $this->call('serve');
                 } else {

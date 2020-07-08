@@ -11,9 +11,11 @@ class ScClassSeeder extends Seeder
      */
     public function run()
     {
-        ScClass::create([
-        	'sc_school_id' => '1',
-        	'name' => 'SMK Letris Indonesia'
-        ]);
+        for ($i=0; $i < 10; $i++) {
+            ScClass::create([
+            	'sc_school_id' => $i,
+            	'name' => 'SMK ' . $i
+            ]);
+        }
     }
 }

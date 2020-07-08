@@ -11,18 +11,20 @@ class ScTypeReportCardSeeder extends Seeder
      */
     public function run()
     {
-        ScTypeReportCard::create([
-        	'sc_home_room_teacher_id' => '1',
-        	'sc_student_id' =>  '1',
-        	'type' => 'senior_high_school',
-        	'period' => '2020-07-02',
-        	'description' => 'Description',
-        	'absent_broken' => '0',
-        	'absent_permission' => '0',
-        	'absent_without_explanation' => '0',
-        	'personality_behavior' => '99',
-        	'personality_diligence' => '100',
-        	'personality_neatness' => '89'
-        ]);
+        for ($i=0; $i < 10; $i++) { 
+            ScTypeReportCard::create([
+            	'sc_home_room_teacher_id' => '1',
+            	'sc_student_id' =>  $i,
+            	'type' => 'senior_high_school',
+            	'period' => '2020-07-02',
+            	'description' => 'Description',
+            	'absent_broken' => '0',
+            	'absent_permission' => '0',
+            	'absent_without_explanation' => '0',
+            	'personality_behavior' => '99',
+            	'personality_diligence' => '100',
+            	'personality_neatness' => '89'
+            ]);
+        }
     }
 }

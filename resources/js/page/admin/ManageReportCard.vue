@@ -849,7 +849,9 @@ export default {
             })
         },
         /*change event in here...*/
-        
+        async changeFileImport() {
+            this.imports = this.$refs.fileImport.files[0];
+        }
     }
 }
 

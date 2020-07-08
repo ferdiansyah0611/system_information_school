@@ -11,10 +11,12 @@ class ScNoteSeeder extends Seeder
      */
     public function run()
     {
-        ScNote::create([
-        	'user_id' => '1',
-        	'title' => 'My Notes',
-        	'note' => 'Laravel is modern framework php'
-        ]);
+        for ($i=0; $i < 10; $i++) {
+            ScNote::create([
+            	'user_id' => $i,
+            	'title' => 'My Notes',
+            	'note' => 'Laravel is modern framework php'
+            ]);
+        }
     }
 }

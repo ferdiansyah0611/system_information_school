@@ -11,69 +11,23 @@ class UserSeeder extends Seeder
      */
     public function run()
     {
-        \DB::table('users')->insert([
-        	'id' => '2',
-        	'sc_school_id' => '1',
-        	'name' => 'Ferdiansyah',
-        	'email' => 'anonymous@gmail.com',
-        	'nisn' => '3478375929',
-        	'password' => bcrypt('password'),
-        	'role' => 'admin',
-        	'born' => '2020-09-20',
-        	'location' => 'indonesia',
-        	'avatar' => 'avatar.png',
-        	'languange' => 'en',
-            'gender' => 'male',
-        	'created_at' => Carbon::now(),
-        	'updated_at' => Carbon::now()
-        ]);
-        \DB::table('users')->insert([
-            'id' => '3',
-            'sc_school_id' => '1',
-            'name' => 'Taylor Otween',
-            'email' => 'otwen@gmail.com',
-            'nisn' => '2525525255',
-            'password' => bcrypt('password'),
-            'role' => 'teacher',
-            'born' => '2020-09-21',
-            'location' => 'indonesia',
-            'avatar' => 'avatar.png',
-            'languange' => 'en',
-            'gender' => 'male',
-            'created_at' => Carbon::now(),
-            'updated_at' => Carbon::now()
-        ]);
-        \DB::table('users')->insert([
-            'id' => '4',
-            'sc_school_id' => '1',
-            'name' => 'Fadillah Muhammad',
-            'email' => 'fadillah@gmail.com',
-            'nisn' => '7563847263',
-            'password' => bcrypt('password'),
-            'role' => 'student',
-            'born' => '2020-09-22',
-            'location' => 'indonesia',
-            'avatar' => 'avatar.png',
-            'languange' => 'en',
-            'gender' => 'male',
-            'created_at' => Carbon::now(),
-            'updated_at' => Carbon::now()
-        ]);
-        \DB::table('users')->insert([
-            'id' => '5',
-            'sc_school_id' => '1',
-            'name' => 'Fadillah',
-            'email' => 'fadil@gmail.com',
-            'nisn' => '3857284950',
-            'password' => bcrypt('password'),
-            'role' => 'student',
-            'born' => '2020-09-22',
-            'location' => 'indonesia',
-            'avatar' => 'avatar.png',
-            'languange' => 'en',
-            'gender' => 'male',
-            'created_at' => Carbon::now(),
-            'updated_at' => Carbon::now()
-        ]);
+        for ($i=2; $i < 11; $i++) {
+            \DB::table('users')->insert([
+                'id' => $i,
+                'sc_school_id' => '1',
+                'name' => 'NameUsers',
+                'email' => 'anonymous' . $i . '@gmail.com',
+                'nisn' => rand(1000000, 10000000),
+                'password' => bcrypt('password'),
+                'role' => 'teacher',
+                'born' => '2020-09-20',
+                'location' => 'indonesia',
+                'avatar' => 'avatar-teacher-male.png',
+                'languange' => 'en',
+                'gender' => 'male',
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now()
+            ]);
+        }
     }
 }

@@ -699,6 +699,9 @@ export default {
         },
         changeFileUpdate() {
             this.editStudent.file = this.$refs.fileEdit.files[0];
+        },
+        async changeFileImport() {
+            this.imports = this.$refs.fileImport.files[0];
         }
     }
 }
