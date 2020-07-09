@@ -23,6 +23,9 @@ Route::group(['namespace' => 'Admin\Request', 'middleware' => 'auth:api'], funct
     Route::apiResource('homeroom-teacher', 'HomeRoomTeacherController');
     Route::apiResource('report-card', 'ReportCardController');
     Route::apiResource('note', 'NoteController');
+
+    Route::apiResource('data-user', 'UserController');
+    Route::post('data-user/update/{any}', 'UserController@update');
     /*import*/
     Route::post('class/excel/import/{any}', 'ClassController@import')->name('class.import');
     Route::post('school/excel/import/{any}', 'SchoolController@import')->name('school.import');
@@ -32,12 +35,11 @@ Route::group(['namespace' => 'Admin\Request', 'middleware' => 'auth:api'], funct
     Route::post('assessment-task/excel/import/{any}', 'AssessmentTaskController@import')->name('assessment-task.import');
     Route::post('homeroom-teacher/excel/import/{any}', 'HomeRoomTeacherController@import')->name('homeroom-teacher.import');
     Route::post('report-card/excel/import/{any}', 'ReportCardController@import')->name('report-card.import');
-    Route::post('user/excel/import/{any}', 'AdminController@import')->name('user.import');
+    Route::post('data-user/excel/import/{any}', 'AdminController@import')->name('data-user.import');
     /*more*/
     Route::get('users', 'AdminController@userLatest')->name('user.index');
 });
 Route::group(['namespace' => 'Admin\Request'], function(){
-    Route::get('test', 'AdminController@sending');
     Route::get('dashboard', 'AdminController@dashboard');
     /*export*/
     Route::get('class/excel/export/{user}/{email}', 'ClassController@export')->name('class.export');
@@ -48,6 +50,7 @@ Route::group(['namespace' => 'Admin\Request'], function(){
     Route::get('assessment-task/excel/export/{user}/{email}', 'AssessmentTaskController@export')->name('assessment-task.export');
     Route::get('homeroom-teacher/excel/export/{user}/{email}', 'HomeRoomTeacherController@export')->name('homeroom-teacher.export');
     Route::get('report-card/excel/export/{user}/{email}', 'ReportCardController@export')->name('report-card.export');
+    Route::get('data-user/excel/export/{user}/{email}', 'UserController@export')->name('data-user.export');
 });
 Route::group(['middleware' => 'auth:api'], function(){
     /*search*/

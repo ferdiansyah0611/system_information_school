@@ -38,12 +38,4 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
-    public function student()
-    {
-        return $this->hasMany('App\Models\ScStudent');
-    }
-    public function scschool()
-    {
-        return $this->belongsTo('App\Models\ScSchool');
-    }
 }

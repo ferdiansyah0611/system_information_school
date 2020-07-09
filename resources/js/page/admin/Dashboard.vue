@@ -52,7 +52,7 @@
                             <div class="card-body">
                                 <h5 class="header-title mb-4 text-center">Date Now</h5>
                                 <h3 class="text-center font-weight-bold">{{dateNow}}</h3>
-                                <h3 class="text-center font-weight-bold" id="time"></h3>
+                                <h3 class="text-center font-weight-bold time"></h3>
                             </div>
                         </div>
                     </div>
@@ -224,7 +224,9 @@ export default {
     methods: {
         time() {
             setInterval(function(){
-                document.getElementById('time').innerText = new Date().getHours() + ':' + new Date().getMinutes() + ':' + new Date().getSeconds();
+                document.getElementsByClassName('time').forEach((v) => {
+                    v.innerText = new Date().getHours() + ':' + new Date().getMinutes() + ':' + new Date().getSeconds();
+                });
             }, 1000);
         },
         async appClass(paginate = 1) {

@@ -30,6 +30,7 @@ import ManageSchool from './page/admin/ManageSchool.vue';
 import ManageStudent from './page/admin/ManageStudent.vue';
 import ManageStudy from './page/admin/ManageStudy.vue';
 import ManageTeacher from './page/admin/ManageTeacher.vue';
+import ManageUser from './page/admin/ManageUser.vue';
 import ManageAssessmentTask from './page/admin/ManageAssessmentTask.vue';
 import ManageScHomeRoomTeacher from './page/admin/ManageScHomeRoomTeacher.vue';
 import ManageReportCard from './page/admin/ManageReportCard.vue';
@@ -109,6 +110,10 @@ const routes = [{
             {
                 path: 'manage/teacher',
                 component: ManageTeacher
+            },
+            {
+                path: 'manage/user',
+                component: ManageUser
             },
             {
                 path: 'manage/assessment-task',

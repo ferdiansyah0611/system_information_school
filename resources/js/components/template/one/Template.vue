@@ -11,6 +11,7 @@
 					</transition>
                 </div>
                 <footer class="footer">
+                    <div class="time d-none"></div>
                     <div class="container-fluid">
                         <div class="row">
                             <div class="col-sm-6">

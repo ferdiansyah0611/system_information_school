@@ -87,6 +87,17 @@
                             </li>
                         </ul>
                     </li>
+                    <li>
+                        <a href="javascript: void(0);" class="has-arrow waves-effect">
+                            <div class="d-inline-block icons-sm mr-1"><i class="fas fa-book" style="color: #3051d3;"></i></div>
+                            <span>User</span>
+                        </a>
+                        <ul class="sub-menu" aria-expanded="true">
+                            <li>
+                                <router-link to="/admin/manage/user" class="waves-effect">Data</router-link>
+                            </li>
+                        </ul>
+                    </li>
                     <li class="menu-title">Assessment Student</li>
                     <li>
                         <a href="javascript: void(0);" class="has-arrow waves-effect">
