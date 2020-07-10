@@ -41,7 +41,7 @@ class AdminController extends Controller
     	return response()->json($app);
     }
     /**
-     * Import a file excel of the export.
+     * Import a file excel of the storage.
      *
      * @param $user
      * @return \Illuminate\Http\Response
@@ -68,6 +68,17 @@ class AdminController extends Controller
     }
     public function userLatest() 
     {
-        return response()->json(User::latest()->paginate(8), 200);
+        $role = request()->user()->role;
+        if($role == 'administrator') {
+            return response()->json(User::latest()
+                ->paginate(8), 200);
+        }
+        if($role == 'admin' || $role == 'teacher') {
+            return response()->json(User::latest()
+                ->where('sc_school_id', request()->user()->sc_school_id)
+                ->paginate(8), 200);
+        } else {
+            return response()->json(['message' => 'Not allowed'], 401);
+        }
     }
 }
