@@ -86,6 +86,9 @@ export default {
                 if(result.data.user.role == 'teacher') {
                     return window.location.href = '/teacher';
                 }
+                if(result.data.user.role == 'teacher') {
+                    return window.location.href = '/teacher';
+                }
                 else{
                     return window.location.href = '/';
                 }

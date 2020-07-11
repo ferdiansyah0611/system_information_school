@@ -60,6 +60,9 @@
                             <li>
                                 <router-link to="/admin/manage/student" class="waves-effect">Data</router-link>
                             </li>
+                            <li>
+                                <router-link to="/admin/manage/absent-student" class="waves-effect">Absent</router-link>
+                            </li>
                         </ul>
                     </li>
                     <li>

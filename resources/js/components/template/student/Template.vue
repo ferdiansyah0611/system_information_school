@@ -32,7 +32,7 @@
 </template>
 <script>
 import NavTemplate from '../../template/one/Nav';
-import SideLeftTemplate from '../../template/teacher/SideLeft';
+import SideLeftTemplate from '../../template/student/SideLeft';
 /*export*/
 export default {
     beforeMount() {

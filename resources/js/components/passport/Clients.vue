@@ -320,7 +320,7 @@
              * Get all of the OAuth clients for the user.
              */
             getClients() {
-                axios.get('/oauth/clients', {
+                axios.get('/api/oauth/clients', {
                     headers : {
                         'Authorization' : 'Bearer ' + this.$store.state.Users.success.token
                     }
@@ -343,7 +343,7 @@
             store() {
                 this.persistClient(
                     'post',
-                    '/oauth/clients',
+                    '/api/oauth/clients',
                     this.createForm,
                     '#modal-create-client'
                 );
