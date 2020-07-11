@@ -8,6 +8,7 @@ use Validator;
 // venor
 use Carbon\Carbon;
 // model
+use \App\Models\ScStudent;
 use App\Models\ScAbsentStudent;
 
 class AbsentStudentController extends Controller
@@ -67,28 +68,34 @@ class AbsentStudentController extends Controller
      */
     public function store(Request $request)
     {
-        $validator = Validator::make($request->all(), [
-            'sc_student_id' => 'required|numeric',
-            'date' => 'required|date',
-            'status' => 'required|string|min:4'
-        ]);
-        if($validator->fails()) {
-            return response()->json(['message' => $validator->errors()], 401);
-        } else {
-            $data = $request->all();
-            $role = request()->user()->role;
-            if($role == 'administrator' || $role == 'admin' || $role == 'teacher') {
+        $role = request()->user()->role;
+        if($role == 'administrator' || $role == 'admin' || $role == 'teacher') {
+            $validator = Validator::make($request->all(), [
+                'sc_student_id' => 'required|numeric',
+                'date' => 'required|date',
+                'status' => 'required|string|min:4'
+            ]);
+            if($validator->fails()) {
+                return response()->json(['message' => $validator->errors()], 401);
+            } else {
+                $data = $request->all();
                 if($request->opinion) {
                     $data['opinion'] = $request->opinion;
                 } else {
                     $data['opinion'] = 'OK';
                 }
+                ScAbsentStudent::create($data);
+                return response()->json(['message' => 'Successfuly create data'], 200);
             }
-            if($role == 'student') {
-                $data['opinion'] = 'present';
-            }
-            ScAbsentStudent::create($data);
+        }
+        if($role == 'student') {
+            $IDStudent = ScStudent::where('user_id', $request->user()->id)->pluck('id');
+            $data['sc_student_id'] = $IDStudent[0];
+            $data['date'] = date('Y-m-d');
+            $data['status'] = 'present';
+            ScAbsentStudent::where('sc_student_id', $IDStudent[0])->create($data);
             return response()->json(['message' => 'Successfuly create data'], 200);
+            
         }
     }
 
@@ -244,6 +251,17 @@ class AbsentStudentController extends Controller
                 ->paginate($paginate), 200);
         } else {
             return response()->json(['message' => 'Not allowed'], 401);
+        }
+    }
+    public function checked()
+    {
+        $IDStudent = ScStudent::where('user_id', request()->user()->id)->pluck('id');
+        $app = ScAbsentStudent::where('sc_student_id', $IDStudent[0])->where('date', date('Y-m-d'));
+        if($app->count() == 0) {
+            return response()->json(['message' => 'not yet absent'], 200);
+        }
+        if($app->count() == 1) {
+            return response()->json(['message' => 'already absent'], 200);
         }
     }
 }
