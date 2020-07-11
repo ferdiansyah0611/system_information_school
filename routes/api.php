@@ -26,6 +26,9 @@ Route::group(['namespace' => 'Admin\Request', 'middleware' => 'auth:api'], funct
 
     Route::apiResource('data-user', 'UserController');
     Route::post('data-user/update/{any}', 'UserController@update');
+
+    Route::apiResource('absent-student', 'AbsentStudentController');
+    Route::get('absent-student/data/check', 'AbsentStudentController@checked');
     /*import*/
     Route::post('class/excel/import/{any}', 'ClassController@import')->name('class.import');
     Route::post('school/excel/import/{any}', 'SchoolController@import')->name('school.import');
@@ -55,4 +58,6 @@ Route::group(['namespace' => 'Admin\Request'], function(){
 Route::group(['middleware' => 'auth:api'], function(){
     /*search*/
     Route::get('search/{any}', 'HomeController@search')->name('search');
+    /*oauth*/
+    Route::post('oauth/clients', '\Laravel\Passport\Http\Controllers\ClientController@store');
 });
