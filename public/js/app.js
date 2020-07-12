@@ -3248,6 +3248,9 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   mounted: function mounted() {
@@ -3833,6 +3836,9 @@ __webpack_require__.r(__webpack_exports__);
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var metismenu__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! metismenu */ "./node_modules/metismenu/dist/metisMenu.js");
 /* harmony import */ var metismenu__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(metismenu__WEBPACK_IMPORTED_MODULE_0__);
+//
+//
+//
 //
 //
 //
@@ -5342,6 +5348,881 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 _context12.next = 4;
                 return axios({
                   url: '/api/absent-student/excel/import/' + _this10.user.id,
+                  method: 'post',
+                  data: formData,
+                  headers: {
+                    'Authorization': 'Bearer ' + _this10.$store.state.Users.success.token
+                  }
+                }).then(function (result) {
+                  $('#modal-import').modal('hide');
+
+                  _this10.RequestSuccess(result.data.message);
+                })["catch"](function (error) {
+                  _this10.Error(error, error.message);
+                });
+
+              case 4:
+              case "end":
+                return _context12.stop();
+            }
+          }
+        }, _callee12);
+      }))();
+    },
+    changeFileImport: function changeFileImport() {
+      var _this11 = this;
+
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee13() {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee13$(_context13) {
+          while (1) {
+            switch (_context13.prev = _context13.next) {
+              case 0:
+                _this11.imports = _this11.$refs.fileImport.files[0];
+
+              case 1:
+              case "end":
+                return _context13.stop();
+            }
+          }
+        }, _callee13);
+      }))();
+    }
+  }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/page/admin/ManageAlumniStudent.vue?vue&type=script&lang=js&":
+/*!******************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/page/admin/ManageAlumniStudent.vue?vue&type=script&lang=js& ***!
+  \******************************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var sweetalert2__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! sweetalert2 */ "./node_modules/sweetalert2/dist/sweetalert2.all.js");
+/* harmony import */ var sweetalert2__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(sweetalert2__WEBPACK_IMPORTED_MODULE_1__);
+
+
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  beforeMount: function beforeMount() {
+    document.title = 'Manage Alumni Student';
+  },
+  data: function data() {
+    return {
+      user: this.$store.state.Users.user,
+
+      /*table data*/
+      TableAbsentStudent: [],
+      PaginateAbsentStudent: {},
+      table: {
+        columns: '25',
+        orderable: 'id asc',
+        searching: ''
+      },
+
+      /*data api fro school*/
+      school: {},
+
+      /*data for add alumni student*/
+      addAlumniStudent: {
+        id: '',
+        sc_student_id: '',
+        student_id_number: '',
+        work: ''
+      },
+
+      /*data for edit alumni student*/
+      editAlumniStudent: {
+        id: '',
+        sc_student_id: '',
+        student_id_number: '',
+        work: ''
+      },
+      imports: '',
+      loading: false
+    };
+  },
+  created: function created() {
+    /*call function default data for table*/
+    this.appClass();
+    /*call function api school*/
+
+    this.schoolData();
+  },
+  methods: {
+    /*Error page with refresh*/
+    serverErrorPage: function serverErrorPage(error, message) {
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
+                console.error(error);
+                sweetalert2__WEBPACK_IMPORTED_MODULE_1___default.a.fire({
+                  title: 'Error!',
+                  text: message + '. Please wait for the page to resfresh automatically',
+                  icon: 'error',
+                  timer: 2000
+                });
+                setTimeout(function () {
+                  document.body.style.paddingRight = '0';
+                }, 3000);
+
+              case 3:
+              case "end":
+                return _context.stop();
+            }
+          }
+        }, _callee);
+      }))();
+    },
+
+    /*display error*/
+    Error: function Error(error, message) {
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2() {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
+          while (1) {
+            switch (_context2.prev = _context2.next) {
+              case 0:
+                console.error(error);
+                sweetalert2__WEBPACK_IMPORTED_MODULE_1___default.a.fire({
+                  title: 'Error!',
+                  text: message,
+                  icon: 'error',
+                  timer: 2000
+                });
+                setTimeout(function () {
+                  document.body.style.paddingRight = '0';
+                }, 3000);
+
+              case 3:
+              case "end":
+                return _context2.stop();
+            }
+          }
+        }, _callee2);
+      }))();
+    },
+
+    /*display success*/
+    RequestSuccess: function RequestSuccess(message) {
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee3() {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee3$(_context3) {
+          while (1) {
+            switch (_context3.prev = _context3.next) {
+              case 0:
+                sweetalert2__WEBPACK_IMPORTED_MODULE_1___default.a.fire({
+                  title: 'Success!',
+                  text: message,
+                  icon: 'success',
+                  timer: 2000
+                });
+                setTimeout(function () {
+                  document.body.style.paddingRight = '0';
+                }, 3000);
+
+              case 2:
+              case "end":
+                return _context3.stop();
+            }
+          }
+        }, _callee3);
+      }))();
+    },
+
+    /*default for table*/
+    appClass: function appClass() {
+      var _arguments = arguments,
+          _this = this;
+
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee4() {
+        var paginate, data, order, columns;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee4$(_context4) {
+          while (1) {
+            switch (_context4.prev = _context4.next) {
+              case 0:
+                paginate = _arguments.length > 0 && _arguments[0] !== undefined ? _arguments[0] : 1;
+                data = _this.table.searching;
+                order = _this.table.orderable.split(' ');
+                columns = _this.table.columns;
+                _this.loading = true;
+                /*search ''*/
+
+                if (!(data == '')) {
+                  _context4.next = 10;
+                  break;
+                }
+
+                _context4.next = 8;
+                return axios({
+                  url: '/api/alumni-student?page=' + paginate + '&orderby=' + order[0] + '&type=' + order[1] + '&columns=' + columns + '&search=default',
+                  method: 'get',
+                  headers: {
+                    'Authorization': 'Bearer ' + _this.$store.state.Users.success.token
+                  }
+                }).then(function (result) {
+                  _this.TableAbsentStudent = result.data.data;
+                  _this.PaginateAbsentStudent = result.data;
+
+                  _this.$store.commit('ClassData', result.data);
+
+                  _this.loading = false;
+                })["catch"](function (error) {
+                  _this.serverErrorPage(error, error.message);
+                });
+
+              case 8:
+                _context4.next = 12;
+                break;
+
+              case 10:
+                _context4.next = 12;
+                return axios({
+                  url: '/api/alumni-student?page=' + paginate + '&orderby=' + order[0] + '&type=' + order[1] + '&columns=' + columns + '&search=' + data,
+                  method: 'get',
+                  headers: {
+                    'Authorization': 'Bearer ' + _this.$store.state.Users.success.token
+                  }
+                }).then(function (result) {
+                  _this.TableAbsentStudent = result.data.data;
+                  _this.PaginateAbsentStudent = result.data;
+                  _this.loading = false;
+                })["catch"](function (error) {
+                  _this.serverErrorPage(error, error.message);
+                });
+
+              case 12:
+              case "end":
+                return _context4.stop();
+            }
+          }
+        }, _callee4);
+      }))();
+    },
+
+    /*searching for table*/
+    search: function search(data) {
+      var _arguments2 = arguments,
+          _this2 = this;
+
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee5() {
+        var paginate, order, columns;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee5$(_context5) {
+          while (1) {
+            switch (_context5.prev = _context5.next) {
+              case 0:
+                paginate = _arguments2.length > 1 && _arguments2[1] !== undefined ? _arguments2[1] : 1;
+                order = _this2.table.orderable.split(' ');
+                columns = _this2.table.columns;
+                _this2.loading = true;
+                /*search ''*/
+
+                if (!(data == '')) {
+                  _context5.next = 9;
+                  break;
+                }
+
+                _context5.next = 7;
+                return axios({
+                  url: '/api/alumni-student?page=' + paginate + '&orderby=' + order[0] + '&type=' + order[1] + '&columns=' + columns + '&search=default',
+                  method: 'get',
+                  headers: {
+                    'Authorization': 'Bearer ' + _this2.$store.state.Users.success.token
+                  }
+                }).then(function (result) {
+                  _this2.TableAbsentStudent = result.data.data;
+                  _this2.PaginateAbsentStudent = result.data;
+                  _this2.loading = false;
+                })["catch"](function (error) {
+                  _this2.Error(error, error.message);
+                });
+
+              case 7:
+                _context5.next = 11;
+                break;
+
+              case 9:
+                _context5.next = 11;
+                return axios({
+                  url: '/api/alumni-student?page=' + paginate + '&orderby=' + order[0] + '&type=' + order[1] + '&columns=' + columns + '&search=' + data,
+                  method: 'get',
+                  headers: {
+                    'Authorization': 'Bearer ' + _this2.$store.state.Users.success.token
+                  }
+                }).then(function (result) {
+                  _this2.TableAbsentStudent = result.data.data;
+                  _this2.PaginateAbsentStudent = result.data;
+                  _this2.loading = false;
+                })["catch"](function (error) {
+                  _this2.Error(error, error.message);
+                });
+
+              case 11:
+              case "end":
+                return _context5.stop();
+            }
+          }
+        }, _callee5);
+      }))();
+    },
+
+    /*orderby for table*/
+    orderby: function orderby(order) {
+      var _arguments3 = arguments,
+          _this3 = this;
+
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee6() {
+        var paginate, data, type, columns;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee6$(_context6) {
+          while (1) {
+            switch (_context6.prev = _context6.next) {
+              case 0:
+                paginate = _arguments3.length > 1 && _arguments3[1] !== undefined ? _arguments3[1] : 1;
+                data = _this3.table.searching;
+                type = order.split(' ');
+                columns = _this3.table.columns;
+                _this3.loading = true;
+                /*search ''*/
+
+                if (!(data == '')) {
+                  _context6.next = 10;
+                  break;
+                }
+
+                _context6.next = 8;
+                return axios({
+                  url: '/api/alumni-student?page=' + paginate + '&orderby=' + type[0] + '&type=' + type[1] + '&columns=' + columns + '&search=default',
+                  method: 'get',
+                  headers: {
+                    'Authorization': 'Bearer ' + _this3.$store.state.Users.success.token
+                  }
+                }).then(function (result) {
+                  _this3.TableAbsentStudent = result.data.data;
+                  _this3.PaginateAbsentStudent = result.data;
+                  _this3.loading = false;
+                })["catch"](function (error) {
+                  _this3.Error(error, error.message);
+                });
+
+              case 8:
+                _context6.next = 12;
+                break;
+
+              case 10:
+                _context6.next = 12;
+                return axios({
+                  url: '/api/alumni-student?page=' + paginate + '&orderby=' + type[0] + '&type=' + type[1] + '&columns=' + columns + '&search=' + data,
+                  method: 'get',
+                  headers: {
+                    'Authorization': 'Bearer ' + _this3.$store.state.Users.success.token
+                  }
+                }).then(function (result) {
+                  _this3.TableAbsentStudent = result.data.data;
+                  _this3.PaginateAbsentStudent = result.data;
+                  _this3.loading = false;
+                })["catch"](function (error) {
+                  _this3.Error(error, error.message);
+                });
+
+              case 12:
+              case "end":
+                return _context6.stop();
+            }
+          }
+        }, _callee6);
+      }))();
+    },
+
+    /*choose columns for table*/
+    columns: function columns(_columns) {
+      var _arguments4 = arguments,
+          _this4 = this;
+
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee7() {
+        var paginate, data, order;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee7$(_context7) {
+          while (1) {
+            switch (_context7.prev = _context7.next) {
+              case 0:
+                paginate = _arguments4.length > 1 && _arguments4[1] !== undefined ? _arguments4[1] : 1;
+                data = _this4.table.searching;
+                order = _this4.table.orderable.split(' ');
+                _this4.loading = true;
+                /*search ''*/
+
+                if (!(data == '')) {
+                  _context7.next = 9;
+                  break;
+                }
+
+                _context7.next = 7;
+                return axios({
+                  url: '/api/alumni-student?page=' + paginate + '&orderby=' + order[0] + '&type=' + order[1] + '&columns=' + _columns + '&search=default',
+                  method: 'get',
+                  headers: {
+                    'Authorization': 'Bearer ' + _this4.$store.state.Users.success.token
+                  }
+                }).then(function (result) {
+                  _this4.TableAbsentStudent = result.data.data;
+                  _this4.PaginateAbsentStudent = result.data;
+                  _this4.loading = false;
+                })["catch"](function (error) {
+                  _this4.Error(error, error.message);
+                });
+
+              case 7:
+                _context7.next = 11;
+                break;
+
+              case 9:
+                _context7.next = 11;
+                return axios({
+                  url: '/api/alumni-student?page=' + paginate + '&orderby=' + order[0] + '&type=' + order[1] + '&columns=' + _columns + '&search=' + data,
+                  method: 'get',
+                  headers: {
+                    'Authorization': 'Bearer ' + _this4.$store.state.Users.success.token
+                  }
+                }).then(function (result) {
+                  _this4.TableAbsentStudent = result.data.data;
+                  _this4.PaginateAbsentStudent = result.data;
+                  _this4.loading = false;
+                })["catch"](function (error) {
+                  _this4.Error(error, error.message);
+                });
+
+              case 11:
+              case "end":
+                return _context7.stop();
+            }
+          }
+        }, _callee7);
+      }))();
+    },
+
+    /*api school*/
+    schoolData: function schoolData() {
+      var _this5 = this;
+
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee8() {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee8$(_context8) {
+          while (1) {
+            switch (_context8.prev = _context8.next) {
+              case 0:
+                if (!(_this5.$store.state.School.to == undefined)) {
+                  _context8.next = 5;
+                  break;
+                }
+
+                _context8.next = 3;
+                return axios({
+                  url: '/api/school?type=default',
+                  method: 'get',
+                  headers: {
+                    'Authorization': 'Bearer ' + _this5.$store.state.Users.success.token
+                  }
+                }).then(function (result) {
+                  _this5.school = result.data.data;
+
+                  _this5.$store.commit('SchoolData', result.data);
+                })["catch"](function (error) {
+                  _this5.Error(error, error.message);
+                });
+
+              case 3:
+                _context8.next = 6;
+                break;
+
+              case 5:
+                _this5.school = _this5.$store.state.School.data;
+
+              case 6:
+              case "end":
+                return _context8.stop();
+            }
+          }
+        }, _callee8);
+      }))();
+    },
+
+    /*save data for add modal*/
+    createSave: function createSave() {
+      var _this6 = this;
+
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee9() {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee9$(_context9) {
+          while (1) {
+            switch (_context9.prev = _context9.next) {
+              case 0:
+                _context9.next = 2;
+                return axios({
+                  url: '/api/alumni-student',
+                  method: 'post',
+                  headers: {
+                    'Authorization': 'Bearer ' + _this6.$store.state.Users.success.token
+                  },
+                  data: {
+                    sc_student_id: _this6.addAlumniStudent.sc_student_id,
+                    student_id_number: _this6.addAlumniStudent.student_id_number,
+                    work: _this6.addAlumniStudent.work
+                  }
+                }).then(function (result) {
+                  $('#modal-add').modal('hide');
+
+                  _this6.RequestSuccess(result.data.message);
+                  /*refresh*/
+
+
+                  _this6.appClass();
+                })["catch"](function (error) {
+                  _this6.Error(error, error.message);
+                });
+
+              case 2:
+              case "end":
+                return _context9.stop();
+            }
+          }
+        }, _callee9);
+      }))();
+    },
+
+    /*save data for edit modal*/
+    editSave: function editSave() {
+      var _this7 = this;
+
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee10() {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee10$(_context10) {
+          while (1) {
+            switch (_context10.prev = _context10.next) {
+              case 0:
+                _context10.next = 2;
+                return axios({
+                  url: '/api/alumni-student/' + _this7.editAlumniStudent.id,
+                  method: 'put',
+                  headers: {
+                    'Authorization': 'Bearer ' + _this7.$store.state.Users.success.token
+                  },
+                  data: {
+                    sc_student_id: _this7.editAlumniStudent.sc_student_id,
+                    student_id_number: _this7.editAlumniStudent.student_id_number,
+                    work: _this7.editAlumniStudent.work
+                  }
+                }).then(function (result) {
+                  $('#modal-1').modal('hide');
+
+                  _this7.RequestSuccess(result.data.message);
+                  /*refresh*/
+
+
+                  _this7.appClass();
+                })["catch"](function (error) {
+                  _this7.Error(error, error.message);
+                });
+
+              case 2:
+              case "end":
+                return _context10.stop();
+            }
+          }
+        }, _callee10);
+      }))();
+    },
+
+    /*edit/get data on click for table*/
+    editRequest: function editRequest(id) {
+      var _this8 = this;
+
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee11() {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee11$(_context11) {
+          while (1) {
+            switch (_context11.prev = _context11.next) {
+              case 0:
+                _context11.next = 2;
+                return axios({
+                  url: '/api/alumni-student/' + id,
+                  method: 'get',
+                  headers: {
+                    'Authorization': 'Bearer ' + _this8.$store.state.Users.success.token
+                  }
+                }).then(function (result) {
+                  $('#modal-1').modal('show');
+                  result.data.forEach(function (val, key) {
+                    _this8.editAlumniStudent.id = val.id;
+                    _this8.editAlumniStudent.sc_student_id = val.sc_student_id;
+                    _this8.editAlumniStudent.student_id_number = val.student_id_number;
+                    _this8.editAlumniStudent.work = val.work;
+                    _this8.editAlumniStudent.updated_at = val.updated_at;
+                  });
+                })["catch"](function (error) {
+                  _this8.Error(error, error.message);
+                });
+
+              case 2:
+              case "end":
+                return _context11.stop();
+            }
+          }
+        }, _callee11);
+      }))();
+    },
+
+    /*delete data on click for table*/
+    deleted: function deleted(id) {
+      var _this9 = this;
+
+      var data = id;
+      sweetalert2__WEBPACK_IMPORTED_MODULE_1___default.a.fire({
+        title: 'Are you sure',
+        text: 'You will not be able to recover this data!',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonText: 'Yes, delete it!',
+        cancelButtonText: 'No, keep it'
+      }).then(function (result) {
+        if (result.value) {
+          return axios({
+            url: '/api/alumni-student/' + data,
+            method: 'delete',
+            headers: {
+              'Authorization': 'Bearer ' + _this9.$store.state.Users.success.token
+            }
+          }).then(function (result) {
+            _this9.RequestSuccess(result.data.message);
+            /*refresh*/
+
+
+            _this9.appClass();
+          })["catch"](function (error) {
+            _this9.Error(error, error.message);
+          });
+        } else if (result.dismiss === sweetalert2__WEBPACK_IMPORTED_MODULE_1___default.a.DismissReason.cancel) {
+          sweetalert2__WEBPACK_IMPORTED_MODULE_1___default.a.fire({
+            title: 'Cancelled!',
+            text: 'Your data is safe',
+            icon: 'error',
+            timer: 2000
+          });
+          setTimeout(function () {
+            document.body.style.paddingRight = '0';
+          }, 3000);
+        }
+      });
+    },
+    importData: function importData() {
+      var _this10 = this;
+
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee12() {
+        var formData;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee12$(_context12) {
+          while (1) {
+            switch (_context12.prev = _context12.next) {
+              case 0:
+                formData = new FormData();
+                formData.append('import', _this10.imports);
+                _context12.next = 4;
+                return axios({
+                  url: '/api/alumni-student/excel/import/' + _this10.user.id,
                   method: 'post',
                   data: formData,
                   headers: {
@@ -94950,6 +95831,21 @@ var render = function() {
                       )
                     ],
                     1
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "li",
+                    [
+                      _c(
+                        "router-link",
+                        {
+                          staticClass: "waves-effect",
+                          attrs: { to: "/admin/manage/alumni-student" }
+                        },
+                        [_vm._v("Alumni")]
+                      )
+                    ],
+                    1
                   )
                 ]
               )
@@ -96150,6 +97046,21 @@ var render = function() {
                           attrs: { to: "/teacher/manage/student" }
                         },
                         [_vm._v("Data")]
+                      )
+                    ],
+                    1
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "li",
+                    [
+                      _c(
+                        "router-link",
+                        {
+                          staticClass: "waves-effect",
+                          attrs: { to: "/admin/manage/alumni-student" }
+                        },
+                        [_vm._v("Alumni")]
                       )
                     ],
                     1
@@ -97909,6 +98820,909 @@ var staticRenderFns = [
         _c("th", [_vm._v("Name")]),
         _vm._v(" "),
         _c("th", [_vm._v("Status")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Updated On")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Action")])
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "modal-header" }, [
+      _c(
+        "h5",
+        { staticClass: "modal-title mt-0", attrs: { id: "modal-add-title" } },
+        [_vm._v("Add data")]
+      ),
+      _vm._v(" "),
+      _c(
+        "button",
+        {
+          staticClass: "close",
+          attrs: {
+            type: "button",
+            "data-dismiss": "modal",
+            "aria-label": "Close"
+          }
+        },
+        [_c("span", { attrs: { "aria-hidden": "true" } }, [_vm._v("×")])]
+      )
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "modal-header" }, [
+      _c(
+        "h5",
+        { staticClass: "modal-title mt-0", attrs: { id: "modal-1-title" } },
+        [_vm._v("Edit data")]
+      ),
+      _vm._v(" "),
+      _c(
+        "button",
+        {
+          staticClass: "close",
+          attrs: {
+            type: "button",
+            "data-dismiss": "modal",
+            "aria-label": "Close"
+          }
+        },
+        [_c("span", { attrs: { "aria-hidden": "true" } }, [_vm._v("×")])]
+      )
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "modal-header" }, [
+      _c(
+        "h5",
+        {
+          staticClass: "modal-title mt-0",
+          attrs: { id: "modal-import-title" }
+        },
+        [_vm._v("Import data")]
+      ),
+      _vm._v(" "),
+      _c(
+        "button",
+        {
+          staticClass: "close",
+          attrs: {
+            type: "button",
+            "data-dismiss": "modal",
+            "aria-label": "Close"
+          }
+        },
+        [_c("span", { attrs: { "aria-hidden": "true" } }, [_vm._v("×")])]
+      )
+    ])
+  }
+]
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/page/admin/ManageAlumniStudent.vue?vue&type=template&id=3ea3dcd4&":
+/*!**********************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/page/admin/ManageAlumniStudent.vue?vue&type=template&id=3ea3dcd4& ***!
+  \**********************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", [
+    _c("div", { staticClass: "page-title-box" }, [
+      _c("div", { staticClass: "container-fluid" }, [
+        _c("div", { staticClass: "row align-items-center" }, [
+          _vm._m(0),
+          _vm._v(" "),
+          _c("div", { staticClass: "col-md-4" }, [
+            _c("div", { staticClass: "float-right d-md-block" }, [
+              _c("div", { staticClass: "dropdown" }, [
+                _vm._m(1),
+                _vm._v(" "),
+                _c(
+                  "div",
+                  {
+                    staticClass:
+                      "dropdown-menu dropdown-menu-right dropdown-menu-animated"
+                  },
+                  [
+                    _c(
+                      "a",
+                      {
+                        staticClass: "dropdown-item",
+                        attrs: {
+                          href: "#",
+                          "data-toggle": "modal",
+                          "data-target": "#modal-add"
+                        }
+                      },
+                      [_vm._v("Add new data")]
+                    ),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "dropdown-divider" }),
+                    _vm._v(" "),
+                    _c(
+                      "a",
+                      {
+                        staticClass: "dropdown-item",
+                        attrs: {
+                          href: "#",
+                          "data-toggle": "modal",
+                          "data-target": "#modal-import"
+                        }
+                      },
+                      [_vm._v("Import Excel")]
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "a",
+                      {
+                        staticClass: "dropdown-item",
+                        attrs: {
+                          href:
+                            "/api/alumni-student/excel/export/" +
+                            _vm.user.id +
+                            "/" +
+                            _vm.user.email,
+                          download: ""
+                        }
+                      },
+                      [_vm._v("Export Excel")]
+                    )
+                  ]
+                )
+              ])
+            ])
+          ])
+        ])
+      ])
+    ]),
+    _vm._v(" "),
+    _c("div", { staticClass: "page-content-wrapper" }, [
+      _c("div", { staticClass: "container-fluid" }, [
+        _c("div", { staticClass: "row" }, [
+          _c("div", { staticClass: "card col-12" }, [
+            _c("div", { staticClass: "card-body" }, [
+              _c("div", { staticClass: "col-sm-12 col-md-4 float-left" }, [
+                _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.table.searching,
+                      expression: "table.searching"
+                    }
+                  ],
+                  staticClass: "form-control",
+                  attrs: {
+                    type: "search",
+                    name: "search",
+                    placeholder: "Search data...",
+                    autocomplete: "off"
+                  },
+                  domProps: { value: _vm.table.searching },
+                  on: {
+                    keyup: function($event) {
+                      return _vm.search($event.target.value)
+                    },
+                    input: function($event) {
+                      if ($event.target.composing) {
+                        return
+                      }
+                      _vm.$set(_vm.table, "searching", $event.target.value)
+                    }
+                  }
+                })
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "col-sm-12 col-md-4 float-left" }, [
+                _c(
+                  "select",
+                  {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.table.orderable,
+                        expression: "table.orderable"
+                      }
+                    ],
+                    staticClass: "custom-select",
+                    on: {
+                      change: [
+                        function($event) {
+                          var $$selectedVal = Array.prototype.filter
+                            .call($event.target.options, function(o) {
+                              return o.selected
+                            })
+                            .map(function(o) {
+                              var val = "_value" in o ? o._value : o.value
+                              return val
+                            })
+                          _vm.$set(
+                            _vm.table,
+                            "orderable",
+                            $event.target.multiple
+                              ? $$selectedVal
+                              : $$selectedVal[0]
+                          )
+                        },
+                        function($event) {
+                          return _vm.orderby($event.target.value)
+                        }
+                      ]
+                    }
+                  },
+                  [
+                    _c("option", { attrs: { selected: "", value: "id asc" } }, [
+                      _vm._v("ID ASC")
+                    ]),
+                    _vm._v(" "),
+                    _c("option", { attrs: { value: "id desc" } }, [
+                      _vm._v("ID DESC")
+                    ]),
+                    _vm._v(" "),
+                    _c("option", { attrs: { value: "sc_school_name asc" } }, [
+                      _vm._v("School ASC")
+                    ]),
+                    _vm._v(" "),
+                    _c("option", { attrs: { value: "sc_school_name desc" } }, [
+                      _vm._v("School DESC")
+                    ]),
+                    _vm._v(" "),
+                    _c("option", { attrs: { value: "user_name asc" } }, [
+                      _vm._v("Name ASC")
+                    ]),
+                    _vm._v(" "),
+                    _c("option", { attrs: { value: "user_name desc" } }, [
+                      _vm._v("Name DESC")
+                    ]),
+                    _vm._v(" "),
+                    _c(
+                      "option",
+                      { attrs: { value: "student_id_number asc" } },
+                      [_vm._v("Student ID Number ASC")]
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "option",
+                      { attrs: { value: "student_id_number desc" } },
+                      [_vm._v("Student ID Number DESC")]
+                    ),
+                    _vm._v(" "),
+                    _c("option", { attrs: { value: "work asc" } }, [
+                      _vm._v("Work ASC")
+                    ]),
+                    _vm._v(" "),
+                    _c("option", { attrs: { value: "work desc" } }, [
+                      _vm._v("Work DESC")
+                    ])
+                  ]
+                )
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "col-sm-12 col-md-4 float-left" }, [
+                _c(
+                  "select",
+                  {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.table.columns,
+                        expression: "table.columns"
+                      }
+                    ],
+                    staticClass: "custom-select",
+                    on: {
+                      change: [
+                        function($event) {
+                          var $$selectedVal = Array.prototype.filter
+                            .call($event.target.options, function(o) {
+                              return o.selected
+                            })
+                            .map(function(o) {
+                              var val = "_value" in o ? o._value : o.value
+                              return val
+                            })
+                          _vm.$set(
+                            _vm.table,
+                            "columns",
+                            $event.target.multiple
+                              ? $$selectedVal
+                              : $$selectedVal[0]
+                          )
+                        },
+                        function($event) {
+                          return _vm.columns($event.target.value)
+                        }
+                      ]
+                    }
+                  },
+                  [
+                    _c("option", { attrs: { value: "10" } }, [_vm._v("10")]),
+                    _vm._v(" "),
+                    _c("option", { attrs: { selected: "", value: "25" } }, [
+                      _vm._v("25")
+                    ]),
+                    _vm._v(" "),
+                    _c("option", { attrs: { value: "50" } }, [_vm._v("50")]),
+                    _vm._v(" "),
+                    _c("option", { attrs: { value: "100" } }, [_vm._v("100")])
+                  ]
+                )
+              ]),
+              _vm._v(" "),
+              _c(
+                "div",
+                { staticClass: "table-responsive" },
+                [
+                  _vm.loading
+                    ? _c(
+                        "div",
+                        { staticClass: "d-flex justify-content-center mt-4" },
+                        [
+                          _vm._m(2),
+                          _vm._v(" "),
+                          _vm._m(3),
+                          _vm._v(" "),
+                          _vm._m(4)
+                        ]
+                      )
+                    : _vm._e(),
+                  _vm._v(" "),
+                  _vm.loading == false
+                    ? _c(
+                        "table",
+                        { staticClass: "table mb-0" },
+                        [
+                          _vm._m(5),
+                          _vm._v(" "),
+                          _vm._l(_vm.TableAbsentStudent, function(data) {
+                            return _c("tbody", [
+                              _c("tr", [
+                                _c("td", [_vm._v(_vm._s(data.id))]),
+                                _vm._v(" "),
+                                _c("td", [_vm._v(_vm._s(data.sc_school_name))]),
+                                _vm._v(" "),
+                                _c("td", [_vm._v(_vm._s(data.user_name))]),
+                                _vm._v(" "),
+                                _c("td", [
+                                  _vm._v(_vm._s(data.student_id_number))
+                                ]),
+                                _vm._v(" "),
+                                _c("td", [_vm._v(_vm._s(data.work))]),
+                                _vm._v(" "),
+                                _c("th", [_vm._v(_vm._s(data.updated_at))]),
+                                _vm._v(" "),
+                                _c("th", [
+                                  _c(
+                                    "button",
+                                    {
+                                      staticClass:
+                                        "btn btn-primary btn-sm waves-effect waves-light",
+                                      on: {
+                                        click: function($event) {
+                                          return _vm.editRequest(data.id)
+                                        }
+                                      }
+                                    },
+                                    [
+                                      _c("i", {
+                                        staticClass:
+                                          "mdi mdi-square-edit-outline"
+                                      })
+                                    ]
+                                  ),
+                                  _vm._v(" "),
+                                  _c(
+                                    "button",
+                                    {
+                                      staticClass:
+                                        "btn btn-danger btn-sm waves-effect waves-light",
+                                      on: {
+                                        click: function($event) {
+                                          return _vm.deleted(data.id)
+                                        }
+                                      }
+                                    },
+                                    [
+                                      _c("i", {
+                                        staticClass: "mdi mdi-plus-box-outline"
+                                      })
+                                    ]
+                                  )
+                                ])
+                              ])
+                            ])
+                          })
+                        ],
+                        2
+                      )
+                    : _vm._e(),
+                  _vm._v(" "),
+                  _vm.loading == false
+                    ? _c("pagination", {
+                        attrs: { data: _vm.PaginateAbsentStudent },
+                        on: { "pagination-change-page": _vm.appClass }
+                      })
+                    : _vm._e()
+                ],
+                1
+              )
+            ])
+          ])
+        ])
+      ])
+    ]),
+    _vm._v(" "),
+    _c(
+      "div",
+      {
+        staticClass: "modal fade",
+        attrs: {
+          id: "modal-add",
+          tabindex: "-1",
+          role: "dialog",
+          "aria-labelledby": "modal-add-title",
+          "aria-hidden": "true"
+        }
+      },
+      [
+        _c("div", { staticClass: "modal-dialog modal-dialog-scrollable" }, [
+          _c("div", { staticClass: "modal-content" }, [
+            _vm._m(6),
+            _vm._v(" "),
+            _c("div", { staticClass: "modal-body" }, [
+              _c(
+                "div",
+                { staticClass: "form-group float-left col-sm-12 col-md-6" },
+                [
+                  _c("label", { attrs: { for: "student-add" } }, [
+                    _vm._v("Student ID")
+                  ]),
+                  _vm._v(" "),
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.addAlumniStudent.sc_student_id,
+                        expression: "addAlumniStudent.sc_student_id"
+                      }
+                    ],
+                    staticClass: "form-control",
+                    attrs: { type: "number", id: "student-add", required: "" },
+                    domProps: { value: _vm.addAlumniStudent.sc_student_id },
+                    on: {
+                      input: function($event) {
+                        if ($event.target.composing) {
+                          return
+                        }
+                        _vm.$set(
+                          _vm.addAlumniStudent,
+                          "sc_student_id",
+                          $event.target.value
+                        )
+                      }
+                    }
+                  })
+                ]
+              ),
+              _vm._v(" "),
+              _c(
+                "div",
+                { staticClass: "form-group float-left col-sm-12 col-md-6" },
+                [
+                  _c("label", { attrs: { for: "student00-number-add" } }, [
+                    _vm._v("Student ID Number")
+                  ]),
+                  _vm._v(" "),
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.addAlumniStudent.student_id_number,
+                        expression: "addAlumniStudent.student_id_number"
+                      }
+                    ],
+                    staticClass: "form-control",
+                    attrs: {
+                      type: "number",
+                      id: "student00-number-add",
+                      required: ""
+                    },
+                    domProps: { value: _vm.addAlumniStudent.student_id_number },
+                    on: {
+                      input: function($event) {
+                        if ($event.target.composing) {
+                          return
+                        }
+                        _vm.$set(
+                          _vm.addAlumniStudent,
+                          "student_id_number",
+                          $event.target.value
+                        )
+                      }
+                    }
+                  })
+                ]
+              ),
+              _vm._v(" "),
+              _c("div", { staticClass: "form-group float-left col-12" }, [
+                _c("label", { attrs: { for: "work-add" } }, [_vm._v("Work")]),
+                _vm._v(" "),
+                _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.addAlumniStudent.work,
+                      expression: "addAlumniStudent.work"
+                    }
+                  ],
+                  staticClass: "form-control",
+                  attrs: { id: "work-add", required: "" },
+                  domProps: { value: _vm.addAlumniStudent.work },
+                  on: {
+                    input: function($event) {
+                      if ($event.target.composing) {
+                        return
+                      }
+                      _vm.$set(
+                        _vm.addAlumniStudent,
+                        "work",
+                        $event.target.value
+                      )
+                    }
+                  }
+                })
+              ])
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "modal-footer" }, [
+              _c(
+                "button",
+                {
+                  staticClass: "btn btn-secondary",
+                  attrs: { type: "button", "data-dismiss": "modal" }
+                },
+                [_vm._v("Close")]
+              ),
+              _vm._v(" "),
+              _c(
+                "button",
+                {
+                  staticClass: "btn btn-primary",
+                  attrs: { type: "button" },
+                  on: { click: _vm.createSave }
+                },
+                [_vm._v("Save changes")]
+              )
+            ])
+          ])
+        ])
+      ]
+    ),
+    _vm._v(" "),
+    _c(
+      "div",
+      {
+        staticClass: "modal fade",
+        attrs: {
+          id: "modal-1",
+          tabindex: "-1",
+          role: "dialog",
+          "aria-labelledby": "modal-1-title",
+          "aria-hidden": "true"
+        }
+      },
+      [
+        _c("div", { staticClass: "modal-dialog modal-dialog-scrollable" }, [
+          _c("div", { staticClass: "modal-content" }, [
+            _vm._m(7),
+            _vm._v(" "),
+            _c("div", { staticClass: "modal-body" }, [
+              _c(
+                "div",
+                { staticClass: "form-group float-left col-sm-12 col-md-6" },
+                [
+                  _c("label", { attrs: { for: "student-edit" } }, [
+                    _vm._v("Student ID")
+                  ]),
+                  _vm._v(" "),
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.editAlumniStudent.sc_student_id,
+                        expression: "editAlumniStudent.sc_student_id"
+                      }
+                    ],
+                    staticClass: "form-control",
+                    attrs: { type: "number", id: "student-edit", required: "" },
+                    domProps: { value: _vm.editAlumniStudent.sc_student_id },
+                    on: {
+                      input: function($event) {
+                        if ($event.target.composing) {
+                          return
+                        }
+                        _vm.$set(
+                          _vm.editAlumniStudent,
+                          "sc_student_id",
+                          $event.target.value
+                        )
+                      }
+                    }
+                  })
+                ]
+              ),
+              _vm._v(" "),
+              _c(
+                "div",
+                { staticClass: "form-group float-left col-sm-12 col-md-6" },
+                [
+                  _c("label", { attrs: { for: "student00-number-edit" } }, [
+                    _vm._v("Student ID Number")
+                  ]),
+                  _vm._v(" "),
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.editAlumniStudent.student_id_number,
+                        expression: "editAlumniStudent.student_id_number"
+                      }
+                    ],
+                    staticClass: "form-control",
+                    attrs: {
+                      type: "number",
+                      id: "student00-number-edit",
+                      required: ""
+                    },
+                    domProps: {
+                      value: _vm.editAlumniStudent.student_id_number
+                    },
+                    on: {
+                      input: function($event) {
+                        if ($event.target.composing) {
+                          return
+                        }
+                        _vm.$set(
+                          _vm.editAlumniStudent,
+                          "student_id_number",
+                          $event.target.value
+                        )
+                      }
+                    }
+                  })
+                ]
+              ),
+              _vm._v(" "),
+              _c("div", { staticClass: "form-group float-left col-12" }, [
+                _c("label", { attrs: { for: "work-edit" } }, [_vm._v("Work")]),
+                _vm._v(" "),
+                _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.editAlumniStudent.work,
+                      expression: "editAlumniStudent.work"
+                    }
+                  ],
+                  staticClass: "form-control",
+                  attrs: { id: "work-edit", required: "" },
+                  domProps: { value: _vm.editAlumniStudent.work },
+                  on: {
+                    input: function($event) {
+                      if ($event.target.composing) {
+                        return
+                      }
+                      _vm.$set(
+                        _vm.editAlumniStudent,
+                        "work",
+                        $event.target.value
+                      )
+                    }
+                  }
+                })
+              ])
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "modal-footer" }, [
+              _c(
+                "button",
+                {
+                  staticClass: "btn btn-secondary",
+                  attrs: { type: "button", "data-dismiss": "modal" }
+                },
+                [_vm._v("Close")]
+              ),
+              _vm._v(" "),
+              _c(
+                "button",
+                {
+                  staticClass: "btn btn-primary",
+                  attrs: { type: "button" },
+                  on: { click: _vm.editSave }
+                },
+                [_vm._v("Save changes")]
+              )
+            ])
+          ])
+        ])
+      ]
+    ),
+    _vm._v(" "),
+    _c(
+      "div",
+      {
+        staticClass: "modal fade",
+        attrs: {
+          id: "modal-import",
+          tabindex: "-1",
+          role: "dialog",
+          "aria-labelledby": "modal-import-title",
+          "aria-hidden": "true"
+        }
+      },
+      [
+        _c("div", { staticClass: "modal-dialog modal-dialog-scrollable" }, [
+          _c("div", { staticClass: "modal-content" }, [
+            _vm._m(8),
+            _vm._v(" "),
+            _c("div", { staticClass: "modal-body" }, [
+              _c("label", { attrs: { for: "imports" } }, [
+                _vm._v("File format .xls / .xlsx")
+              ]),
+              _vm._v(" "),
+              _c("input", {
+                ref: "fileImport",
+                staticClass: "form-control",
+                attrs: { type: "file", id: "imports", accept: ".xls,.xlsx" },
+                on: {
+                  change: function($event) {
+                    return _vm.changeFileImport()
+                  }
+                }
+              }),
+              _vm._v(" "),
+              _c(
+                "button",
+                {
+                  staticClass: "btn btn-primary mt-2",
+                  on: { click: _vm.importData }
+                },
+                [_vm._v("Import")]
+              )
+            ])
+          ])
+        ])
+      ]
+    )
+  ])
+}
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "col-md-8" }, [
+      _c("h4", { staticClass: "page-title mb-1" }, [
+        _vm._v("Manage Data Absent Student")
+      ]),
+      _vm._v(" "),
+      _c("ol", { staticClass: "breadcrumb m-0" }, [
+        _c("li", { staticClass: "breadcrumb-item" }, [
+          _c("a", { attrs: { href: "javascript: void(0);" } }, [
+            _vm._v("Manage")
+          ])
+        ]),
+        _vm._v(" "),
+        _c("li", { staticClass: "breadcrumb-item active" }, [
+          _vm._v("Absent Student")
+        ])
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "button",
+      {
+        staticClass: "btn btn-light btn-rounded dropdown-toggle",
+        attrs: {
+          type: "button",
+          "data-toggle": "dropdown",
+          "aria-haspopup": "true",
+          "aria-expanded": "false"
+        }
+      },
+      [
+        _c("i", { staticClass: "mdi mdi-settings-outline mr-1" }),
+        _vm._v(" Settings\n                            ")
+      ]
+    )
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "div",
+      {
+        staticClass: "spinner-grow text-danger mr-2 mt-2",
+        attrs: { role: "status" }
+      },
+      [_c("span", { staticClass: "sr-only" }, [_vm._v("Loading...")])]
+    )
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "div",
+      {
+        staticClass: "spinner-grow text-warning mr-2 mt-2",
+        attrs: { role: "status" }
+      },
+      [_c("span", { staticClass: "sr-only" }, [_vm._v("Loading...")])]
+    )
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "div",
+      {
+        staticClass: "spinner-grow text-success mr-2 mt-2",
+        attrs: { role: "status" }
+      },
+      [_c("span", { staticClass: "sr-only" }, [_vm._v("Loading...")])]
+    )
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("thead", [
+      _c("tr", [
+        _c("th", [_vm._v("#")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("School")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Name")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Student ID Number")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Work")]),
         _vm._v(" "),
         _c("th", [_vm._v("Updated On")]),
         _vm._v(" "),
@@ -127884,6 +129698,75 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./resources/js/page/admin/ManageAlumniStudent.vue":
+/*!*********************************************************!*\
+  !*** ./resources/js/page/admin/ManageAlumniStudent.vue ***!
+  \*********************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _ManageAlumniStudent_vue_vue_type_template_id_3ea3dcd4___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./ManageAlumniStudent.vue?vue&type=template&id=3ea3dcd4& */ "./resources/js/page/admin/ManageAlumniStudent.vue?vue&type=template&id=3ea3dcd4&");
+/* harmony import */ var _ManageAlumniStudent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./ManageAlumniStudent.vue?vue&type=script&lang=js& */ "./resources/js/page/admin/ManageAlumniStudent.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _ManageAlumniStudent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _ManageAlumniStudent_vue_vue_type_template_id_3ea3dcd4___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _ManageAlumniStudent_vue_vue_type_template_id_3ea3dcd4___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/page/admin/ManageAlumniStudent.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/page/admin/ManageAlumniStudent.vue?vue&type=script&lang=js&":
+/*!**********************************************************************************!*\
+  !*** ./resources/js/page/admin/ManageAlumniStudent.vue?vue&type=script&lang=js& ***!
+  \**********************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_ManageAlumniStudent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib??ref--4-0!../../../../node_modules/vue-loader/lib??vue-loader-options!./ManageAlumniStudent.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/page/admin/ManageAlumniStudent.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_ManageAlumniStudent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/page/admin/ManageAlumniStudent.vue?vue&type=template&id=3ea3dcd4&":
+/*!****************************************************************************************!*\
+  !*** ./resources/js/page/admin/ManageAlumniStudent.vue?vue&type=template&id=3ea3dcd4& ***!
+  \****************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ManageAlumniStudent_vue_vue_type_template_id_3ea3dcd4___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib??vue-loader-options!./ManageAlumniStudent.vue?vue&type=template&id=3ea3dcd4& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/page/admin/ManageAlumniStudent.vue?vue&type=template&id=3ea3dcd4&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ManageAlumniStudent_vue_vue_type_template_id_3ea3dcd4___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ManageAlumniStudent_vue_vue_type_template_id_3ea3dcd4___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
 /***/ "./resources/js/page/admin/ManageAssessmentTask.vue":
 /*!**********************************************************!*\
   !*** ./resources/js/page/admin/ManageAssessmentTask.vue ***!
@@ -128716,15 +130599,14 @@ __webpack_require__.r(__webpack_exports__);
 /*!*************************************************!*\
   !*** ./resources/js/page/student/Dashboard.vue ***!
   \*************************************************/
-/*! no static exports found */
+/*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _Dashboard_vue_vue_type_template_id_7eee37c4___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Dashboard.vue?vue&type=template&id=7eee37c4& */ "./resources/js/page/student/Dashboard.vue?vue&type=template&id=7eee37c4&");
 /* harmony import */ var _Dashboard_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Dashboard.vue?vue&type=script&lang=js& */ "./resources/js/page/student/Dashboard.vue?vue&type=script&lang=js&");
-/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _Dashboard_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__) if(__WEBPACK_IMPORT_KEY__ !== 'default') (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _Dashboard_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__[key]; }) }(__WEBPACK_IMPORT_KEY__));
-/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
 
 
 
@@ -128754,7 +130636,7 @@ component.options.__file = "resources/js/page/student/Dashboard.vue"
 /*!**************************************************************************!*\
   !*** ./resources/js/page/student/Dashboard.vue?vue&type=script&lang=js& ***!
   \**************************************************************************/
-/*! no static exports found */
+/*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -128842,15 +130724,17 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _page_admin_ManageAssessmentTask_vue__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./page/admin/ManageAssessmentTask.vue */ "./resources/js/page/admin/ManageAssessmentTask.vue");
 /* harmony import */ var _page_admin_ManageScHomeRoomTeacher_vue__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./page/admin/ManageScHomeRoomTeacher.vue */ "./resources/js/page/admin/ManageScHomeRoomTeacher.vue");
 /* harmony import */ var _page_admin_ManageReportCard_vue__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./page/admin/ManageReportCard.vue */ "./resources/js/page/admin/ManageReportCard.vue");
-/* harmony import */ var _components_template_teacher_Template_vue__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./components/template/teacher/Template.vue */ "./resources/js/components/template/teacher/Template.vue");
-/* harmony import */ var _components_template_student_Template_vue__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ./components/template/student/Template.vue */ "./resources/js/components/template/student/Template.vue");
-/* harmony import */ var _page_student_Dashboard_vue__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ./page/student/Dashboard.vue */ "./resources/js/page/student/Dashboard.vue");
-/* harmony import */ var _components_auth_Login_vue__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ./components/auth/Login.vue */ "./resources/js/components/auth/Login.vue");
-/* harmony import */ var _page_api_Client_vue__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ./page/api/Client.vue */ "./resources/js/page/api/Client.vue");
-/* harmony import */ var _page_api_AuthorizedClient_vue__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! ./page/api/AuthorizedClient.vue */ "./resources/js/page/api/AuthorizedClient.vue");
-/* harmony import */ var _page_api_PersonalToken_vue__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! ./page/api/PersonalToken.vue */ "./resources/js/page/api/PersonalToken.vue");
+/* harmony import */ var _page_admin_ManageAlumniStudent_vue__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./page/admin/ManageAlumniStudent.vue */ "./resources/js/page/admin/ManageAlumniStudent.vue");
+/* harmony import */ var _components_template_teacher_Template_vue__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ./components/template/teacher/Template.vue */ "./resources/js/components/template/teacher/Template.vue");
+/* harmony import */ var _components_template_student_Template_vue__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ./components/template/student/Template.vue */ "./resources/js/components/template/student/Template.vue");
+/* harmony import */ var _page_student_Dashboard_vue__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ./page/student/Dashboard.vue */ "./resources/js/page/student/Dashboard.vue");
+/* harmony import */ var _components_auth_Login_vue__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ./components/auth/Login.vue */ "./resources/js/components/auth/Login.vue");
+/* harmony import */ var _page_api_Client_vue__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! ./page/api/Client.vue */ "./resources/js/page/api/Client.vue");
+/* harmony import */ var _page_api_AuthorizedClient_vue__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! ./page/api/AuthorizedClient.vue */ "./resources/js/page/api/AuthorizedClient.vue");
+/* harmony import */ var _page_api_PersonalToken_vue__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(/*! ./page/api/PersonalToken.vue */ "./resources/js/page/api/PersonalToken.vue");
 
  // admin {teacher}
+
 
 
 
@@ -128877,7 +130761,7 @@ __webpack_require__.r(__webpack_exports__);
 var Route = [{
   name: 'index',
   path: '/',
-  component: _components_auth_Login_vue__WEBPACK_IMPORTED_MODULE_17__["default"],
+  component: _components_auth_Login_vue__WEBPACK_IMPORTED_MODULE_18__["default"],
   beforeEnter: function beforeEnter(to, from, next) {
     var User = JSON.parse(window.localStorage.getItem('users'));
 
@@ -128943,6 +130827,9 @@ var Route = [{
     path: 'manage/absent-student',
     component: _page_admin_ManageAbsentStudent_vue__WEBPACK_IMPORTED_MODULE_7__["default"]
   }, {
+    path: 'manage/alumni-student',
+    component: _page_admin_ManageAlumniStudent_vue__WEBPACK_IMPORTED_MODULE_14__["default"]
+  }, {
     path: 'manage/study',
     component: _page_admin_ManageStudy_vue__WEBPACK_IMPORTED_MODULE_8__["default"]
   }, {
@@ -128962,13 +130849,13 @@ var Route = [{
     component: _page_admin_ManageReportCard_vue__WEBPACK_IMPORTED_MODULE_13__["default"]
   }, {
     path: 'setting/api/client',
-    component: _page_api_Client_vue__WEBPACK_IMPORTED_MODULE_18__["default"]
+    component: _page_api_Client_vue__WEBPACK_IMPORTED_MODULE_19__["default"]
   }, {
     path: 'setting/api/authorized-token',
-    component: _page_api_AuthorizedClient_vue__WEBPACK_IMPORTED_MODULE_19__["default"]
+    component: _page_api_AuthorizedClient_vue__WEBPACK_IMPORTED_MODULE_20__["default"]
   }, {
     path: 'setting/api/personal-token',
-    component: _page_api_PersonalToken_vue__WEBPACK_IMPORTED_MODULE_20__["default"]
+    component: _page_api_PersonalToken_vue__WEBPACK_IMPORTED_MODULE_21__["default"]
   }, {
     path: 'search/:search',
     component: _page_Search_vue__WEBPACK_IMPORTED_MODULE_0__["default"],
@@ -128977,7 +130864,7 @@ var Route = [{
 }, {
   name: 'teacher',
   path: '/teacher',
-  component: _components_template_teacher_Template_vue__WEBPACK_IMPORTED_MODULE_14__["default"],
+  component: _components_template_teacher_Template_vue__WEBPACK_IMPORTED_MODULE_15__["default"],
   beforeEnter: function beforeEnter(to, from, next) {
     var User = JSON.parse(window.localStorage.getItem('users'));
 
@@ -129009,6 +130896,12 @@ var Route = [{
     path: 'manage/report-card',
     component: _page_admin_ManageReportCard_vue__WEBPACK_IMPORTED_MODULE_13__["default"]
   }, {
+    path: 'manage/absent-student',
+    component: _page_admin_ManageAbsentStudent_vue__WEBPACK_IMPORTED_MODULE_7__["default"]
+  }, {
+    path: 'manage/alumni-student',
+    component: _page_admin_ManageAlumniStudent_vue__WEBPACK_IMPORTED_MODULE_14__["default"]
+  }, {
     path: 'search/:search',
     component: _page_Search_vue__WEBPACK_IMPORTED_MODULE_0__["default"],
     params: true
@@ -129016,7 +130909,7 @@ var Route = [{
 }, {
   name: 'student',
   path: '/student',
-  component: _components_template_student_Template_vue__WEBPACK_IMPORTED_MODULE_15__["default"],
+  component: _components_template_student_Template_vue__WEBPACK_IMPORTED_MODULE_16__["default"],
   beforeEnter: function beforeEnter(to, from, next) {
     var User = JSON.parse(window.localStorage.getItem('users'));
 
@@ -129034,7 +130927,7 @@ var Route = [{
   },
   children: [{
     path: 'dashboard',
-    component: _page_student_Dashboard_vue__WEBPACK_IMPORTED_MODULE_16__["default"]
+    component: _page_student_Dashboard_vue__WEBPACK_IMPORTED_MODULE_17__["default"]
   }]
 }];
 /* harmony default export */ __webpack_exports__["default"] = (Route);

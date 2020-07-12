@@ -29,6 +29,8 @@ Route::group(['namespace' => 'Admin\Request', 'middleware' => 'auth:api'], funct
 
     Route::apiResource('absent-student', 'AbsentStudentController');
     Route::get('absent-student/data/check', 'AbsentStudentController@checked');
+
+    Route::apiResource('alumni-student', 'AlumniContoller');
     /*import*/
     Route::post('class/excel/import/{any}', 'ClassController@import')->name('class.import');
     Route::post('school/excel/import/{any}', 'SchoolController@import')->name('school.import');

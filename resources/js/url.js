@@ -13,6 +13,7 @@ import ManageUser from './page/admin/ManageUser.vue';
 import ManageAssessmentTask from './page/admin/ManageAssessmentTask.vue';
 import ManageScHomeRoomTeacher from './page/admin/ManageScHomeRoomTeacher.vue';
 import ManageReportCard from './page/admin/ManageReportCard.vue';
+import ManageAlumniStudent from './page/admin/ManageAlumniStudent.vue';
 // teacher
 import TemplateTeacher from './components/template/teacher/Template.vue';
 // student
@@ -92,6 +93,10 @@ const Route = [{
                 component: ManageAbsentStudent
             },
             {
+                path: 'manage/alumni-student',
+                component: ManageAlumniStudent
+            },
+            {
                 path: 'manage/study',
                 component: ManageStudy
             },
@@ -169,6 +174,14 @@ const Route = [{
             {
                 path: 'manage/report-card',
                 component: ManageReportCard
+            },
+            {
+                path: 'manage/absent-student',
+                component: ManageAbsentStudent
+            },
+            {
+                path: 'manage/alumni-student',
+                component: ManageAlumniStudent
             },
             {
                 path : 'search/:search',

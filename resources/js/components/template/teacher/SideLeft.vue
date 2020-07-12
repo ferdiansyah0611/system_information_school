@@ -21,6 +21,9 @@
                             <li>
                                 <router-link to="/teacher/manage/student" class="waves-effect">Data</router-link>
                             </li>
+                            <li>
+                                <router-link to="/admin/manage/alumni-student" class="waves-effect">Alumni</router-link>
+                            </li>
                         </ul>
                     </li>
                     <li>
