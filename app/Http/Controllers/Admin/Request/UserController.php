@@ -81,7 +81,8 @@ class UserController extends Controller
             'location' => 'required|string',
             'born' => 'required|date',
             'languange' => 'required|string|min:2',
-            'gender' => 'required|string'
+            'gender' => 'required|string',
+            'religious' => 'required|string'
         ]);
         if($validator->fails()){
             return response()->json(['message' => $validator->errors()], 401);
@@ -154,7 +155,8 @@ class UserController extends Controller
             'location' => 'required|string',
             'born' => 'required|date',
             'languange' => 'required|string|min:2',
-            'gender' => 'required|string'
+            'gender' => 'required|string',
+            'religious' => 'required|string',
         ]);
         if($validator->fails()){
             return response()->json(['message' => $validator->errors()], 401);
