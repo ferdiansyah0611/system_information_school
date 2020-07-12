@@ -7,14 +7,14 @@
                     <li class="menu-title">Menu</li>
                     <li>
                         <router-link to="/teacher/dashboard" class="waves-effect">
-                            <div class="d-inline-block icons-sm mr-1"><i class="fas fa-chart-line" style="color: #3051d3;"></i></div>
+                            <div class="d-inline-block icons-sm ml-1"><i class="fas fa-chart-line" style="color: #3051d3;"></i></div>
                             <span>Dashboard</span>
                         </router-link>
                     </li>
                     <li class="menu-title">Management</li>
                     <li>
                         <a href="javascript: void(0);" class="has-arrow waves-effect">
-                            <div class="d-inline-block icons-sm mr-1"><i class="fas fa-smile" style="color: #3051d3;"></i></div>
+                            <div class="d-inline-block icons-sm ml-1"><i class="fas fa-smile" style="color: #3051d3;"></i></div>
                             <span>Student</span>
                         </a>
                         <ul class="sub-menu" aria-expanded="true">
@@ -28,7 +28,7 @@
                     </li>
                     <li>
                         <a href="javascript: void(0);" class="has-arrow waves-effect">
-                            <div class="d-inline-block icons-sm mr-1"><i class="fas fa-book" style="color: #3051d3;"></i></div>
+                            <div class="d-inline-block icons-sm ml-1"><i class="fas fa-book" style="color: #3051d3;"></i></div>
                             <span>Study</span>
                         </a>
                         <ul class="sub-menu" aria-expanded="true">
@@ -40,7 +40,7 @@
                     <li class="menu-title">Assessment Student</li>
                     <li>
                         <a href="javascript: void(0);" class="has-arrow waves-effect">
-                            <div class="d-inline-block icons-sm mr-1"><i class="fas fa-sticky-note" style="color: #3051d3;"></i></div>
+                            <div class="d-inline-block icons-sm ml-1"><i class="fas fa-sticky-note" style="color: #3051d3;"></i></div>
                             <span>Assessment Task</span>
                         </a>
                         <ul class="sub-menu" aria-expanded="true">
@@ -52,7 +52,7 @@
                     </li>
                     <li>
                         <a href="javascript: void(0);" class="has-arrow waves-effect">
-                            <div class="d-inline-block icons-sm mr-1"><i class="mdi mdi-notebook-multiple" style="color: #3051d3;"></i></div>
+                            <div class="d-inline-block icons-sm ml-1"><i class="mdi mdi-notebook-multiple" style="color: #3051d3;"></i></div>
                             <span>Report Card</span>
                         </a>
                         <ul class="sub-menu" aria-expanded="true">

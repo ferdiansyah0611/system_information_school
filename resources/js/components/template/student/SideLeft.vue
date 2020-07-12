@@ -7,7 +7,7 @@
                     <li class="menu-title">Menu</li>
                     <li>
                         <router-link to="/student/dashboard" class="waves-effect">
-                            <div class="d-inline-block icons-sm mr-1"><i class="fas fa-chart-line" style="color: #3051d3;"></i></div>
+                            <div class="d-inline-block icons-sm ml-1"><i class="fas fa-chart-line" style="color: #3051d3;"></i></div>
                             <span>Dashboard</span>
                         </router-link>
                     </li>
