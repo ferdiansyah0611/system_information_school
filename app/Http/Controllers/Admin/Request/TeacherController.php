@@ -331,4 +331,8 @@ class TeacherController extends Controller
             }
         }
     }
+    public function check()
+    {
+        return response()->json(ScTeacher::where('user_id', request()->user()->id)->count(), 200);
+    }
 }

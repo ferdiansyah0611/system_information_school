@@ -7,7 +7,9 @@ use Illuminate\Http\Request;
 use Validator;
 use Carbon\Carbon;
 // model
+use App\Models\ScTeacher;
 use App\Models\ScClassroomPost;
+use App\Models\ScClassroomQuestion;
 use App\Models\ScClassroomComment;
 use App\Models\ScClassroomCommentPrivate;
 use App\Models\ScClassroomQuestChoice;
@@ -51,7 +53,7 @@ class ClassroomController extends Controller
             return response()->json(['message' => $validator->errors()], 401);
         } else {
             $data = $request->all();
-            $data['id'] => $this->random;
+            $data['id'] = $this->random;
             /*upload asset*/
             if($request->file('asset')) {
                 $valid_asset = Validator::make($request->all(), [
@@ -66,49 +68,38 @@ class ClassroomController extends Controller
                     $data['asset'] = $name;
                 }
             }
-            /*quest choice*/
-            if($request->type == 'quest_choice') {
-                $data_choice = $request->all();
-                $data_choice['sc_classroom_post_id'] = $this->random;
-                $data_choice['answer'] = $request->answer;
-                $data_choice['correct'] = $request->correct;
-                /*upload file_choices*/
-                if($request->file('file_choices')) {
-                    $file = $request->file('file_choices');
-                    $name = $file->getClientOriginalName();
-                    $file->move(storage_path('app/public/asset'), $name);
-                    $data_choice['file_choices'] = $name;
-                }
-                ScClassroomQuestChoice::create($data_choice);
+            if($request->type == 'question') {
+                $teacher = ScTeacher::where('user_id', request()->user()->id)->pluck('id');
+                ScClassroomQuestion::create([
+                    'id' => $this->random,
+                    'sc_classroom_post_id' => $this->random,
+                    'sc_teacher_id' => $teacher[0],
+                    'sc_study_id' => $request->sc_study_id,
+                    'question' => $request->question,
+                    'max_question' => $request->max_question
+                ]);
             }
-            /*quest fill*/
-            if($request->type == 'quest_fill') {
-                $data_fill = $request->all();
-                $data_fill['sc_classroom_post_id'] = $this->random;
-                $data_fill['answer'] = $request->answer;
-                $data_fill['correct'] = $request->correct;
-                /*upload file_fills*/
-                if($request->file('file_fills')) {
-                    $file = $request->file('file_fills');
-                    $name = $file->getClientOriginalName();
-                    $file->move(storage_path('app/public/asset'), $name);
-                    $data_fill['file_fills'] = $name;
-                }
-                ScClassroomQuestFill::create($data_fill);
-            }
+            $data['user_id'] = request()->user()->id;
             ScClassroomPost::create($data);
+            return response()->json(['message' => 'Successfuly create data'], 200);
         }
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\ScClassroomPost  $scClassroomPost
+     * @param  $scClassroomPost
      * @return \Illuminate\Http\Response
      */
-    public function show(ScClassroomPost $scClassroomPost)
+    public function show($scClassroomPost)
     {
-        //
+        /*$data = ScClassroomPost::where('id', $scClassroomPost)->get();*/
+        $data = ScClassroomPost::with('user')->with('sc_classroom_questions')
+        ->where('sc_classroom_posts.id', $scClassroomPost)
+        ->where('sc_classroom_questions.sc_classroom_post_id', $scClassroomPost)
+        ->get();
+        /*$data['question'] = ScClassroomQuestion::where('id', $scClassroomPost)->get();*/
+        return response()->json($data, 200);
     }
 
     /**

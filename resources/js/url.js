@@ -3,6 +3,8 @@ import Error404 from './components/404.vue';
 // admin {teacher}
 import TemplateAdmin from './components/template/one/Template.vue';
 import Dashboard from './page/admin/Dashboard.vue';
+import Classroom from './page/admin/Classroom.vue';
+import ClassroomView from './page/admin/ClassroomView.vue';
 import ManageClass from './page/admin/Manageclass.vue';
 import ManageSchool from './page/admin/ManageSchool.vue';
 import ManageStudent from './page/admin/ManageStudent.vue';
@@ -75,6 +77,15 @@ const Route = [{
         children: [{
                 path: 'dashboard',
                 component: Dashboard
+            },
+            {
+                path: 'classroom',
+                component: Classroom
+            },
+            {
+                path : 'classroom/:classroom',
+                component: ClassroomView,
+                params : true,
             },
             {
                 path: 'manage/class',

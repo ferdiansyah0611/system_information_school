@@ -15,4 +15,12 @@ class ScClassroomPost extends Model
     protected $fillable = [
     	'user_id', 'description', 'asset', 'type'
     ];
+    public function user()
+    {
+    	return $this->hasOne('App\User', 'id');
+    }
+    public function sc_classroom_questions()
+    {
+        return $this->hasMany('App\Models\SclassroomQuestion', 'id');
+    }
 }

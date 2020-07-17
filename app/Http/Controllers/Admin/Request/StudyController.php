@@ -311,4 +311,8 @@ class StudyController extends Controller
             }
         }
     }
+    public function school()
+    {
+        return response()->json(ScStudy::where('sc_school_id', request()->user()->sc_school_id)->get(),200);
+    }
 }

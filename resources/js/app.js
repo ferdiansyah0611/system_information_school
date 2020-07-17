@@ -12,7 +12,9 @@ import VueRouter from 'vue-router';
 import VueAxios from 'vue-axios';
 import Axios from 'axios';
 import Vuex from 'vuex';
+import CKEditor from '@ckeditor/ckeditor5-vue';
 Vue.use(VueRouter, VueAxios, Axios);
+Vue.use(CKEditor);
 Vue.component('pagination', require('laravel-vue-pagination'));
 Vue.component('side-right-template', require('./components/template/one/SideRight').default);
 

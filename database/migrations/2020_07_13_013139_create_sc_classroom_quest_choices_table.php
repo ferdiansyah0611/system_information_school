@@ -19,11 +19,7 @@ class CreateScClassroomQuestChoicesTable extends Migration
             $table->bigInteger('sc_classroom_post_id')->unsigned();
             $table->longText('answer');
             $table->string('correct');
-            $table->string('select_a');
-            $table->string('select_b');
-            $table->string('select_c');
-            $table->string('select_d')->nullable();
-            $table->string('select_e')->nullable();
+            $table->longText('select');
             $table->string('file_choices')->nullable();
             $table->timestamps();
         });

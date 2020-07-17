@@ -31,6 +31,7 @@ Route::group(['namespace' => 'Admin\Request', 'middleware' => 'auth:api'], funct
     Route::get('absent-student/data/check', 'AbsentStudentController@checked');
 
     Route::apiResource('alumni-student', 'AlumniContoller');
+    Route::apiResource('classroom', 'ClassroomController');
     /*import*/
     Route::post('class/excel/import/{any}', 'ClassController@import')->name('class.import');
     Route::post('school/excel/import/{any}', 'SchoolController@import')->name('school.import');
@@ -43,6 +44,8 @@ Route::group(['namespace' => 'Admin\Request', 'middleware' => 'auth:api'], funct
     Route::post('data-user/excel/import/{any}', 'AdminController@import')->name('data-user.import');
     /*more*/
     Route::get('users', 'AdminController@userLatest')->name('user.index');
+    Route::get('teacher/data/check', 'TeacherController@check');
+    Route::get('study/data/school', 'StudyController@school');
 });
 Route::group(['namespace' => 'Admin\Request'], function(){
     Route::get('dashboard', 'AdminController@dashboard');

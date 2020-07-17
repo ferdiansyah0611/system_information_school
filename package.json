@@ -24,6 +24,8 @@
         "vue-template-compiler": "^2.6.10"
     },
     "dependencies": {
+        "@ckeditor/ckeditor5-build-classic": "^20.0.0",
+        "@ckeditor/ckeditor5-vue": "^1.0.1",
         "chart.js": "^2.9.3",
         "laravel-vue-pagination": "^2.3.1",
         "metismenu": "^3.0.6",
