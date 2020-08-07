@@ -53,7 +53,6 @@ class ClassroomController extends Controller
             return response()->json(['message' => $validator->errors()], 401);
         } else {
             $data = $request->all();
-            $data['id'] = $this->random;
             /*upload asset*/
             if($request->file('asset')) {
                 $valid_asset = Validator::make($request->all(), [
@@ -76,9 +75,12 @@ class ClassroomController extends Controller
                     'sc_teacher_id' => $teacher[0],
                     'sc_study_id' => $request->sc_study_id,
                     'question' => $request->question,
-                    'max_question' => $request->max_question
+                    'max_question' => $request->max_question,
+                    'max_date' => $request->max_date,
+                    'note' => $request->note
                 ]);
             }
+            $data['id'] = $this->random;
             $data['user_id'] = request()->user()->id;
             ScClassroomPost::create($data);
             return response()->json(['message' => 'Successfuly create data'], 200);
@@ -93,12 +95,22 @@ class ClassroomController extends Controller
      */
     public function show($scClassroomPost)
     {
-        /*$data = ScClassroomPost::where('id', $scClassroomPost)->get();*/
-        $data = ScClassroomPost::with('user')->with('sc_classroom_questions')
-        ->where('sc_classroom_posts.id', $scClassroomPost)
-        ->where('sc_classroom_questions.sc_classroom_post_id', $scClassroomPost)
-        ->get();
-        /*$data['question'] = ScClassroomQuestion::where('id', $scClassroomPost)->get();*/
+        $data['post'] = ScClassroomPost::where('sc_classroom_posts.sc_classroom_post_id', $scClassroomPost)
+        ->join('users', 'sc_classroom_posts.user_id', '=', 'users.id')
+        ->select(
+            'sc_classroom_posts.id', 'sc_classroom_posts.user_id', 'sc_classroom_posts.description',
+            'sc_classroom_posts.asset', 'sc_classroom_posts.type', 'sc_classroom_posts.created_at', 'sc_classroom_posts.updated_at',
+            'users.name', 'users.nisn', 'users.avatar'
+        )->paginate(25);
+        $data['task'] = ScClassroomQuestion::where('sc_classroom_post_id', $scClassroomPost)
+        ->join('sc_teachers', 'sc_classroom_questions.sc_teacher_id', '=', 'sc_teachers.id')
+        ->join('users', 'sc_teachers.user_id', '=', 'users.id')
+        ->select(
+            'sc_classroom_questions.sc_classroom_post_id', 'sc_classroom_questions.sc_teacher_id', 'sc_classroom_questions.sc_study_id', 'sc_classroom_questions.question',
+            'sc_classroom_questions.max_question', 'sc_classroom_questions.max_date', 'sc_classroom_questions.note', 'sc_classroom_questions.created_at', 'sc_classroom_questions.updated_at',
+            'users.name', 'users.id as user_id', 'users.nisn', 'users.avatar'
+        )
+        ->paginate(25);
         return response()->json($data, 200);
     }
 
