@@ -323,7 +323,7 @@ export default {
             }).catch(error => {
                 console.error(error.stack)
             })
-        }
+        },
         /*change event in here...*/
         async changeAsset() {
             this.addClassroom.asset = this.$refs.asset.files[0];
