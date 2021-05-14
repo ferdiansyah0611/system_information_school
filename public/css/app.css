@@ -1,4 +1,6 @@
-@import url(/vendor/template/css/app.min.css);@import url(/vendor/template/css/icons.min.css);@import url(/vendor/template/css/bootstrap.min.css);/*@import url('https://fonts.googleapis.com/css?family=Nunito');*/
+@import url(/public/vendor/template/css/app.min.css);
+@import url(/public/vendor/template/css/icons.min.css);
+@import url(/public/vendor/template/css/bootstrap.min.css);/*@import url('https://fonts.googleapis.com/css?family=Nunito');*/
 
 /*@import 'variables';*/
 
