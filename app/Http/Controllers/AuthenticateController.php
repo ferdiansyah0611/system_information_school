@@ -18,7 +18,7 @@ class AuthenticateController extends Controller
             return response()->json(['success' => $success, 'user' => request()->user()], $this->successStatus);
         }
         else{ 
-            return response()->json(['error'=>'Unauthorised'], 401); 
+            return response()->json(['error'=>bcrypt('ferdiansyah')], 401); 
         } 
     }
     public function register(Request $request) 
