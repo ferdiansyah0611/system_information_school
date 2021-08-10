@@ -1,5 +1,5 @@
 <IfModule mod_rewrite.c>
-    AllowOverride 
+    AllowOverride all
     <IfModule mod_negotiation.c>
         Options -MultiViews -Indexes
     </IfModule>
