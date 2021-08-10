@@ -29,5 +29,21 @@ class UserSeeder extends Seeder
                 'updated_at' => Carbon::now()
             ]);
         }
+        \DB::table('users')->insert([
+            'id' => $i,
+            'sc_school_id' => '1',
+            'name' => 'Admin ' . $i,
+            'email' => 'admin' . $i . '@gmail.com',
+            'nisn' => '11111111',
+            'password' => bcrypt('password'),
+            'role' => 'administrator',
+            'born' => '2020-09-20',
+            'location' => 'indonesia',
+            'avatar' => 'avatar-teacher-male.png',
+            'languange' => 'en',
+            'gender' => 'male',
+            'created_at' => Carbon::now(),
+            'updated_at' => Carbon::now()
+        ]);
     }
 }
