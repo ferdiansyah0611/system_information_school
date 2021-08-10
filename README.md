@@ -3,7 +3,7 @@
 <h2>Demo</h2>
 <p>For <a href="http://system-school-laravel.herokuapp.com/">Link Demo</a></p>
 <p>For account login with :</p>
-<p>NIK = 11111111 & Password = Password</p>
+<p>NIK = 11111111 & Password = password</p>
 <h2>Manual Setup</h2>
 <ul>
     <li>Please configuration database for this projects. Change in .env.example to .env</li>
