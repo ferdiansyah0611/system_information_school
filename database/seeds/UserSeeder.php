@@ -32,8 +32,8 @@ class UserSeeder extends Seeder
         \DB::table('users')->insert([
             'id' => $i,
             'sc_school_id' => '1',
-            'name' => 'Admin ' . $i,
-            'email' => 'admin' . $i . '@gmail.com',
+            'name' => 'Admin',
+            'email' => 'admin@gmail.com',
             'nisn' => '11111111',
             'password' => bcrypt('password'),
             'role' => 'administrator',
