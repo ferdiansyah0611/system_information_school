@@ -25,6 +25,7 @@ class UserSeeder extends Seeder
                 'avatar' => 'avatar-teacher-male.png',
                 'languange' => 'en',
                 'gender' => 'male',
+                'religious' => 'islam',
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now()
             ]);
@@ -42,6 +43,7 @@ class UserSeeder extends Seeder
             'avatar' => 'avatar-teacher-male.png',
             'languange' => 'en',
             'gender' => 'male',
+            'religious' => 'islam',
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now()
         ]);
