@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Database\Seeder;
-use App\models\ScNote;
+use App\Models\ScNote;
 class ScNoteSeeder extends Seeder
 {
     /**
